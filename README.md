@@ -71,6 +71,32 @@ Ouvrez votre navigateur sur : **http://127.0.0.1:5000**
 
 ---
 
+## 🔒 Accès HTTPS (Docker + Nginx)
+
+Après avoir configuré les services Docker avec Nginx, ouvre ton navigateur sur : **https://localhost** ou **https://127.0.0.1**
+
+> Le certificat est auto-signé, donc le navigateur affichera un avertissement de sécurité. Accepte le certificat pour continuer.
+
+### Dépannage certificat
+
+- Si le navigateur dit « connexion non privée » ou « certificat invalide », choisis l’option pour continuer malgré l’avertissement.
+- Sur Chrome/Edge : clique sur « Avancé », puis « Continuer vers localhost (non sécurisé) ».
+- Sur Firefox : clique sur « Avancé », puis « Ajouter une exception… », et confirme.
+- Si la page ne s’affiche toujours pas, redémarre les conteneurs Docker :
+
+```powershell
+docker compose down
+Docker compose up --build
+```
+
+- Vérifie que le service `nginx` est bien démarré :
+
+```powershell
+docker compose ps
+```
+
+---
+
 ## 📊 Données
 
 ### Sources de données
