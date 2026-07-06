@@ -305,6 +305,11 @@ Le projet utilise PostgreSQL via Docker sur le port hôte `5433` pour éviter le
 
 ## 👥 Auteurs
 
+**Nom** : OUOBA Abdou  
+**Téléphone** : +226 54516665  
+**WhatsApp** : +226 54516665  
+**Email** : aouoba9@gmail.com  
+
 Projet réalisé dans le cadre du Sujet 21 - Filière Génie logiciel — Licence 3 Analyse de données.
 
 ---
