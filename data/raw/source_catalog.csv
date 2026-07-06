@@ -1,0 +1,12 @@
+nom_source,url,type_source,donnees_attendues,methode_collecte,format,niveau_confiance
+SONABEL Facebook officiel,https://www.facebook.com/sonabelbf/,officielle/sociale,"communiqués, alertes, incidents","API officielle si disponible, téléchargement manuel contrôlé, OCR sur images",HTML/image/texte,1.00
+SONABEL X officiel,https://x.com/SONABEL2,officielle/sociale,alertes courtes et communiqués,API X si autorisée ou veille manuelle,texte,0.95
+Wakat Séra recherche SONABEL coupure,https://www.wakatsera.com/?s=SONABEL+coupure,média,articles reprenant les communiqués SONABEL,scraping BeautifulSoup,HTML,0.80
+Lefaso.net,https://lefaso.net/,média,articles et communiqués sur incidents électriques,scraping BeautifulSoup/recherche manuelle,HTML,0.80
+Faso Actu,https://faso-actu.info/?s=SONABEL,média,communiqués et articles locaux,scraping BeautifulSoup,HTML,0.75
+HDX Burkina Faso administrative boundaries,https://data.humdata.org/dataset/cod-ab-bfa,géographie,limites administratives Burkina Faso,téléchargement GeoJSON/Shapefile,GeoJSON/Shapefile,0.95
+geoBoundaries Burkina Faso,https://data.humdata.org/dataset/geoboundaries-admin-boundaries-for-burkina-faso,géographie,ADM0 à ADM3,téléchargement,GeoJSON/Shapefile,0.95
+Open-Meteo Historical Weather API,https://open-meteo.com/en/docs/historical-weather-api,météo,"température, pluie, vent historiques",API JSON/CSV,JSON/CSV,0.90
+NASA POWER Daily API,https://power.larc.nasa.gov/docs/services/api/temporal/daily/,solaire/météo,"irradiation solaire, température, vent",API JSON/CSV,JSON/CSV,0.90
+World Bank Data API,https://data.worldbank.org/indicator/EG.ELC.ACCS.ZS?locations=BF,contexte énergie,accès à l’électricité et indicateurs énergétiques,API JSON/CSV,JSON/CSV,0.90
+Signalements utilisateurs,application web,terrain,confirmation communautaire des coupures,formulaire web + validation admin,PostgreSQL,0.40 à 0.70

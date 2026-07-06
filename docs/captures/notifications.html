@@ -1,0 +1,63 @@
+﻿﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Alertes et abonnements</h1>
+<p class="lead">Abonnez un utilisateur à une région, ville ou zone. Les alertes sont simulées en web/email/SMS pour le projet.</p>
+<form method="post" class="form-card">
+  <h2>Créer un abonnement</h2>
+  <div class="form-grid">
+    <input name="nom" placeholder="Nom">
+    <input name="contact" placeholder="Contact email/téléphone" required>
+    <select name="canal"><option>web</option><option>email</option><option>sms</option><option>whatsapp</option></select>
+    <input name="region" placeholder="Région">
+    <input name="ville" placeholder="Ville">
+    <input name="zone" placeholder="Zone/quartier">
+  </div>
+  <button type="submit">S’abonner</button>
+  <a class="button-link" href="/notifications/simuler">Générer les alertes prévues</a>
+</form>
+<section class="grid">
+  <div class="panel">
+    <h2>Abonnements actifs</h2>
+    <table><thead><tr><th>Contact</th><th>Canal</th><th>Région</th><th>Ville</th><th>Zone</th></tr></thead><tbody>
+      <tr><td>test-manuel@example.com</td><td>email</td><td>Centre</td><td>Ouagadougou</td><td>Tanghin</td></tr>
+    </tbody></table>
+  </div>
+  <div class="panel">
+    <h2>Notifications générées</h2>
+    <table><thead><tr><th>Date</th><th>Destinataire</th><th>Canal</th><th>Message</th></tr></thead><tbody>
+      <tr><td colspan="4">Aucune notification.</td></tr>
+    </tbody></table>
+  </div>
+</section>
+
+  </main>
+</body>
+</html>

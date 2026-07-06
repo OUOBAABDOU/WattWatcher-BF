@@ -1,0 +1,25 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<h1>Recommandations énergétiques</h1>
+<form method="get" class="form-card compact-form">
+  <div class="form-grid">
+    <input name="region" placeholder="Région" value="{{ filters.get('region','') }}">
+    <input name="zone" placeholder="Zone/quartier" value="{{ filters.get('zone','') }}">
+  </div>
+  <button type="submit">Analyser la zone</button>
+</form>
+<div class="cards">
+  <div class="card"><span>Coupures dans le filtre</span><strong>{{ recommandations.nb_coupures }}</strong></div>
+  <div class="card"><span>Durée moyenne</span><strong>{{ recommandations.duree_moyenne }} min</strong></div>
+  <div class="card"><span>Irradiation solaire</span><strong>{{ recommandations.irradiation_moyenne or 'N/A' }}</strong></div>
+</div>
+<div class="panel">
+  <h2>Conseils personnalisés</h2>
+  <ul class="list">
+    {% for r in recommandations['items'] %}<li><strong>{{ r.titre }}</strong><br>{{ r.description }} <span class="badge">{{ r.type }}</span></li>{% endfor %}
+  </ul>
+</div>
+<h2>Zones les plus touchées</h2>
+<ul class="list">{% for z in top_zones %}<li><strong>{{ z.label }}</strong> : {{ z.value }} coupures enregistrées.</li>{% endfor %}</ul>
+{% endblock %}
+

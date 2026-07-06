@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Carte des zones touchées</h1>
+<p class="lead">Visualisation géographique des coupures réelles agrégées par région, ville et zone.</p>
+
+<section class="panel">
+  <div id="page-map" class="large-chart"></div>
+</section>
+
+<h2>Zones cartographiées</h2>
+<table>
+  <thead>
+    <tr><th>Région</th><th>Ville</th><th>Zone</th><th>Coupures</th><th>Durée moyenne</th><th>Dernière coupure</th></tr>
+  </thead>
+  <tbody>
+    {% for point in map_points %}
+    <tr>
+      <td>{{ point.region }}</td>
+      <td>{{ point.ville }}</td>
+      <td>{{ point.zone }}</td>
+      <td>{{ point.nb_coupures }}</td>
+      <td>{{ point.duree_moyenne }} min</td>
+      <td>{{ point.derniere_coupure or 'Non renseignée' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">Aucune coordonnée disponible.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+const pageMapPoints={{ map_points|tojson }};
+Plotly.newPlot('page-map',[{
+  type:'scattergeo',
+  mode:'markers',
+  lat:pageMapPoints.map(x=>x.latitude),
+  lon:pageMapPoints.map(x=>x.longitude),
+  text:pageMapPoints.map(x=>`${x.zone} (${x.ville})<br>${x.region}<br>${x.nb_coupures} coupure(s)<br>Durée moyenne: ${x.duree_moyenne} min`),
+  marker:{
+    size:pageMapPoints.map(x=>Math.max(10,Math.min(34,8 + x.nb_coupures / 2))),
+    color:pageMapPoints.map(x=>x.nb_coupures),
+    colorscale:'Blues',
+    showscale:true,
+    colorbar:{title:'Coupures'}
+  }
+}],{
+  margin:{t:10,b:10,l:10,r:10},
+  geo:{
+    scope:'africa',
+    projection:{type:'mercator'},
+    center:{lat:12.4,lon:-1.5},
+    lataxis:{range:[9,15]},
+    lonaxis:{range:[-6,3]},
+    showland:true,
+    landcolor:'#f8fafc',
+    countrycolor:'#94a3b8',
+    showcountries:true
+  }
+});
+</script>
+{% endblock %}

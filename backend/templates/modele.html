@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Modèle prédictif ML</h1>
+<p class="lead">Évaluation du modèle entraîné sur les données réelles disponibles.</p>
+
+{% if not metrics.available %}
+<div class="alert warning">{{ metrics.message }}</div>
+{% else %}
+<p class="badge">Fichier : {{ metrics.path }}</p>
+<p><a class="button-link" href="/modele/fiche">Voir la fiche modèle pour le rapport</a></p>
+<p><a class="button-link" href="/modele/erreurs">Analyser les erreurs de test</a></p>
+
+<div class="cards">
+  <div class="card"><span>Lignes exploitables</span><strong>{{ metrics.dataset.usable_rows }}</strong></div>
+  <div class="card"><span>Lignes test</span><strong>{{ metrics.dataset.test_rows }}</strong></div>
+  <div class="card"><span>Accuracy classification</span><strong>{{ metrics.classification.accuracy }}</strong></div>
+  <div class="card"><span>MAE régression</span><strong>{{ metrics.regression.mae }} min</strong></div>
+</div>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Régression durée</h2>
+    <table>
+      <tbody>
+        <tr><th>MAE modèle</th><td>{{ metrics.regression.mae }} min</td></tr>
+        <tr><th>RMSE modèle</th><td>{{ metrics.regression.rmse }} min</td></tr>
+        <tr><th>R2</th><td>{{ metrics.regression.r2 }}</td></tr>
+        <tr><th>Baseline moyenne</th><td>{{ metrics.regression.baseline_prediction_minutes }} min</td></tr>
+        <tr><th>MAE baseline</th><td>{{ metrics.regression.baseline_mae }} min</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>Classification durée</h2>
+    <table>
+      <tbody>
+        <tr><th>Classes</th><td>{{ metrics.classification.classes|join(', ') }}</td></tr>
+        <tr><th>Accuracy modèle</th><td>{{ metrics.classification.accuracy }}</td></tr>
+        <tr><th>Classe baseline</th><td>{{ metrics.classification.baseline_class }}</td></tr>
+        <tr><th>Accuracy baseline</th><td>{{ metrics.classification.baseline_accuracy }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Distribution des classes</h2>
+    <table>
+      <thead><tr><th>Classe</th><th>Lignes</th></tr></thead>
+      <tbody>
+        {% for label, value in metrics.dataset.class_distribution.items() %}
+        <tr><td>{{ label }}</td><td>{{ value }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p class="lead">
+      Classe majoritaire : {{ metrics.dataset.class_balance.majority_class }}
+      ({{ metrics.dataset.class_balance.majority_count }} lignes).
+      Classe minoritaire : {{ metrics.dataset.class_balance.minority_class }}
+      ({{ metrics.dataset.class_balance.minority_count }} lignes).
+      Ratio : {{ metrics.dataset.class_balance.imbalance_ratio }}.
+    </p>
+  </div>
+  <div class="panel">
+    <h2>Statistiques de durée</h2>
+    <table>
+      <tbody>
+        <tr><th>Min</th><td>{{ metrics.dataset.duration_stats.min }} min</td></tr>
+        <tr><th>Médiane</th><td>{{ metrics.dataset.duration_stats.median }} min</td></tr>
+        <tr><th>Moyenne</th><td>{{ metrics.dataset.duration_stats.mean }} min</td></tr>
+        <tr><th>Max</th><td>{{ metrics.dataset.duration_stats.max }} min</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Comparaison des variantes</h2>
+  <table>
+    <thead><tr><th>Variante</th><th>Class weight</th><th>MAE</th><th>Accuracy</th><th>Macro-F1</th><th>Weighted-F1</th></tr></thead>
+    <tbody>
+      {% for variant in metrics.comparison.variants %}
+      <tr>
+        <td>{{ variant.label }}</td>
+        <td>{{ variant.class_weight or 'none' }}</td>
+        <td>{{ variant.mae if variant.available else '-' }}</td>
+        <td>{{ variant.accuracy if variant.available else '-' }}</td>
+        <td>{{ variant.macro_f1 if variant.available else '-' }}</td>
+        <td>{{ variant.weighted_f1 if variant.available else '-' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="lead">Meilleur macro-F1 : {{ metrics.comparison.best_by_macro_f1 }}. Meilleure MAE : {{ metrics.comparison.best_by_mae }}.</p>
+</section>
+
+{% if metrics.feature_importance.available %}
+<section class="grid">
+  <div class="panel">
+    <h2>Variables importantes</h2>
+    <div id="importance-chart"></div>
+  </div>
+  <div class="panel">
+    <h2>Détail importance durée</h2>
+    <table>
+      <thead><tr><th>Variable</th><th>Importance</th></tr></thead>
+      <tbody>
+        {% for item in metrics.feature_importance.regression[:8] %}
+        <tr><td>{{ item.feature }}</td><td>{{ item.importance }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+
+<section class="panel">
+  <h2>Matrice de confusion</h2>
+  <div id="confusion-chart"></div>
+</section>
+
+<section class="panel">
+  <h2>Lecture rapide</h2>
+  <p class="lead">{{ metrics.interpretation }}</p>
+  <p>Le modèle sert surtout à classer les coupures en courte, moyenne ou longue. Les prédictions exactes en minutes doivent rester indicatives tant que le volume de données réelles reste limité.</p>
+</section>
+
+<script>
+const modelClasses={{ metrics.classification.classes|tojson }};
+const confusionMatrix={{ metrics.classification.confusion_matrix|tojson }};
+const featureImportance={{ metrics.feature_importance.regression[:8]|tojson }};
+if (featureImportance.length) {
+  Plotly.newPlot('importance-chart',[{
+    x:featureImportance.map(x=>x.importance).reverse(),
+    y:featureImportance.map(x=>x.feature).reverse(),
+    type:'bar',
+    orientation:'h'
+  }],{margin:{t:20,l:120}});
+}
+Plotly.newPlot('confusion-chart',[{
+  z:confusionMatrix,
+  x:modelClasses,
+  y:modelClasses,
+  type:'heatmap',
+  colorscale:'Blues',
+  showscale:true
+}],{
+  margin:{t:20},
+  xaxis:{title:'Prédit'},
+  yaxis:{title:'Réel'}
+});
+</script>
+{% endif %}
+{% endblock %}

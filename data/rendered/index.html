@@ -1,0 +1,93 @@
+﻿﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Tableau de bord des coupures d’électricité</h1>
+<p class="lead">Suivi, analyse et aide à la décision énergétique au Burkina Faso.</p>
+<div class="cards">
+  <div class="card"><span>Total coupures</span><strong>331</strong></div>
+  <div class="card"><span>Durée moyenne</span><strong>225.86 min</strong></div>
+  <div class="card"><span>Durée médiane</span><strong>240.0 min</strong></div>
+  <div class="card"><span>Durée maximale</span><strong>480 min</strong></div>
+  <div class="card"><span>Durée cumulée</span><strong>74760 min</strong></div>
+  <div class="card"><span>Zones suivies</span><strong>19</strong></div>
+  <div class="card"><span>Coupures actives</span><strong>4</strong></div>
+</div>
+<section class="grid">
+  <div class="panel"><h2>Coupures par région</h2><div id="chart-region"></div></div>
+  <div class="panel"><h2>Coupures par mois</h2><div id="chart-month"></div></div>
+  <div class="panel"><h2>Répartition par source</h2><div id="chart-source"></div></div>
+  <div class="panel"><h2>Répartition par statut</h2><div id="chart-status"></div></div>
+  <div class="panel"><h2>Types de coupure</h2><div id="chart-type"></div></div>
+  <div class="panel full"><h2>Carte des zones touchées</h2><div id="chart-map"></div></div>
+</section>
+<script>
+const byRegion=[{"label": "Est", "value": 55}, {"label": "Centre", "value": 54}, {"label": "Hauts-Bassins", "value": 48}, {"label": "Centre-Ouest", "value": 44}, {"label": "Centre-Nord", "value": 44}, {"label": "Nord", "value": 43}, {"label": "Sud-Ouest", "value": 43}];
+const byMonth=[{"label": "3", "value": 37}, {"label": "4", "value": 32}, {"label": "1", "value": 31}, {"label": "9", "value": 31}, {"label": "6", "value": 30}, {"label": "8", "value": 30}, {"label": "12", "value": 28}, {"label": "7", "value": 27}, {"label": "5", "value": 25}, {"label": "2", "value": 25}, {"label": "11", "value": 19}, {"label": "10", "value": 16}];
+const bySource=[{"label": "media", "value": 145}, {"label": "officielle", "value": 127}, {"label": "terrain", "value": 58}, {"label": "interne", "value": 1}];
+const byStatus=[{"label": "termin\u00e9e", "value": 327}, {"label": "pr\u00e9vue", "value": 4}];
+const byType=[{"label": "pr\u00e9vue", "value": 165}, {"label": "impr\u00e9vue", "value": 74}, {"label": "perturbation", "value": 67}, {"label": "travaux", "value": 25}];
+const mapPoints=[{"derniere_coupure": "2026-06-23", "duree_moyenne": 260.91, "latitude": 12.061, "longitude": 0.359, "nb_coupures": 33, "region": "Est", "ville": "Fada N\u0027Gourma", "zone": "Secteur 1"}, {"derniere_coupure": "2026-04-08", "duree_moyenne": 215.17, "latitude": 13.102, "longitude": -1.095, "nb_coupures": 29, "region": "Centre-Nord", "ville": "Kaya", "zone": "Secteur 6"}, {"derniere_coupure": "2026-04-19", "duree_moyenne": 225.65, "latitude": 13.583, "longitude": -2.421, "nb_coupures": 23, "region": "Nord", "ville": "Ouahigouya", "zone": "Secteur 2"}, {"derniere_coupure": "2026-02-03", "duree_moyenne": 277.83, "latitude": 10.324, "longitude": -3.19, "nb_coupures": 23, "region": "Sud-Ouest", "ville": "Gaoua", "zone": "Secteur 3"}, {"derniere_coupure": "2025-12-04", "duree_moyenne": 169.57, "latitude": 12.243, "longitude": -2.365, "nb_coupures": 23, "region": "Centre-Ouest", "ville": "Koudougou", "zone": "Secteur 5"}, {"derniere_coupure": "2026-06-07", "duree_moyenne": 218.18, "latitude": 12.056, "longitude": 0.366, "nb_coupures": 22, "region": "Est", "ville": "Fada N\u0027Gourma", "zone": "Secteur 11"}, {"derniere_coupure": "2026-03-03", "duree_moyenne": 240.0, "latitude": 12.252, "longitude": -2.363, "nb_coupures": 21, "region": "Centre-Ouest", "ville": "Koudougou", "zone": "Secteur 1"}, {"derniere_coupure": "2026-05-28", "duree_moyenne": 243.0, "latitude": 10.328, "longitude": -3.178, "nb_coupures": 20, "region": "Sud-Ouest", "ville": "Gaoua", "zone": "Centre-ville"}, {"derniere_coupure": "2026-03-27", "duree_moyenne": 160.5, "latitude": 13.57, "longitude": -2.41, "nb_coupures": 20, "region": "Nord", "ville": "Ouahigouya", "zone": "Secteur 10"}, {"derniere_coupure": "2026-06-19", "duree_moyenne": 257.65, "latitude": 11.172, "longitude": -4.297, "nb_coupures": 17, "region": "Hauts-Bassins", "ville": "Bobo-Dioulasso", "zone": "Accart-Ville"}, {"derniere_coupure": "2026-03-21", "duree_moyenne": 215.62, "latitude": 11.177, "longitude": -4.31, "nb_coupures": 16, "region": "Hauts-Bassins", "ville": "Bobo-Dioulasso", "zone": "Sarfala"}, {"derniere_coupure": "2026-03-26", "duree_moyenne": 218.0, "latitude": 11.189, "longitude": -4.289, "nb_coupures": 15, "region": "Hauts-Bassins", "ville": "Bobo-Dioulasso", "zone": "Bindougousso"}, {"derniere_coupure": "2026-05-29", "duree_moyenne": 198.0, "latitude": 13.091, "longitude": -1.083, "nb_coupures": 15, "region": "Centre-Nord", "ville": "Kaya", "zone": "Secteur 4"}, {"derniere_coupure": "2026-05-18", "duree_moyenne": 250.0, "latitude": 12.384, "longitude": -1.469, "nb_coupures": 12, "region": "Centre", "ville": "Ouagadougou", "zone": "Dassasgho"}, {"derniere_coupure": "2026-03-07", "duree_moyenne": 210.0, "latitude": 12.389455, "longitude": -1.515909, "nb_coupures": 11, "region": "Centre", "ville": "Ouagadougou", "zone": "Tanghin"}, {"derniere_coupure": "2026-03-25", "duree_moyenne": 286.67, "latitude": 12.317, "longitude": -1.493, "nb_coupures": 9, "region": "Centre", "ville": "Ouagadougou", "zone": "Karpala"}, {"derniere_coupure": "2026-03-07", "duree_moyenne": 176.25, "latitude": 12.357125, "longitude": -1.543, "nb_coupures": 8, "region": "Centre", "ville": "Ouagadougou", "zone": "Gounghin"}, {"derniere_coupure": "2026-03-23", "duree_moyenne": 220.0, "latitude": 12.318, "longitude": -1.451, "nb_coupures": 6, "region": "Centre", "ville": "Ouagadougou", "zone": "Rayongo"}, {"derniere_coupure": "2025-07-24", "duree_moyenne": 230.0, "latitude": 12.373, "longitude": -1.44, "nb_coupures": 6, "region": "Centre", "ville": "Ouagadougou", "zone": "Bendogo"}, {"derniere_coupure": "2025-12-27", "duree_moyenne": 300.0, "latitude": 12.3714, "longitude": -1.5197, "nb_coupures": 1, "region": "Centre", "ville": "Ouagadougou", "zone": "Ouagadougou"}];
+Plotly.newPlot('chart-region',[{x:byRegion.map(x=>x.label),y:byRegion.map(x=>x.value),type:'bar'}],{margin:{t:20}});
+Plotly.newPlot('chart-month',[{x:byMonth.map(x=>x.label),y:byMonth.map(x=>x.value),type:'scatter',mode:'lines+markers'}],{margin:{t:20}});
+Plotly.newPlot('chart-source',[{labels:bySource.map(x=>x.label),values:bySource.map(x=>x.value),type:'pie',hole:.35}],{margin:{t:20,b:20}});
+Plotly.newPlot('chart-status',[{x:byStatus.map(x=>x.label),y:byStatus.map(x=>x.value),type:'bar'}],{margin:{t:20}});
+Plotly.newPlot('chart-type',[{x:byType.map(x=>x.label),y:byType.map(x=>x.value),type:'bar'}],{margin:{t:20}});
+Plotly.newPlot('chart-map',[{
+  type:'scattergeo',
+  mode:'markers',
+  lat:mapPoints.map(x=>x.latitude),
+  lon:mapPoints.map(x=>x.longitude),
+  text:mapPoints.map(x=>`${x.zone} (${x.ville})<br>${x.nb_coupures} coupure(s)<br>Durée moyenne: ${x.duree_moyenne} min`),
+  marker:{
+    size:mapPoints.map(x=>Math.max(8,Math.min(28,6 + x.nb_coupures / 2))),
+    color:mapPoints.map(x=>x.nb_coupures),
+    colorscale:'Blues',
+    showscale:true,
+    colorbar:{title:'Coupures'}
+  }
+}],{
+  margin:{t:10,b:10,l:10,r:10},
+  geo:{
+    scope:'africa',
+    projection:{type:'mercator'},
+    center:{lat:12.4,lon:-1.5},
+    lataxis:{range:[9,15]},
+    lonaxis:{range:[-6,3]},
+    showland:true,
+    landcolor:'#f8fafc',
+    countrycolor:'#94a3b8',
+    showcountries:true
+  }
+});
+</script>
+
+  </main>
+</body>
+</html>

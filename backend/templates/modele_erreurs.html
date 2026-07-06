@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Erreurs du modèle ML</h1>
+<p class="lead">Analyse ligne par ligne des prédictions sur le jeu de test.</p>
+
+{% if not report.available %}
+<div class="alert warning">Aucun fichier de prédictions de test disponible.</div>
+{% else %}
+<p class="badge">Fichier : {{ report.path }}</p>
+
+<div class="cards">
+  <div class="card"><span>Lignes test</span><strong>{{ report.summary.rows }}</strong></div>
+  <div class="card"><span>MAE observée</span><strong>{{ report.summary.mae_from_predictions }} min</strong></div>
+  <div class="card"><span>Accuracy classes</span><strong>{{ report.summary.classification_accuracy }}</strong></div>
+  <div class="card"><span>Classes incorrectes</span><strong>{{ report.summary.misclassified_rows }}</strong></div>
+</div>
+
+<section class="panel">
+  <h2>Fiabilité par niveau de confiance</h2>
+  <table>
+    <thead><tr><th>Niveau</th><th>Lignes</th><th>Correctes</th><th>Accuracy</th><th>Confiance moyenne</th></tr></thead>
+    <tbody>
+      {% for item in report.confidence_summary %}
+      <tr>
+        <td>{{ item.level_label }}</td>
+        <td>{{ item.rows }}</td>
+        <td>{{ item.correct_rows }}</td>
+        <td>{{ item.accuracy }}</td>
+        <td>{{ item.avg_confidence }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Pires erreurs de durée</h2>
+  <table>
+    <thead><tr><th>Lieu</th><th>Type</th><th>Réel</th><th>Prédit</th><th>Erreur</th><th>Classe réelle</th><th>Classe prédite</th></tr></thead>
+    <tbody>
+      {% for row in report.worst_errors %}
+      <tr>
+        <td>{{ row.region }} / {{ row.ville }} / {{ row.zone }}</td>
+        <td>{{ row.type_coupure }}</td>
+        <td>{{ row.actual_duration }} min</td>
+        <td>{{ row.predicted_duration }} min</td>
+        <td>{{ row.absolute_error }} min</td>
+        <td>{{ row.actual_class }}</td>
+        <td>{{ row.predicted_class }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Erreurs de classification</h2>
+  <table>
+    <thead><tr><th>Lieu</th><th>Réel</th><th>Prédit</th><th>Confiance</th><th>Niveau</th><th>P(courte)</th><th>P(moyenne)</th><th>P(longue)</th></tr></thead>
+    <tbody>
+      {% for row in report.misclassified %}
+      <tr>
+        <td>{{ row.region }} / {{ row.ville }} / {{ row.zone }}</td>
+        <td>{{ row.actual_class }}</td>
+        <td>{{ row.predicted_class }}</td>
+        <td>{{ row.predicted_class_confidence }}</td>
+        <td>{{ row.confidence_level_label }}</td>
+        <td>{{ row.proba_courte }}</td>
+        <td>{{ row.proba_moyenne }}</td>
+        <td>{{ row.proba_longue }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}

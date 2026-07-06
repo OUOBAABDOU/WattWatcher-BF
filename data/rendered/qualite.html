@@ -1,0 +1,102 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Qualité des données</h1>
+<p class="lead">Contrôles de complétude, doublons, anomalies et répartition des sources.</p>
+
+<div class="cards">
+  <div class="card"><span>Lignes contrôlées</span><strong>331</strong></div>
+  <div class="card"><span>Score qualité</span><strong>96.44%</strong></div>
+  <div class="card"><span>Complétude moyenne</span><strong>96.44%</strong></div>
+  <div class="card"><span>Doublons</span><strong>0</strong></div>
+</div>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Anomalies</h2>
+    <table>
+      <tr><th>Contrôle</th><th>Nombre</th></tr>
+      
+      <tr><td>duree_negative_or_zero</td><td>0</td></tr>
+      
+      <tr><td>date_fin_before_date_debut</td><td>0</td></tr>
+      
+      <tr><td>source_type_inconnu</td><td>0</td></tr>
+      
+    </table>
+  </div>
+  <div class="panel">
+    <h2>Sources</h2>
+    <table>
+      <tr><th>Source</th><th>Lignes</th></tr>
+      
+      <tr><td>media</td><td>145</td></tr>
+      
+      <tr><td>officielle</td><td>127</td></tr>
+      
+      <tr><td>terrain</td><td>58</td></tr>
+      
+      <tr><td>interne</td><td>1</td></tr>
+      
+    </table>
+  </div>
+</section>
+
+<div class="panel">
+  <h2>Complétude par colonne</h2>
+  <table>
+    <tr><th>Colonne</th><th>Complétude</th></tr>
+    
+    <tr><td>date_debut</td><td>100.0%</td></tr>
+    
+    <tr><td>heure_debut</td><td>100.0%</td></tr>
+    
+    <tr><td>heure_fin</td><td>100.0%</td></tr>
+    
+    <tr><td>duree_minutes</td><td>100.0%</td></tr>
+    
+    <tr><td>region</td><td>100.0%</td></tr>
+    
+    <tr><td>ville</td><td>100.0%</td></tr>
+    
+    <tr><td>zone</td><td>100.0%</td></tr>
+    
+    <tr><td>source_name</td><td>100.0%</td></tr>
+    
+    <tr><td>source_type</td><td>100.0%</td></tr>
+    
+    <tr><td>url_source</td><td>64.35%</td></tr>
+    
+  </table>
+</div>
+
+  </main>
+</body>
+</html>

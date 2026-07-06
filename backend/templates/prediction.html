@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Prédiction de durée</h1>
+<p class="lead">Estimez la durée probable d’une coupure à partir des caractéristiques connues.</p>
+
+{% if result %}
+<div class="cards">
+  <div class="card"><span>Durée estimée</span><strong>{{ result.prediction.duree_minutes }} min</strong></div>
+  <div class="card"><span>Classe prédite</span><strong>{{ result.prediction.classe_duree }}</strong></div>
+  <div class="card"><span>Confiance classe</span><strong>{{ result.prediction.classe_confiance }}</strong></div>
+  <div class="card"><span>Niveau confiance</span><strong>{{ result.prediction.niveau_confiance }}</strong></div>
+  <div class="card"><span>Modèle utilisé</span><strong>{{ result.model_variant }}</strong></div>
+</div>
+<div class="alert warning">{{ result.prediction.message_decision }}</div>
+{% endif %}
+
+<form method="post" class="form-card">
+  <h2>Scénario à tester</h2>
+  <div class="form-grid">
+    <input name="region" placeholder="Région" value="{{ form_values.region }}" required>
+    <input name="ville" placeholder="Ville" value="{{ form_values.ville }}" required>
+    <input name="zone" placeholder="Zone" value="{{ form_values.zone }}" required>
+    <select name="type_coupure">
+      {% for item in ['prévue', 'imprévue', 'perturbation', 'travaux'] %}
+      <option value="{{ item }}" {% if form_values.type_coupure == item %}selected{% endif %}>{{ item }}</option>
+      {% endfor %}
+    </select>
+    <select name="model_variant">
+      <option value="balanced" {% if form_values.model_variant == 'balanced' %}selected{% endif %}>Modèle balanced</option>
+      <option value="standard" {% if form_values.model_variant == 'standard' %}selected{% endif %}>Modèle standard</option>
+    </select>
+    <input name="mois" type="number" min="1" max="12" placeholder="Mois" value="{{ form_values.mois }}">
+    <input name="heure_num" type="number" min="0" max="23" placeholder="Heure" value="{{ form_values.heure_num }}">
+    <input name="jour_num" type="number" min="0" max="6" placeholder="Jour semaine 0-6" value="{{ form_values.jour_num }}">
+    <input name="temperature_max" type="number" step="0.1" placeholder="Température max" value="{{ form_values.temperature_max }}">
+    <input name="precipitation" type="number" step="0.1" placeholder="Précipitation" value="{{ form_values.precipitation }}">
+    <input name="irradiation_solaire" type="number" step="0.1" placeholder="Irradiation solaire" value="{{ form_values.irradiation_solaire }}">
+  </div>
+  <button type="submit">Prédire</button>
+</form>
+
+{% if result %}
+<section class="panel">
+  <h2>Probabilités par classe</h2>
+  <table>
+    <thead><tr><th>Classe</th><th>Probabilité</th></tr></thead>
+    <tbody>
+      {% for label, value in result.prediction.classe_proba.items() %}
+      <tr><td>{{ label }}</td><td>{{ value }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Détails de la prédiction</h2>
+  <table>
+    <tbody>
+      {% for key, value in result.features.items() %}
+      <tr><th>{{ key }}</th><td>{{ value }}</td></tr>
+      {% endfor %}
+      <tr><th>model_path</th><td>{{ result.model_path }}</td></tr>
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}

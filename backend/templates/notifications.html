@@ -1,0 +1,32 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<h1>Alertes et abonnements</h1>
+<p class="lead">Abonnez un utilisateur à une région, ville ou zone. Les alertes sont simulées en web/email/SMS pour le projet.</p>
+<form method="post" class="form-card">
+  <h2>Créer un abonnement</h2>
+  <div class="form-grid">
+    <input name="nom" placeholder="Nom">
+    <input name="contact" placeholder="Contact email/téléphone" required>
+    <select name="canal"><option>web</option><option>email</option><option>sms</option><option>whatsapp</option></select>
+    <input name="region" placeholder="Région">
+    <input name="ville" placeholder="Ville">
+    <input name="zone" placeholder="Zone/quartier">
+  </div>
+  <button type="submit">S’abonner</button>
+  <a class="button-link" href="/notifications/simuler">Générer les alertes prévues</a>
+</form>
+<section class="grid">
+  <div class="panel">
+    <h2>Abonnements actifs</h2>
+    <table><thead><tr><th>Contact</th><th>Canal</th><th>Région</th><th>Ville</th><th>Zone</th></tr></thead><tbody>
+      {% for a in abonnements %}<tr><td>{{ a.contact }}</td><td>{{ a.canal }}</td><td>{{ a.region or '-' }}</td><td>{{ a.ville or '-' }}</td><td>{{ a.zone or '-' }}</td></tr>{% else %}<tr><td colspan="5">Aucun abonnement.</td></tr>{% endfor %}
+    </tbody></table>
+  </div>
+  <div class="panel">
+    <h2>Notifications générées</h2>
+    <table><thead><tr><th>Date</th><th>Destinataire</th><th>Canal</th><th>Message</th></tr></thead><tbody>
+      {% for n in notifications %}<tr><td>{{ n.date_envoi }}</td><td>{{ n.destinataire or '-' }}</td><td>{{ n.canal }}</td><td>{{ n.message }}</td></tr>{% else %}<tr><td colspan="4">Aucune notification.</td></tr>{% endfor %}
+    </tbody></table>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,223 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Traçabilité des sources</h1>
+<p class="lead">Synthèse des sources réelles, URLs collectées et fichiers produits par le pipeline.</p>
+
+<div class="cards">
+  <div class="card"><span>Sources cataloguées</span><strong>11</strong></div>
+  <div class="card"><span>URLs seedées</span><strong>4</strong></div>
+  <div class="card"><span>Fichiers suivis</span><strong>7</strong></div>
+  <div class="card"><span>Lignes combinées</span><strong>330</strong></div>
+</div>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Répartition des données</h2>
+    <div id="source-trace-chart"></div>
+  </div>
+  <div class="panel">
+    <h2>URLs collectées</h2>
+    <table>
+      <thead><tr><th>Titre</th><th>Type</th><th>URL</th></tr></thead>
+      <tbody>
+        
+        <tr><td>Wakat Séra 2026 Tanghin Gounghin</td><td>media</td><td><a href="https://www.wakatsera.com/la-sonabel-annonce-une-coupure-dans-les-zones-de-tanghin-et-gounghin/">https://www.wakatsera.com/la-sonabel-annonce-une-coupure-dans-les-zones-de-tanghin-et-gounghin/</a></td></tr>
+        
+        <tr><td>Wakat Séra 2025 vingtaine de zones</td><td>media</td><td><a href="https://www.wakatsera.com/la-sonabel-annonce-une-coupure-de-courant-dans-une-vingtaine-de-zones/">https://www.wakatsera.com/la-sonabel-annonce-une-coupure-de-courant-dans-une-vingtaine-de-zones/</a></td></tr>
+        
+        <tr><td>Lefaso perturbations SONABEL 2025</td><td>media</td><td><a href="https://lefaso.net/spip.php?article138282=">https://lefaso.net/spip.php?article138282=</a></td></tr>
+        
+        <tr><td>SONABEL Facebook</td><td>officielle</td><td><a href="https://www.facebook.com/sonabelbf/">https://www.facebook.com/sonabelbf/</a></td></tr>
+        
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Fichiers produits</h2>
+  <table>
+    <thead><tr><th>Fichier</th><th>Présent</th><th>Taille KB</th><th>Lignes CSV</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>data\raw\medias\articles_collectes.csv</td>
+        <td>oui</td>
+        <td>2.43</td>
+        <td>4</td>
+      </tr>
+      
+      <tr>
+        <td>data\raw\medias\coupures_structurees.csv</td>
+        <td>oui</td>
+        <td>1.27</td>
+        <td>3</td>
+      </tr>
+      
+      <tr>
+        <td>data\final\dataset_coupures_reelles.csv</td>
+        <td>oui</td>
+        <td>76.47</td>
+        <td>327</td>
+      </tr>
+      
+      <tr>
+        <td>data\final\dataset_coupures_reelles_collectees.csv</td>
+        <td>oui</td>
+        <td>1.31</td>
+        <td>3</td>
+      </tr>
+      
+      <tr>
+        <td>data\final\dataset_coupures_reelles_combine.csv</td>
+        <td>oui</td>
+        <td>76.29</td>
+        <td>330</td>
+      </tr>
+      
+      <tr>
+        <td>data\processed\indicateurs_reels.json</td>
+        <td>oui</td>
+        <td>1.11</td>
+        <td>-</td>
+      </tr>
+      
+      <tr>
+        <td>data\processed\model_metrics_real.json</td>
+        <td>oui</td>
+        <td>4.18</td>
+        <td>-</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Catalogue des sources</h2>
+  <table>
+    <thead><tr><th>Source</th><th>Type</th><th>Méthode</th><th>Confiance</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>SONABEL Facebook officiel</td>
+        <td>officielle/sociale</td>
+        <td>API officielle si disponible, téléchargement manuel contrôlé, OCR sur images</td>
+        <td>1.00</td>
+      </tr>
+      
+      <tr>
+        <td>SONABEL X officiel</td>
+        <td>officielle/sociale</td>
+        <td>API X si autorisée ou veille manuelle</td>
+        <td>0.95</td>
+      </tr>
+      
+      <tr>
+        <td>Wakat Séra recherche SONABEL coupure</td>
+        <td>média</td>
+        <td>scraping BeautifulSoup</td>
+        <td>0.80</td>
+      </tr>
+      
+      <tr>
+        <td>Lefaso.net</td>
+        <td>média</td>
+        <td>scraping BeautifulSoup/recherche manuelle</td>
+        <td>0.80</td>
+      </tr>
+      
+      <tr>
+        <td>Faso Actu</td>
+        <td>média</td>
+        <td>scraping BeautifulSoup</td>
+        <td>0.75</td>
+      </tr>
+      
+      <tr>
+        <td>HDX Burkina Faso administrative boundaries</td>
+        <td>géographie</td>
+        <td>téléchargement GeoJSON/Shapefile</td>
+        <td>0.95</td>
+      </tr>
+      
+      <tr>
+        <td>geoBoundaries Burkina Faso</td>
+        <td>géographie</td>
+        <td>téléchargement</td>
+        <td>0.95</td>
+      </tr>
+      
+      <tr>
+        <td>Open-Meteo Historical Weather API</td>
+        <td>météo</td>
+        <td>API JSON/CSV</td>
+        <td>0.90</td>
+      </tr>
+      
+      <tr>
+        <td>NASA POWER Daily API</td>
+        <td>solaire/météo</td>
+        <td>API JSON/CSV</td>
+        <td>0.90</td>
+      </tr>
+      
+      <tr>
+        <td>World Bank Data API</td>
+        <td>contexte énergie</td>
+        <td>API JSON/CSV</td>
+        <td>0.90</td>
+      </tr>
+      
+      <tr>
+        <td>Signalements utilisateurs</td>
+        <td>terrain</td>
+        <td>formulaire web + validation admin</td>
+        <td>0.40 à 0.70</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</section>
+
+<script>
+const sourceDistribution=[{"label": "media", "value": 145}, {"label": "officielle", "value": 127}, {"label": "terrain", "value": 58}];
+Plotly.newPlot('source-trace-chart',[{
+  labels:sourceDistribution.map(x=>x.label),
+  values:sourceDistribution.map(x=>x.value),
+  type:'pie',
+  hole:.35
+}],{margin:{t:20,b:20}});
+</script>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Prédiction de durée</h1>
+<p class="lead">Estimez la durée probable d’une coupure à partir des caractéristiques connues.</p>
+
+
+
+<form method="post" class="form-card">
+  <h2>Scénario à tester</h2>
+  <div class="form-grid">
+    <input name="region" placeholder="Région" value="Centre" required>
+    <input name="ville" placeholder="Ville" value="Ouagadougou" required>
+    <input name="zone" placeholder="Zone" value="Tanghin" required>
+    <select name="type_coupure">
+      
+      <option value="prévue" selected>prévue</option>
+      
+      <option value="imprévue" >imprévue</option>
+      
+      <option value="perturbation" >perturbation</option>
+      
+      <option value="travaux" >travaux</option>
+      
+    </select>
+    <select name="model_variant">
+      <option value="balanced" selected>Modèle balanced</option>
+      <option value="standard" >Modèle standard</option>
+    </select>
+    <input name="mois" type="number" min="1" max="12" placeholder="Mois" value="3">
+    <input name="heure_num" type="number" min="0" max="23" placeholder="Heure" value="8">
+    <input name="jour_num" type="number" min="0" max="6" placeholder="Jour semaine 0-6" value="1">
+    <input name="temperature_max" type="number" step="0.1" placeholder="Température max" value="38.0">
+    <input name="precipitation" type="number" step="0.1" placeholder="Précipitation" value="0.0">
+    <input name="irradiation_solaire" type="number" step="0.1" placeholder="Irradiation solaire" value="5.8">
+  </div>
+  <button type="submit">Prédire</button>
+</form>
+
+
+
+  </main>
+</body>
+</html>

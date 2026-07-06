@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Fiche modèle ML</h1>
+<p class="lead">Résumé prêt pour le rapport : usage, données, scores, variantes, variables importantes et limites.</p>
+
+{% if not card.available %}
+<div class="alert warning">Aucune fiche modèle disponible.</div>
+{% else %}
+<div class="cards">
+  <div class="card"><span>Lignes exploitables</span><strong>{{ card.summary.usable_rows }}</strong></div>
+  <div class="card"><span>Lignes test</span><strong>{{ card.summary.test_rows }}</strong></div>
+  <div class="card"><span>MAE</span><strong>{{ card.summary.mae }} min</strong></div>
+  <div class="card"><span>Meilleur macro-F1</span><strong>{{ card.summary.best_by_macro_f1 }}</strong></div>
+  <div class="card"><span>MAE test détaillée</span><strong>{{ card.summary.prediction_mae }} min</strong></div>
+  <div class="card"><span>Classes incorrectes</span><strong>{{ card.summary.misclassified_rows }}</strong></div>
+</div>
+
+<section class="panel">
+  <h2>Lecture rapport</h2>
+  <p>{{ card.sections.usage }}</p>
+  <p>{{ card.sections.data }}</p>
+  <p>{{ card.sections.errors }}</p>
+  <p>{{ card.sections.recommendation }}</p>
+  <p>{{ card.sections.limits }}</p>
+</section>
+
+<section class="panel">
+  <h2>Fiabilité par niveau</h2>
+  <table>
+    <thead><tr><th>Niveau</th><th>Lignes</th><th>Correctes</th><th>Accuracy</th><th>Confiance moyenne</th></tr></thead>
+    <tbody>
+      {% for item in card.error_analysis.confidence_summary %}
+      <tr>
+        <td>{{ item.level_label }}</td>
+        <td>{{ item.rows }}</td>
+        <td>{{ item.correct_rows }}</td>
+        <td>{{ item.accuracy }}</td>
+        <td>{{ item.avg_confidence }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Markdown généré</h2>
+  <pre class="code-block">{{ card.markdown }}</pre>
+</section>
+{% endif %}
+{% endblock %}

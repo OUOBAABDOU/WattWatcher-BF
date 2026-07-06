@@ -1,0 +1,36 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<h1>Suivi temps réel par région</h1>
+<p class="lead">Filtrez les coupures prévues, en cours ou terminées par région, ville et zone.</p>
+<form method="get" class="form-card compact-form">
+  <div class="form-grid">
+    <input name="region" placeholder="Région" value="{{ filters.get('region','') }}">
+    <input name="ville" placeholder="Ville" value="{{ filters.get('ville','') }}">
+    <input name="zone" placeholder="Zone/quartier" value="{{ filters.get('zone','') }}">
+    <select name="statut">
+      <option value="">Tous les statuts</option>
+      {% for s in ['prévue','en cours','terminée'] %}<option value="{{ s }}" {% if filters.get('statut') == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select>
+  </div>
+  <label class="checkline"><input type="checkbox" name="aujourdhui" value="1" {% if filters.get('aujourdhui') == '1' %}checked{% endif %}> Coupures d’aujourd’hui seulement</label>
+  <button type="submit">Filtrer</button>
+</form>
+<div class="cards">
+  <div class="card"><span>Résultats filtrés</span><strong>{{ coupures|length }}</strong></div>
+  <div class="card"><span>Coupures actives</span><strong>{{ active_coupures|length }}</strong></div>
+</div>
+<h2>Coupures actives</h2>
+<table>
+  <thead><tr><th>Date</th><th>Heure</th><th>Région</th><th>Ville</th><th>Zone</th><th>Statut</th><th>Source</th></tr></thead>
+  <tbody>
+    {% for c in active_coupures %}<tr><td>{{ c.date_debut }}</td><td>{{ c.heure_debut }}</td><td>{{ c.region }}</td><td>{{ c.ville }}</td><td>{{ c.zone }}</td><td><span class="badge">{{ c.statut }}</span></td><td>{{ c.source_name }}</td></tr>{% else %}<tr><td colspan="7">Aucune coupure active dans ce filtre.</td></tr>{% endfor %}
+  </tbody>
+</table>
+<h2>Historique filtré</h2>
+<table>
+  <thead><tr><th>Date</th><th>Heure</th><th>Région</th><th>Ville</th><th>Zone</th><th>Durée</th><th>Statut</th></tr></thead>
+  <tbody>
+    {% for c in coupures %}<tr><td>{{ c.date_debut }}</td><td>{{ c.heure_debut }}</td><td>{{ c.region }}</td><td>{{ c.ville }}</td><td>{{ c.zone }}</td><td>{{ c.duree_minutes }} min</td><td>{{ c.statut }}</td></tr>{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

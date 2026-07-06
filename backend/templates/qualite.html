@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Qualité des données</h1>
+<p class="lead">Contrôles de complétude, doublons, anomalies et répartition des sources.</p>
+
+<div class="cards">
+  <div class="card"><span>Lignes contrôlées</span><strong>{{ report.total_lignes }}</strong></div>
+  <div class="card"><span>Score qualité</span><strong>{{ report.score_qualite }}%</strong></div>
+  <div class="card"><span>Complétude moyenne</span><strong>{{ report.completude_moyenne }}%</strong></div>
+  <div class="card"><span>Doublons</span><strong>{{ report.doublons }}</strong></div>
+</div>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Anomalies</h2>
+    <table>
+      <tr><th>Contrôle</th><th>Nombre</th></tr>
+      {% for name, value in report.anomalies.items() %}
+      <tr><td>{{ name }}</td><td>{{ value }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="panel">
+    <h2>Sources</h2>
+    <table>
+      <tr><th>Source</th><th>Lignes</th></tr>
+      {% for name, value in report.repartition_sources.items() %}
+      <tr><td>{{ name }}</td><td>{{ value }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</section>
+
+<div class="panel">
+  <h2>Complétude par colonne</h2>
+  <table>
+    <tr><th>Colonne</th><th>Complétude</th></tr>
+    {% for name, value in report.completude_par_colonne.items() %}
+    <tr><td>{{ name }}</td><td>{{ value }}%</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

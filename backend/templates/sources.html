@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Traçabilité des sources</h1>
+<p class="lead">Synthèse des sources réelles, URLs collectées et fichiers produits par le pipeline.</p>
+
+<div class="cards">
+  <div class="card"><span>Sources cataloguées</span><strong>{{ traceability.kpis.catalog_sources }}</strong></div>
+  <div class="card"><span>URLs seedées</span><strong>{{ traceability.kpis.seed_urls }}</strong></div>
+  <div class="card"><span>Fichiers suivis</span><strong>{{ traceability.kpis.tracked_files }}</strong></div>
+  <div class="card"><span>Lignes combinées</span><strong>{{ traceability.kpis.combined_rows }}</strong></div>
+</div>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Répartition des données</h2>
+    <div id="source-trace-chart"></div>
+  </div>
+  <div class="panel">
+    <h2>URLs collectées</h2>
+    <table>
+      <thead><tr><th>Titre</th><th>Type</th><th>URL</th></tr></thead>
+      <tbody>
+        {% for seed in traceability.seeds %}
+        <tr><td>{{ seed.titre }}</td><td>{{ seed.type_source }}</td><td><a href="{{ seed.url }}">{{ seed.url }}</a></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Fichiers produits</h2>
+  <table>
+    <thead><tr><th>Fichier</th><th>Présent</th><th>Taille KB</th><th>Lignes CSV</th></tr></thead>
+    <tbody>
+      {% for file in traceability.files %}
+      <tr>
+        <td>{{ file.path }}</td>
+        <td>{{ 'oui' if file.exists else 'non' }}</td>
+        <td>{{ file.size_kb }}</td>
+        <td>{{ file.rows if file.rows is not none else '-' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Catalogue des sources</h2>
+  <table>
+    <thead><tr><th>Source</th><th>Type</th><th>Méthode</th><th>Confiance</th></tr></thead>
+    <tbody>
+      {% for source in traceability.catalog %}
+      <tr>
+        <td>{{ source.nom_source }}</td>
+        <td>{{ source.type_source }}</td>
+        <td>{{ source.methode_collecte }}</td>
+        <td>{{ source.niveau_confiance }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<script>
+const sourceDistribution={{ traceability.source_distribution|tojson }};
+Plotly.newPlot('source-trace-chart',[{
+  labels:sourceDistribution.map(x=>x.label),
+  values:sourceDistribution.map(x=>x.value),
+  type:'pie',
+  hole:.35
+}],{margin:{t:20,b:20}});
+</script>
+{% endblock %}

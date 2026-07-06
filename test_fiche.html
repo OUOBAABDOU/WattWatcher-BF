@@ -1,0 +1,169 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Fiche modèle ML</h1>
+<p class="lead">Résumé prêt pour le rapport : usage, données, scores, variantes, variables importantes et limites.</p>
+
+
+<div class="cards">
+  <div class="card"><span>Lignes exploitables</span><strong>330</strong></div>
+  <div class="card"><span>Lignes test</span><strong>66</strong></div>
+  <div class="card"><span>MAE</span><strong>117.72 min</strong></div>
+  <div class="card"><span>Meilleur macro-F1</span><strong>standard</strong></div>
+  <div class="card"><span>MAE test détaillée</span><strong>117.72 min</strong></div>
+  <div class="card"><span>Classes incorrectes</span><strong>32</strong></div>
+</div>
+
+<section class="panel">
+  <h2>Lecture rapport</h2>
+  <p>Estimer la durée probable d’une coupure et classer le risque en courte, moyenne ou longue.</p>
+  <p>330 lignes réelles exploitables, dont 66 lignes de test.</p>
+  <p>66 lignes de test analysées, MAE observée 117.72 min, 32 erreurs de classification.</p>
+  <p>Variante recommandée pour la classification : standard. Variante avec la meilleure MAE : standard.</p>
+  <p>Le volume de données réelles reste limité. Les prédictions exactes en minutes doivent rester indicatives et être confirmées par les sources terrain.</p>
+</section>
+
+<section class="panel">
+  <h2>Fiabilité par niveau</h2>
+  <table>
+    <thead><tr><th>Niveau</th><th>Lignes</th><th>Correctes</th><th>Accuracy</th><th>Confiance moyenne</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>faible</td>
+        <td>4</td>
+        <td>2</td>
+        <td>0.5</td>
+        <td>0.43</td>
+      </tr>
+      
+      <tr>
+        <td>moyenne</td>
+        <td>51</td>
+        <td>26</td>
+        <td>0.51</td>
+        <td>0.543</td>
+      </tr>
+      
+      <tr>
+        <td>élevée</td>
+        <td>11</td>
+        <td>6</td>
+        <td>0.545</td>
+        <td>0.685</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Markdown généré</h2>
+  <pre class="code-block"># Fiche modèle ML — WattWatcher BF
+
+**Fichier métriques :** `data\processed\model_metrics_real.json`
+
+## Usage prévu
+Estimer la durée probable d’une coupure et classer le risque en courte, moyenne ou longue.
+
+## Données utilisées
+330 lignes réelles exploitables, dont 66 lignes de test.
+
+## Distribution des classes
+| Classe | Lignes |
+| --- | --- |
+| courte | 39 |
+| longue | 117 |
+| moyenne | 174 |
+
+## Déséquilibre des classes
+| Classe majoritaire | Lignes | Classe minoritaire | Lignes | Ratio |
+| --- | --- | --- | --- | --- |
+| moyenne | 174 | courte | 39 | 4.46 |
+
+## Statistiques de durée
+| Min | Médiane | Moyenne | Max |
+| --- | --- | --- | --- |
+| 60.0 | 240.0 | 226.09 | 480.0 |
+
+## Résultats principaux
+| Métrique | Valeur |
+| --- | --- |
+| MAE régression | 117.72 min |
+| RMSE régression | 139.4 min |
+| R2 régression | -0.135 |
+| Accuracy classification | 0.515 |
+| Accuracy baseline | 0.53 |
+
+## Comparaison des variantes
+| Variante | Class weight | MAE | Accuracy | Macro-F1 | Weighted-F1 |
+| --- | --- | --- | --- | --- | --- |
+| standard | none | 117.72 | 0.515 | 0.312 | 0.446 |
+| balanced | balanced | 117.72 | 0.455 | 0.312 | 0.431 |
+
+## Variables les plus importantes
+| Variable | Importance |
+| --- | --- |
+| temperature_max | 0.2153 |
+| irradiation_solaire | 0.208 |
+| mois | 0.114 |
+| precipitation | 0.101 |
+| heure_num | 0.0984 |
+| jour_num | 0.0954 |
+| zone | 0.062 |
+| type_coupure | 0.0432 |
+
+## Analyse des erreurs de test
+66 lignes de test analysées, MAE observée 117.72 min, 32 erreurs de classification.
+
+### Fiabilite par niveau de confiance
+| Niveau | Lignes | Correctes | Accuracy | Confiance moyenne |
+| --- | --- | --- | --- | --- |
+| faible | 4 | 2 | 0.5 | 0.43 |
+| moyenne | 51 | 26 | 0.51 | 0.543 |
+| élevée | 11 | 6 | 0.545 | 0.685 |
+
+| Lieu | Durée réelle | Durée prédite | Erreur | Classe réelle | Classe prédite |
+| --- | --- | --- | --- | --- | --- |
+| Hauts-Bassins / Bobo-Dioulasso / Accart-Ville | 480.0 | 159.26 | 320.74 | longue | moyenne |
+| Centre / Ouagadougou / Dassasgho | 480.0 | 161.28 | 318.72 | longue | moyenne |
+| Sud-Ouest / Gaoua / Secteur 3 | 480.0 | 197.21 | 282.79 | longue | longue |
+
+## Limites
+Le volume de données réelles reste limité. Les prédictions exactes en minutes doivent rester indicatives et être confirmées par les sources terrain.
+
+## Recommandation
+Variante recommandée pour la classification : standard. Variante avec la meilleure MAE : standard.</pre>
+</section>
+
+
+  </main>
+</body>
+</html>

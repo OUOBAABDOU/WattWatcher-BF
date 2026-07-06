@@ -1,0 +1,212 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Modèle prédictif ML</h1>
+<p class="lead">Évaluation du modèle entraîné sur les données réelles disponibles.</p>
+
+
+<p class="badge">Fichier : data\processed\model_metrics_real.json</p>
+<p><a class="button-link" href="/modele/fiche">Voir la fiche modèle pour le rapport</a></p>
+<p><a class="button-link" href="/modele/erreurs">Analyser les erreurs de test</a></p>
+
+<div class="cards">
+  <div class="card"><span>Lignes exploitables</span><strong>330</strong></div>
+  <div class="card"><span>Lignes test</span><strong>66</strong></div>
+  <div class="card"><span>Accuracy classification</span><strong>0.515</strong></div>
+  <div class="card"><span>MAE régression</span><strong>117.72 min</strong></div>
+</div>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Régression durée</h2>
+    <table>
+      <tbody>
+        <tr><th>MAE modèle</th><td>117.72 min</td></tr>
+        <tr><th>RMSE modèle</th><td>139.4 min</td></tr>
+        <tr><th>R2</th><td>-0.135</td></tr>
+        <tr><th>Baseline moyenne</th><td>228.52 min</td></tr>
+        <tr><th>MAE baseline</th><td>113.5 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>Classification durée</h2>
+    <table>
+      <tbody>
+        <tr><th>Classes</th><td>courte, longue, moyenne</td></tr>
+        <tr><th>Accuracy modèle</th><td>0.515</td></tr>
+        <tr><th>Classe baseline</th><td>moyenne</td></tr>
+        <tr><th>Accuracy baseline</th><td>0.53</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="panel">
+    <h2>Distribution des classes</h2>
+    <table>
+      <thead><tr><th>Classe</th><th>Lignes</th></tr></thead>
+      <tbody>
+        
+        <tr><td>courte</td><td>39</td></tr>
+        
+        <tr><td>longue</td><td>117</td></tr>
+        
+        <tr><td>moyenne</td><td>174</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="lead">
+      Classe majoritaire : moyenne
+      (174 lignes).
+      Classe minoritaire : courte
+      (39 lignes).
+      Ratio : 4.46.
+    </p>
+  </div>
+  <div class="panel">
+    <h2>Statistiques de durée</h2>
+    <table>
+      <tbody>
+        <tr><th>Min</th><td>60.0 min</td></tr>
+        <tr><th>Médiane</th><td>240.0 min</td></tr>
+        <tr><th>Moyenne</th><td>226.09 min</td></tr>
+        <tr><th>Max</th><td>480.0 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Comparaison des variantes</h2>
+  <table>
+    <thead><tr><th>Variante</th><th>Class weight</th><th>MAE</th><th>Accuracy</th><th>Macro-F1</th><th>Weighted-F1</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>standard</td>
+        <td>none</td>
+        <td>117.72</td>
+        <td>0.515</td>
+        <td>0.312</td>
+        <td>0.446</td>
+      </tr>
+      
+      <tr>
+        <td>balanced</td>
+        <td>balanced</td>
+        <td>117.72</td>
+        <td>0.455</td>
+        <td>0.312</td>
+        <td>0.431</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  <p class="lead">Meilleur macro-F1 : standard. Meilleure MAE : standard.</p>
+</section>
+
+
+<section class="grid">
+  <div class="panel">
+    <h2>Variables importantes</h2>
+    <div id="importance-chart"></div>
+  </div>
+  <div class="panel">
+    <h2>Détail importance durée</h2>
+    <table>
+      <thead><tr><th>Variable</th><th>Importance</th></tr></thead>
+      <tbody>
+        
+        <tr><td>temperature_max</td><td>0.2153</td></tr>
+        
+        <tr><td>irradiation_solaire</td><td>0.208</td></tr>
+        
+        <tr><td>mois</td><td>0.114</td></tr>
+        
+        <tr><td>precipitation</td><td>0.101</td></tr>
+        
+        <tr><td>heure_num</td><td>0.0984</td></tr>
+        
+        <tr><td>jour_num</td><td>0.0954</td></tr>
+        
+        <tr><td>zone</td><td>0.062</td></tr>
+        
+        <tr><td>type_coupure</td><td>0.0432</td></tr>
+        
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<section class="panel">
+  <h2>Matrice de confusion</h2>
+  <div id="confusion-chart"></div>
+</section>
+
+<section class="panel">
+  <h2>Lecture rapide</h2>
+  <p class="lead">La classification courte/moyenne/longue reste le resultat principal si la regression est instable sur les donnees disponibles.</p>
+  <p>Le modèle sert surtout à classer les coupures en courte, moyenne ou longue. Les prédictions exactes en minutes doivent rester indicatives tant que le volume de données réelles reste limité.</p>
+</section>
+
+<script>
+const modelClasses=["courte", "longue", "moyenne"];
+const confusionMatrix=[[0, 2, 6], [0, 5, 18], [0, 6, 29]];
+const featureImportance=[{"feature": "temperature_max", "importance": 0.2153}, {"feature": "irradiation_solaire", "importance": 0.208}, {"feature": "mois", "importance": 0.114}, {"feature": "precipitation", "importance": 0.101}, {"feature": "heure_num", "importance": 0.0984}, {"feature": "jour_num", "importance": 0.0954}, {"feature": "zone", "importance": 0.062}, {"feature": "type_coupure", "importance": 0.0432}];
+if (featureImportance.length) {
+  Plotly.newPlot('importance-chart',[{
+    x:featureImportance.map(x=>x.importance).reverse(),
+    y:featureImportance.map(x=>x.feature).reverse(),
+    type:'bar',
+    orientation:'h'
+  }],{margin:{t:20,l:120}});
+}
+Plotly.newPlot('confusion-chart',[{
+  z:confusionMatrix,
+  x:modelClasses,
+  y:modelClasses,
+  type:'heatmap',
+  colorscale:'Blues',
+  showscale:true
+}],{
+  margin:{t:20},
+  xaxis:{title:'Prédit'},
+  yaxis:{title:'Réel'}
+});
+</script>
+
+
+  </main>
+</body>
+</html>

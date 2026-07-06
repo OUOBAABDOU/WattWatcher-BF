@@ -1,0 +1,60 @@
+{
+  "nombre_total_coupures": 360,
+  "duree_moyenne_minutes": 228.0,
+  "duree_max_minutes": 480,
+  "regions_suivies": 7,
+  "zones_suivies": 18,
+  "top_regions": {
+    "Est": 59,
+    "Centre": 57,
+    "Hauts-Bassins": 52,
+    "Nord": 51,
+    "Centre-Ouest": 48,
+    "Centre-Nord": 48,
+    "Sud-Ouest": 45
+  },
+  "top_zones": {
+    "Secteur 1": 56,
+    "Secteur 6": 31,
+    "Secteur 2": 28,
+    "Secteur 11": 26,
+    "Secteur 5": 25,
+    "Secteur 3": 24,
+    "Secteur 10": 23,
+    "Centre-ville": 21,
+    "Accart-Ville": 19,
+    "Bindougousso": 17
+  },
+  "duree_moyenne_par_region": {
+    "Centre": 221.05,
+    "Centre-Nord": 214.38,
+    "Centre-Ouest": 211.88,
+    "Est": 247.63,
+    "Hauts-Bassins": 240.0,
+    "Nord": 197.65,
+    "Sud-Ouest": 263.33
+  },
+  "coupures_par_annee": {
+    "2020": 58,
+    "2021": 42,
+    "2022": 58,
+    "2023": 58,
+    "2024": 63,
+    "2025": 56,
+    "2026": 25
+  },
+  "coupures_par_mois": {
+    "1": 32,
+    "2": 28,
+    "3": 37,
+    "4": 34,
+    "5": 31,
+    "6": 31,
+    "7": 30,
+    "8": 32,
+    "9": 34,
+    "10": 20,
+    "11": 21,
+    "12": 30
+  }
+}

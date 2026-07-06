@@ -1,0 +1,193 @@
+{
+  "regression": {
+    "MAE": 117.71888190329241,
+    "RMSE": 139.40093204559207,
+    "R2": -0.13547759439673235,
+    "baseline_mean_duration": {
+      "prediction_minutes": 228.52272727272728,
+      "MAE": 113.50206611570249,
+      "RMSE": 131.38452374047864
+    }
+  },
+  "classification": {
+    "accuracy": 0.45454545454545453,
+    "classes": [
+      "courte",
+      "longue",
+      "moyenne"
+    ],
+    "report": {
+      "courte": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 8.0
+      },
+      "longue": {
+        "precision": 0.36363636363636365,
+        "recall": 0.34782608695652173,
+        "f1-score": 0.35555555555555557,
+        "support": 23.0
+      },
+      "moyenne": {
+        "precision": 0.5365853658536586,
+        "recall": 0.6285714285714286,
+        "f1-score": 0.5789473684210527,
+        "support": 35.0
+      },
+      "accuracy": 0.45454545454545453,
+      "macro avg": {
+        "precision": 0.3000739098300074,
+        "recall": 0.32546583850931676,
+        "f1-score": 0.31150097465886945,
+        "support": 66.0
+      },
+      "weighted avg": {
+        "precision": 0.41127460861385473,
+        "recall": 0.45454545454545453,
+        "f1-score": 0.43092326776537304,
+        "support": 66.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        0,
+        3,
+        5
+      ],
+      [
+        1,
+        8,
+        14
+      ],
+      [
+        2,
+        11,
+        22
+      ]
+    ],
+    "baseline_majority_class": {
+      "class": "moyenne",
+      "accuracy": 0.5303030303030303
+    }
+  },
+  "dataset": {
+    "input": "data\\final\\dataset_coupures_reelles_combine.csv",
+    "real_only": true,
+    "source_rows": 330,
+    "usable_rows": 330,
+    "train_rows": 264,
+    "test_rows": 66,
+    "class_distribution": {
+      "courte": 39,
+      "longue": 117,
+      "moyenne": 174
+    },
+    "class_balance": {
+      "majority_class": "moyenne",
+      "majority_count": 174,
+      "minority_class": "courte",
+      "minority_count": 39,
+      "imbalance_ratio": 4.46
+    },
+    "duration_stats": {
+      "min": 60.0,
+      "median": 240.0,
+      "mean": 226.09,
+      "max": 480.0
+    }
+  },
+  "feature_importance": {
+    "regression": [
+      {
+        "feature": "temperature_max",
+        "importance": 0.2153
+      },
+      {
+        "feature": "irradiation_solaire",
+        "importance": 0.208
+      },
+      {
+        "feature": "mois",
+        "importance": 0.114
+      },
+      {
+        "feature": "precipitation",
+        "importance": 0.101
+      },
+      {
+        "feature": "heure_num",
+        "importance": 0.0984
+      },
+      {
+        "feature": "jour_num",
+        "importance": 0.0954
+      },
+      {
+        "feature": "zone",
+        "importance": 0.062
+      },
+      {
+        "feature": "type_coupure",
+        "importance": 0.0432
+      },
+      {
+        "feature": "ville",
+        "importance": 0.0331
+      },
+      {
+        "feature": "region",
+        "importance": 0.0295
+      }
+    ],
+    "classification": [
+      {
+        "feature": "irradiation_solaire",
+        "importance": 0.1544
+      },
+      {
+        "feature": "temperature_max",
+        "importance": 0.1395
+      },
+      {
+        "feature": "mois",
+        "importance": 0.1117
+      },
+      {
+        "feature": "precipitation",
+        "importance": 0.1071
+      },
+      {
+        "feature": "zone",
+        "importance": 0.0993
+      },
+      {
+        "feature": "ville",
+        "importance": 0.0838
+      },
+      {
+        "feature": "heure_num",
+        "importance": 0.0813
+      },
+      {
+        "feature": "region",
+        "importance": 0.0774
+      },
+      {
+        "feature": "type_coupure",
+        "importance": 0.0748
+      },
+      {
+        "feature": "jour_num",
+        "importance": 0.0708
+      }
+    ]
+  },
+  "model_params": {
+    "n_estimators": 160,
+    "test_size": 0.2,
+    "random_state": 42,
+    "class_weight": "balanced"
+  },
+  "interpretation": "La classification courte/moyenne/longue reste le resultat principal si la regression est instable sur les donnees disponibles."
+}

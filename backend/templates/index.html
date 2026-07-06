@@ -1,0 +1,62 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<h1>Tableau de bord des coupures d’électricité</h1>
+<p class="lead">Suivi, analyse et aide à la décision énergétique au Burkina Faso.</p>
+<div class="cards">
+  <div class="card"><span>Total coupures</span><strong>{{ kpis.total_coupures }}</strong></div>
+  <div class="card"><span>Durée moyenne</span><strong>{{ kpis.duree_moyenne }} min</strong></div>
+  <div class="card"><span>Durée médiane</span><strong>{{ kpis.duree_mediane }} min</strong></div>
+  <div class="card"><span>Durée maximale</span><strong>{{ kpis.duree_max }} min</strong></div>
+  <div class="card"><span>Durée cumulée</span><strong>{{ kpis.duree_totale }} min</strong></div>
+  <div class="card"><span>Zones suivies</span><strong>{{ kpis.zones_suivies }}</strong></div>
+  <div class="card"><span>Coupures actives</span><strong>{{ kpis.coupures_actives }}</strong></div>
+</div>
+<section class="grid">
+  <div class="panel"><h2>Coupures par région</h2><div id="chart-region"></div></div>
+  <div class="panel"><h2>Coupures par mois</h2><div id="chart-month"></div></div>
+  <div class="panel"><h2>Répartition par source</h2><div id="chart-source"></div></div>
+  <div class="panel"><h2>Répartition par statut</h2><div id="chart-status"></div></div>
+  <div class="panel"><h2>Types de coupure</h2><div id="chart-type"></div></div>
+  <div class="panel full"><h2>Carte des zones touchées</h2><div id="chart-map"></div></div>
+</section>
+<script>
+const byRegion={{ by_region|tojson }};
+const byMonth={{ by_month|tojson }};
+const bySource={{ by_source|tojson }};
+const byStatus={{ by_status|tojson }};
+const byType={{ by_type|tojson }};
+const mapPoints={{ map_points|tojson }};
+Plotly.newPlot('chart-region',[{x:byRegion.map(x=>x.label),y:byRegion.map(x=>x.value),type:'bar'}],{margin:{t:20}});
+Plotly.newPlot('chart-month',[{x:byMonth.map(x=>x.label),y:byMonth.map(x=>x.value),type:'scatter',mode:'lines+markers'}],{margin:{t:20}});
+Plotly.newPlot('chart-source',[{labels:bySource.map(x=>x.label),values:bySource.map(x=>x.value),type:'pie',hole:.35}],{margin:{t:20,b:20}});
+Plotly.newPlot('chart-status',[{x:byStatus.map(x=>x.label),y:byStatus.map(x=>x.value),type:'bar'}],{margin:{t:20}});
+Plotly.newPlot('chart-type',[{x:byType.map(x=>x.label),y:byType.map(x=>x.value),type:'bar'}],{margin:{t:20}});
+Plotly.newPlot('chart-map',[{
+  type:'scattergeo',
+  mode:'markers',
+  lat:mapPoints.map(x=>x.latitude),
+  lon:mapPoints.map(x=>x.longitude),
+  text:mapPoints.map(x=>`${x.zone} (${x.ville})<br>${x.nb_coupures} coupure(s)<br>Durée moyenne: ${x.duree_moyenne} min`),
+  marker:{
+    size:mapPoints.map(x=>Math.max(8,Math.min(28,6 + x.nb_coupures / 2))),
+    color:mapPoints.map(x=>x.nb_coupures),
+    colorscale:'Blues',
+    showscale:true,
+    colorbar:{title:'Coupures'}
+  }
+}],{
+  margin:{t:10,b:10,l:10,r:10},
+  geo:{
+    scope:'africa',
+    projection:{type:'mercator'},
+    center:{lat:12.4,lon:-1.5},
+    lataxis:{range:[9,15]},
+    lonaxis:{range:[-6,3]},
+    showland:true,
+    landcolor:'#f8fafc',
+    countrycolor:'#94a3b8',
+    showcountries:true
+  }
+});
+</script>
+{% endblock %}

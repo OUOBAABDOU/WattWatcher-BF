@@ -1,0 +1,27 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<h1>Gestion des coupures</h1>
+<form method="post" class="form-card">
+  <h2>Ajouter une coupure</h2>
+  <div class="form-grid">
+    <input name="region" placeholder="Région" required>
+    <input name="ville" placeholder="Ville" required>
+    <input name="zone" placeholder="Zone/quartier" required>
+    <input name="date_debut" type="date" required>
+    <input name="heure_debut" type="time" required>
+    <input name="date_fin" type="date">
+    <input name="heure_fin" type="time">
+    <input name="duree_minutes" type="number" placeholder="Durée minutes">
+    <select name="type_coupure"><option>prévue</option><option>imprévue</option><option>perturbation</option><option>travaux</option></select>
+    <select name="statut"><option>prévue</option><option>en cours</option><option>terminée</option></select>
+    <select name="niveau_impact"><option>faible</option><option>moyen</option><option>élevé</option></select>
+    <input name="source_name" placeholder="Source">
+  </div>
+  <textarea name="cause" placeholder="Cause ou description"></textarea>
+  <button type="submit">Enregistrer</button>
+</form>
+<h2>Dernières coupures</h2>
+<table><thead><tr><th>Date</th><th>Heure</th><th>Région</th><th>Ville</th><th>Zone</th><th>Durée</th><th>Statut</th><th>Type</th><th>Source</th></tr></thead><tbody>
+{% for c in coupures %}<tr><td>{{ c.date_debut }}</td><td>{{ c.heure_debut }}</td><td>{{ c.region }}</td><td>{{ c.ville }}</td><td>{{ c.zone }}</td><td>{{ c.duree_minutes }} min</td><td>{{ c.statut }}</td><td>{{ c.type_coupure }}</td><td>{{ c.source_name }}</td></tr>{% endfor %}
+</tbody></table>
+{% endblock %}

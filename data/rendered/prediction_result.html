@@ -1,0 +1,124 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Prédiction de durée</h1>
+<p class="lead">Estimez la durée probable d’une coupure à partir des caractéristiques connues.</p>
+
+
+<div class="cards">
+  <div class="card"><span>Durée estimée</span><strong>187.29 min</strong></div>
+  <div class="card"><span>Classe prédite</span><strong>longue</strong></div>
+  <div class="card"><span>Confiance classe</span><strong>0.516</strong></div>
+  <div class="card"><span>Niveau confiance</span><strong>moyenne</strong></div>
+  <div class="card"><span>Modèle utilisé</span><strong>balanced</strong></div>
+</div>
+<div class="alert warning">Prédiction exploitable comme indication, à confirmer par suivi local.</div>
+
+
+<form method="post" class="form-card">
+  <h2>Scénario à tester</h2>
+  <div class="form-grid">
+    <input name="region" placeholder="Région" value="Centre" required>
+    <input name="ville" placeholder="Ville" value="Ouagadougou" required>
+    <input name="zone" placeholder="Zone" value="Tanghin" required>
+    <select name="type_coupure">
+      
+      <option value="prévue" selected>prévue</option>
+      
+      <option value="imprévue" >imprévue</option>
+      
+      <option value="perturbation" >perturbation</option>
+      
+      <option value="travaux" >travaux</option>
+      
+    </select>
+    <select name="model_variant">
+      <option value="balanced" selected>Modèle balanced</option>
+      <option value="standard" >Modèle standard</option>
+    </select>
+    <input name="mois" type="number" min="1" max="12" placeholder="Mois" value="3">
+    <input name="heure_num" type="number" min="0" max="23" placeholder="Heure" value="8">
+    <input name="jour_num" type="number" min="0" max="6" placeholder="Jour semaine 0-6" value="1">
+    <input name="temperature_max" type="number" step="0.1" placeholder="Température max" value="38">
+    <input name="precipitation" type="number" step="0.1" placeholder="Précipitation" value="0">
+    <input name="irradiation_solaire" type="number" step="0.1" placeholder="Irradiation solaire" value="5.8">
+  </div>
+  <button type="submit">Prédire</button>
+</form>
+
+
+<section class="panel">
+  <h2>Probabilités par classe</h2>
+  <table>
+    <thead><tr><th>Classe</th><th>Probabilité</th></tr></thead>
+    <tbody>
+      
+      <tr><td>courte</td><td>0.186</td></tr>
+      
+      <tr><td>longue</td><td>0.516</td></tr>
+      
+      <tr><td>moyenne</td><td>0.297</td></tr>
+      
+    </tbody>
+  </table>
+
+  <h2>Détails de la prédiction</h2>
+  <table>
+    <tbody>
+      
+      <tr><th>region</th><td>Centre</td></tr>
+      
+      <tr><th>ville</th><td>Ouagadougou</td></tr>
+      
+      <tr><th>zone</th><td>Tanghin</td></tr>
+      
+      <tr><th>type_coupure</th><td>prévue</td></tr>
+      
+      <tr><th>mois</th><td>3</td></tr>
+      
+      <tr><th>heure_num</th><td>8</td></tr>
+      
+      <tr><th>jour_num</th><td>1</td></tr>
+      
+      <tr><th>temperature_max</th><td>38.0</td></tr>
+      
+      <tr><th>precipitation</th><td>0.0</td></tr>
+      
+      <tr><th>irradiation_solaire</th><td>5.8</td></tr>
+      
+      <tr><th>model_path</th><td>ml\model_real_balanced.pkl</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+  </main>
+</body>
+</html>

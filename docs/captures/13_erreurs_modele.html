@@ -1,0 +1,353 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WattWatcher BF</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">⚡ WattWatcher BF</div>
+    <a href="/">Tableau de bord</a>
+    <a href="/suivi">Suivi temps réel</a>
+    <a href="/carte">Carte</a>
+    <a href="/coupures">Coupures</a>
+    <a href="/signalements">Signalements</a>
+    <a href="/notifications">Alertes</a>
+    <a href="/recommandations">Recommandations</a>
+    <a href="/qualite">Qualité</a>
+    <a href="/sources">Sources</a>
+    <a href="/modele">Modèle ML</a>
+    <a href="/prediction">Prédiction</a>
+    <a href="/pipeline">Pipeline</a>
+  </nav>
+  <main class="container">
+    
+      
+    
+    
+<h1>Erreurs du modèle ML</h1>
+<p class="lead">Analyse ligne par ligne des prédictions sur le jeu de test.</p>
+
+
+<p class="badge">Fichier : data\processed\model_predictions_real.csv</p>
+
+<div class="cards">
+  <div class="card"><span>Lignes test</span><strong>66</strong></div>
+  <div class="card"><span>MAE observée</span><strong>117.72 min</strong></div>
+  <div class="card"><span>Accuracy classes</span><strong>0.515</strong></div>
+  <div class="card"><span>Classes incorrectes</span><strong>32</strong></div>
+</div>
+
+<section class="panel">
+  <h2>Fiabilité par niveau de confiance</h2>
+  <table>
+    <thead><tr><th>Niveau</th><th>Lignes</th><th>Correctes</th><th>Accuracy</th><th>Confiance moyenne</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>faible</td>
+        <td>4</td>
+        <td>2</td>
+        <td>0.5</td>
+        <td>0.43</td>
+      </tr>
+      
+      <tr>
+        <td>moyenne</td>
+        <td>51</td>
+        <td>26</td>
+        <td>0.51</td>
+        <td>0.543</td>
+      </tr>
+      
+      <tr>
+        <td>élevée</td>
+        <td>11</td>
+        <td>6</td>
+        <td>0.545</td>
+        <td>0.685</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Pires erreurs de durée</h2>
+  <table>
+    <thead><tr><th>Lieu</th><th>Type</th><th>Réel</th><th>Prédit</th><th>Erreur</th><th>Classe réelle</th><th>Classe prédite</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Accart-Ville</td>
+        <td>prévue</td>
+        <td>480.0 min</td>
+        <td>159.26 min</td>
+        <td>320.74 min</td>
+        <td>longue</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Centre / Ouagadougou / Dassasgho</td>
+        <td>prévue</td>
+        <td>480.0 min</td>
+        <td>161.28 min</td>
+        <td>318.72 min</td>
+        <td>longue</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Sud-Ouest / Gaoua / Secteur 3</td>
+        <td>perturbation</td>
+        <td>480.0 min</td>
+        <td>197.21 min</td>
+        <td>282.79 min</td>
+        <td>longue</td>
+        <td>longue</td>
+      </tr>
+      
+      <tr>
+        <td>Est / Fada N&#39;Gourma / Secteur 1</td>
+        <td>imprévue</td>
+        <td>480.0 min</td>
+        <td>240.08 min</td>
+        <td>239.92 min</td>
+        <td>longue</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Bindougousso</td>
+        <td>prévue</td>
+        <td>480.0 min</td>
+        <td>244.46 min</td>
+        <td>235.54 min</td>
+        <td>longue</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Nord / Ouahigouya / Secteur 2</td>
+        <td>prévue</td>
+        <td>480.0 min</td>
+        <td>244.54 min</td>
+        <td>235.46 min</td>
+        <td>longue</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Sarfala</td>
+        <td>perturbation</td>
+        <td>480.0 min</td>
+        <td>252.12 min</td>
+        <td>227.88 min</td>
+        <td>longue</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Accart-Ville</td>
+        <td>imprévue</td>
+        <td>60.0 min</td>
+        <td>276.47 min</td>
+        <td>216.47 min</td>
+        <td>courte</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Centre / Ouagadougou / Karpala</td>
+        <td>perturbation</td>
+        <td>120.0 min</td>
+        <td>328.22 min</td>
+        <td>208.22 min</td>
+        <td>moyenne</td>
+        <td>longue</td>
+      </tr>
+      
+      <tr>
+        <td>Est / Fada N&#39;Gourma / Secteur 1</td>
+        <td>prévue</td>
+        <td>360.0 min</td>
+        <td>157.06 min</td>
+        <td>202.94 min</td>
+        <td>longue</td>
+        <td>moyenne</td>
+      </tr>
+      
+      <tr>
+        <td>Sud-Ouest / Gaoua / Centre-ville</td>
+        <td>prévue</td>
+        <td>60.0 min</td>
+        <td>260.64 min</td>
+        <td>200.64 min</td>
+        <td>courte</td>
+        <td>longue</td>
+      </tr>
+      
+      <tr>
+        <td>Nord / Ouahigouya / Secteur 2</td>
+        <td>prévue</td>
+        <td>90.0 min</td>
+        <td>277.67 min</td>
+        <td>187.67 min</td>
+        <td>moyenne</td>
+        <td>moyenne</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Erreurs de classification</h2>
+  <table>
+    <thead><tr><th>Lieu</th><th>Réel</th><th>Prédit</th><th>Confiance</th><th>Niveau</th><th>P(courte)</th><th>P(moyenne)</th><th>P(longue)</th></tr></thead>
+    <tbody>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Accart-Ville</td>
+        <td>longue</td>
+        <td>moyenne</td>
+        <td>0.44</td>
+        <td>faible</td>
+        <td>0.1636</td>
+        <td>0.44</td>
+        <td>0.3964</td>
+      </tr>
+      
+      <tr>
+        <td>Centre / Ouagadougou / Dassasgho</td>
+        <td>longue</td>
+        <td>moyenne</td>
+        <td>0.5014</td>
+        <td>moyenne</td>
+        <td>0.1418</td>
+        <td>0.5014</td>
+        <td>0.3568</td>
+      </tr>
+      
+      <tr>
+        <td>Est / Fada N&#39;Gourma / Secteur 1</td>
+        <td>longue</td>
+        <td>moyenne</td>
+        <td>0.5923</td>
+        <td>moyenne</td>
+        <td>0.0984</td>
+        <td>0.5923</td>
+        <td>0.3094</td>
+      </tr>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Bindougousso</td>
+        <td>longue</td>
+        <td>moyenne</td>
+        <td>0.5758</td>
+        <td>moyenne</td>
+        <td>0.1246</td>
+        <td>0.5758</td>
+        <td>0.2996</td>
+      </tr>
+      
+      <tr>
+        <td>Nord / Ouahigouya / Secteur 2</td>
+        <td>longue</td>
+        <td>moyenne</td>
+        <td>0.4812</td>
+        <td>moyenne</td>
+        <td>0.1292</td>
+        <td>0.4812</td>
+        <td>0.3897</td>
+      </tr>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Sarfala</td>
+        <td>longue</td>
+        <td>moyenne</td>
+        <td>0.6455</td>
+        <td>moyenne</td>
+        <td>0.0256</td>
+        <td>0.6455</td>
+        <td>0.3289</td>
+      </tr>
+      
+      <tr>
+        <td>Hauts-Bassins / Bobo-Dioulasso / Accart-Ville</td>
+        <td>courte</td>
+        <td>moyenne</td>
+        <td>0.6015</td>
+        <td>moyenne</td>
+        <td>0.0405</td>
+        <td>0.6015</td>
+        <td>0.358</td>
+      </tr>
+      
+      <tr>
+        <td>Centre / Ouagadougou / Karpala</td>
+        <td>moyenne</td>
+        <td>longue</td>
+        <td>0.6516</td>
+        <td>élevée</td>
+        <td>0.0592</td>
+        <td>0.2892</td>
+        <td>0.6516</td>
+      </tr>
+      
+      <tr>
+        <td>Est / Fada N&#39;Gourma / Secteur 1</td>
+        <td>longue</td>
+        <td>moyenne</td>
+        <td>0.4911</td>
+        <td>moyenne</td>
+        <td>0.2383</td>
+        <td>0.4911</td>
+        <td>0.2706</td>
+      </tr>
+      
+      <tr>
+        <td>Sud-Ouest / Gaoua / Centre-ville</td>
+        <td>courte</td>
+        <td>longue</td>
+        <td>0.4893</td>
+        <td>moyenne</td>
+        <td>0.0826</td>
+        <td>0.4281</td>
+        <td>0.4893</td>
+      </tr>
+      
+      <tr>
+        <td>Centre-Ouest / Koudougou / Secteur 1</td>
+        <td>courte</td>
+        <td>moyenne</td>
+        <td>0.5044</td>
+        <td>moyenne</td>
+        <td>0.1528</td>
+        <td>0.5044</td>
+        <td>0.3427</td>
+      </tr>
+      
+      <tr>
+        <td>Centre-Ouest / Koudougou / Secteur 5</td>
+        <td>courte</td>
+        <td>moyenne</td>
+        <td>0.4718</td>
+        <td>moyenne</td>
+        <td>0.1857</td>
+        <td>0.4718</td>
+        <td>0.3424</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</section>
+
+
+  </main>
+</body>
+</html>
