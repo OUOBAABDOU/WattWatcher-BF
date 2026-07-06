@@ -22,50 +22,50 @@ Utilisez **Windows + Shift + S** pour ouvrir l'outil de capture d'écran Windows
 
 ## SECTION 1 : Pages principales (10 captures)
 
-#### Capture 01 : Dashboard principal
+#### Capture 01 : Tableau de bord des coupures d'électricité
 - **URL** : http://127.0.0.1:5000
-- **Nom du fichier** : `01_dashboard_principal.png`
+- **Nom du fichier** : `01_tableau_bord_coupures.png`
 - **Ce qu'il faut montrer** :
   - Les 7 cartes KPI en haut (Total coupures, Durée moyenne, etc.)
   - Les graphiques par région, mois, source, statut, type
   - La carte géographique en bas
 - **Conseil** : Capturez en mode plein écran (F11) pour une meilleure qualité
 
-#### Capture 02 : Suivi des coupures
+#### Capture 02 : Coupures par région
 - **URL** : http://127.0.0.1:5000/suivi
-- **Nom du fichier** : `02_suivi_coupures.png`
+- **Nom du fichier** : `02_coupures_par_region.png`
 - **Ce qu'il faut montrer** :
   - Le tableau des coupures récentes
   - La section "Coupures actives" en haut
   - Les filtres si disponibles
 
-#### Capture 03 : Carte des zones
+#### Capture 03 : Carte des zones touchées
 - **URL** : http://127.0.0.1:5000/carte
-- **Nom du fichier** : `03_carte_zones.png`
+- **Nom du fichier** : `03_carte_zones_touchees.png`
 - **Ce qu'il faut montrer** :
   - La carte interactive centrée sur le Burkina Faso
   - Les points représentant les zones
   - Le tableau des zones cartographiées en dessous
 
-#### Capture 04 : Liste des coupures (CRUD)
+#### Capture 04 : Gestion des coupures
 - **URL** : http://127.0.0.1:5000/coupures
-- **Nom du fichier** : `04_liste_coupures.png`
+- **Nom du fichier** : `04_gestion_coupures.png`
 - **Ce qu'il faut montrer** :
   - La liste complète des coupures
   - Les boutons d'action (modifier, supprimer)
   - La pagination si disponible
 
-#### Capture 05 : Signalements utilisateurs
+#### Capture 05 : Répartition par source
 - **URL** : http://127.0.0.1:5000/signalements
-- **Nom du fichier** : `05_signalements.png`
+- **Nom du fichier** : `05_repartition_source.png`
 - **Ce qu'il faut montrer** :
   - Le formulaire de signalement
   - La liste des signalements existants
   - Les statuts des signalements
 
-#### Capture 06 : Notifications / Alertes
+#### Capture 06 : Répartition par statut
 - **URL** : http://127.0.0.1:5000/notifications
-- **Nom du fichier** : `06_notifications.png`
+- **Nom du fichier** : `06_repartition_statut.png`
 - **Ce qu'il faut montrer** :
   - Le formulaire d'abonnement
   - La liste des abonnements
@@ -73,7 +73,7 @@ Utilisez **Windows + Shift + S** pour ouvrir l'outil de capture d'écran Windows
 
 #### Capture 07 : Recommandations énergétiques
 - **URL** : http://127.0.0.1:5000/recommandations
-- **Nom du fichier** : `07_recommandations.png`
+- **Nom du fichier** : `07_recommandations_energetiques.png`
 - **Ce qu'il faut montrer** :
   - Les conseils personnalisés par zone
   - Les KPIs contextuels
@@ -87,18 +87,18 @@ Utilisez **Windows + Shift + S** pour ouvrir l'outil de capture d'écran Windows
   - La répartition des sources
   - Les anomalies détectées
 
-#### Capture 09 : Sources de données
+#### Capture 09 : Traçabilité des sources
 - **URL** : http://127.0.0.1:5000/sources
-- **Nom du fichier** : `09_sources_donnees.png`
+- **Nom du fichier** : `09_tracabilite_sources.png`
 - **Ce qu'il faut montrer** :
   - Le catalogue des sources
   - Les URLs collectées
   - Les fichiers produits
   - La répartition par type de source
 
-#### Capture 10 : Pipeline d'exécution
+#### Capture 10 : Zones cartographiées
 - **URL** : http://127.0.0.1:5000/pipeline
-- **Nom du fichier** : `10_pipeline.png`
+- **Nom du fichier** : `10_zones_cartographiees.png`
 - **Ce qu'il faut montrer** :
   - Le journal des exécutions du pipeline
   - Les dates et statuts des runs
@@ -108,9 +108,9 @@ Utilisez **Windows + Shift + S** pour ouvrir l'outil de capture d'écran Windows
 
 ## SECTION 2 : Machine Learning (5 captures)
 
-#### Capture 11 : Modèle ML - Métriques
+#### Capture 11 : Modèle prédictif ML
 - **URL** : http://127.0.0.1:5000/modele
-- **Nom du fichier** : `11_modele_ml.png`
+- **Nom du fichier** : `11_modele_predictif_ml.png`
 - **Ce qu'il faut montrer** :
   - Les métriques d'entraînement (MAE, RMSE, R², Accuracy)
   - La distribution des classes
@@ -135,16 +135,16 @@ Utilisez **Windows + Shift + S** pour ouvrir l'outil de capture d'écran Windows
   - Les erreurs de classification
   - L'analyse des cas problématiques
 
-#### Capture 14 : Prédiction ML - Formulaire vide
+#### Capture 14 : Prédiction de durée (avant)
 - **URL** : http://127.0.0.1:5000/prediction
-- **Nom du fichier** : `14_prediction_formulaire.png`
+- **Nom du fichier** : `14_prediction_duree_avant.png`
 - **Ce qu'il faut montrer** :
   - Le formulaire de saisie des paramètres vide
   - Les champs disponibles (région, ville, type, cause, etc.)
 
-#### Capture 15 : Prédiction ML - Résultat
+#### Capture 15 : Prédiction de durée (après)
 - **URL** : http://127.0.0.1:5000/prediction
-- **Nom du fichier** : `15_prediction_resultat.png`
+- **Nom du fichier** : `15_prediction_duree_apres.png`
 - **Ce qu'il faut montrer** :
   - Le formulaire rempli avec des valeurs par défaut
   - Le résultat de prédiction (durée estimée, classe, confiance)
@@ -253,23 +253,23 @@ Utilisez **Windows + Shift + S** pour ouvrir l'outil de capture d'écran Windows
 À la fin, vous devriez avoir **25 fichiers PNG** dans `docs/captures/` :
 
 **Section 1 - Pages principales (10 captures) :**
-- 01_dashboard_principal.png
-- 02_suivi_coupures.png
-- 03_carte_zones.png
-- 04_liste_coupures.png
-- 05_signalements.png
-- 06_notifications.png
-- 07_recommandations.png
+- 01_tableau_bord_coupures.png
+- 02_coupures_par_region.png
+- 03_carte_zones_touchees.png
+- 04_gestion_coupures.png
+- 05_repartition_source.png
+- 06_repartition_statut.png
+- 07_recommandations_energetiques.png
 - 08_qualite_donnees.png
-- 09_sources_donnees.png
-- 10_pipeline.png
+- 09_tracabilite_sources.png
+- 10_zones_cartographiees.png
 
 **Section 2 - Machine Learning (5 captures) :**
-- 11_modele_ml.png
+- 11_modele_predictif_ml.png
 - 12_fiche_modele.png
 - 13_erreurs_modele.png
-- 14_prediction_formulaire.png
-- 15_prediction_resultat.png
+- 14_prediction_duree_avant.png
+- 15_prediction_duree_apres.png
 
 **Section 3 - Détails et démonstration (5 captures) :**
 - 16_navigation_menu.png

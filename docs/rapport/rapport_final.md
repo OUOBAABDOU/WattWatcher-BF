@@ -389,24 +389,24 @@ Le projet WattWatcher BF répond au sujet 21 en proposant une application foncti
 
 ### Section 1 - Pages principales (10 captures)
 
-1. **Dashboard principal** - KPIs et graphiques interactifs
-2. **Suivi des coupures** - Liste des coupures avec filtres
-3. **Carte des zones** - Visualisation géographique
-4. **Liste des coupures** - Interface CRUD
-5. **Signalements utilisateurs** - Formulaire et liste
-6. **Notifications** - Système d'alertes
-7. **Recommandations** - Conseils énergétiques
+1. **Tableau de bord des coupures d'électricité** - KPIs et graphiques interactifs
+2. **Coupures par région** - Liste des coupures avec filtres
+3. **Carte des zones touchées** - Visualisation géographique
+4. **Gestion des coupures** - Interface CRUD
+5. **Répartition par source** - Formulaire et liste
+6. **Répartition par statut** - Système d'alertes
+7. **Recommandations énergétiques** - Conseils énergétiques
 8. **Qualité des données** - Rapport qualité
-9. **Sources de données** - Traçabilité
-10. **Pipeline** - Journal d'exécution
+9. **Traçabilité des sources** - Traçabilité
+10. **Zones cartographiées** - Journal d'exécution
 
 ### Section 2 - Machine Learning (5 captures)
 
-11. **Modèle ML** - Métriques d'entraînement
+11. **Modèle prédictif ML** - Métriques d'entraînement
 12. **Fiche modèle** - Documentation technique
 13. **Erreurs ML** - Analyse des erreurs
-14. **Prédiction (formulaire)** - Interface vide
-15. **Prédiction (résultat)** - Exemple de prédiction
+14. **Prédiction de durée (avant)** - Interface vide
+15. **Prédiction de durée (après)** - Exemple de prédiction
 
 ### Section 3 - Détails et démonstration (5 captures)
 

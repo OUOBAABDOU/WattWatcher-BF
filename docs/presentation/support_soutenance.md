@@ -159,23 +159,23 @@ Dashboard + ML + Recommandations
 ### Captures d'écran du projet
 
 **Section 1 - Pages principales (10 captures)**
-- Capture 01 : Dashboard principal avec KPIs et graphiques
-- Capture 02 : Suivi des coupures en temps réel
-- Capture 03 : Carte géographique des zones
-- Capture 04 : Liste des coupures (CRUD)
-- Capture 05 : Signalements utilisateurs
-- Capture 06 : Système d'alertes et notifications
+- Capture 01 : Tableau de bord des coupures d'électricité
+- Capture 02 : Coupures par région
+- Capture 03 : Carte des zones touchées
+- Capture 04 : Gestion des coupures
+- Capture 05 : Répartition par source
+- Capture 06 : Répartition par statut
 - Capture 07 : Recommandations énergétiques
-- Capture 08 : Rapport qualité des données
+- Capture 08 : Qualité des données
 - Capture 09 : Traçabilité des sources
-- Capture 10 : Pipeline d'exécution
+- Capture 10 : Zones cartographiées
 
 **Section 2 - Machine Learning (5 captures)**
-- Capture 11 : Métriques du modèle ML
+- Capture 11 : Modèle prédictif ML
 - Capture 12 : Fiche technique du modèle
 - Capture 13 : Analyse des erreurs
-- Capture 14 : Formulaire de prédiction
-- Capture 15 : Résultat de prédiction
+- Capture 14 : Prédiction de durée (avant)
+- Capture 15 : Prédiction de durée (après)
 
 **Section 3 - Détails et démonstration (5 captures)**
 - Capture 16 : Navigation et menu

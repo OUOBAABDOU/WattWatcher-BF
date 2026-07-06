@@ -40,23 +40,23 @@ Suivez le guide détaillé dans `docs/captures/instructions_captures.md`
 **Pages à capturer (25 captures PNG) :**
 
 **Section 1 - Pages principales (10 captures) :**
-1. Dashboard principal → `01_dashboard_principal.png`
-2. Suivi des coupures → `02_suivi_coupures.png`
-3. Carte des zones → `03_carte_zones.png`
-4. Liste des coupures (CRUD) → `04_liste_coupures.png`
-5. Signalements utilisateurs → `05_signalements.png`
-6. Notifications / Alertes → `06_notifications.png`
-7. Recommandations → `07_recommandations.png`
+1. Tableau de bord des coupures d'électricité → `01_tableau_bord_coupures.png`
+2. Coupures par région → `02_coupures_par_region.png`
+3. Carte des zones touchées → `03_carte_zones_touchees.png`
+4. Gestion des coupures → `04_gestion_coupures.png`
+5. Répartition par source → `05_repartition_source.png`
+6. Répartition par statut → `06_repartition_statut.png`
+7. Recommandations énergétiques → `07_recommandations_energetiques.png`
 8. Qualité des données → `08_qualite_donnees.png`
-9. Sources de données → `09_sources_donnees.png`
-10. Pipeline d'exécution → `10_pipeline.png`
+9. Traçabilité des sources → `09_tracabilite_sources.png`
+10. Zones cartographiées → `10_zones_cartographiees.png`
 
 **Section 2 - Machine Learning (5 captures) :**
-11. Modèle ML - Métriques → `11_modele_ml.png`
+11. Modèle prédictif ML → `11_modele_predictif_ml.png`
 12. Fiche modèle ML → `12_fiche_modele.png`
 13. Erreurs du modèle ML → `13_erreurs_modele.png`
-14. Prédiction ML - Formulaire vide → `14_prediction_formulaire.png`
-15. Prédiction ML - Résultat → `15_prediction_resultat.png`
+14. Prédiction de durée (avant) → `14_prediction_duree_avant.png`
+15. Prédiction de durée (après) → `15_prediction_duree_apres.png`
 
 **Section 3 - Détails et démonstration (5 captures) :**
 16. Navigation et menu → `16_navigation_menu.png`
