@@ -371,19 +371,606 @@ Le projet WattWatcher BF répond au sujet 21 en proposant une application foncti
 
 ### Annexe A : Structure du projet
 
-[Structure détaillée du projet avec description des répertoires]
+```
+wattwatcher-bf/
+├── backend/                    # Application Flask
+│   ├── app.py                 # Application principale avec routes
+│   ├── config.py              # Configuration de l'application
+│   ├── models.py              # Modèles SQLAlchemy (Coupure, Signalement, etc.)
+│   ├── extensions.py          # Initialisation de la base de données
+│   ├── services/               # Services métier
+│   │   ├── analytics_service.py        # Calcul des KPIs et graphiques
+│   │   ├── data_quality_service.py    # Rapport qualité des données
+│   │   ├── model_card_service.py       # Génération de la fiche modèle
+│   │   ├── model_metrics_service.py   # Chargement des métriques ML
+│   │   ├── model_predictions_service.py # Rapport de prédictions
+│   │   ├── pipeline_service.py        # Journal des exécutions pipeline
+│   │   ├── prediction_service.py      # Service de prédiction
+│   │   ├── recommendation_service.py  # Recommandations énergétiques
+│   │   └── source_traceability_service.py # Traçabilité des sources
+│   └── templates/              # Templates HTML
+│       ├── base.html           # Template de base
+│       ├── index.html         # Dashboard principal
+│       ├── suivi.html          # Page de suivi des coupures
+│       ├── carte.html          # Carte géographique
+│       ├── coupures.html       # Liste des coupures (CRUD)
+│       ├── signalements.html   # Formulaire de signalement
+│       ├── notifications.html   # Page des notifications
+│       ├── recommandations.html # Recommandations énergétiques
+│       ├── qualite.html        # Rapport qualité des données
+│       ├── sources.html        # Traçabilité des sources
+│       ├── modele.html         # Page du modèle ML
+│       ├── prediction.html     # Interface de prédiction
+│       └── pipeline.html       # Journal d'exécution
+├── ingestion/                  # Collecte des données
+│   ├── scrape_medias.py        # Scraping web des médias burkinabé
+│   ├── download_weather.py     # Téléchargement données météo
+│   ├── download_solar.py       # Téléchargement données solaires
+│   └── load_to_postgres.py     # Chargement CSV vers PostgreSQL
+├── processing/                 # Traitement des données
+│   ├── clean_coupures.py       # Nettoyage et normalisation
+│   ├── feature_engineering.py  # Création de variables dérivées
+│   ├── filter_real_data.py     # Filtrage des données réelles
+│   └── merge_real_datasets.py # Fusion des datasets réels
+├── analytics/                  # Analyse et visualisation
+│   ├── generate_indicators.py # Génération des indicateurs JSON
+│   ├── eda.py                  # Analyse exploratoire des données
+│   └── generate_graphiques.py  # Génération des graphiques analytiques
+├── ml/                         # Machine Learning
+│   ├── train_model.py          # Entraînement du modèle Random Forest
+│   ├── predict.py              # Prédiction de durée
+│   ├── model_real.pkl          # Modèle entraîné (données réelles)
+│   └── model_metrics_real.json # Métriques du modèle
+├── database/                   # Base de données
+│   └── schema.sql              # Schéma PostgreSQL (7 tables)
+├── data/                       # Données
+│   ├── raw/                    # Données brutes
+│   ├── processed/              # Données traitées
+│   └── final/                  # Données finales
+│       ├── dataset_coupures_2020_2026.csv
+│       ├── dataset_coupures_reelles.csv
+│       ├── dataset_coupures_reelles_collectees.csv
+│       └── dataset_coupures_reelles_combine.csv
+├── docs/                       # Documentation
+│   ├── rapport/                # Rapport du projet
+│   │   └── rapport_final.md    # Rapport principal
+│   ├── captures/               # Captures d'écran et graphiques
+│   │   ├── instructions_captures.md
+│   │   ├── guide_graphiques.md
+│   │   └── graphiques_analytiques.md
+│   ├── presentation/           # Support de présentation
+│   │   └── support_soutenance.md
+│   └── sources_donnees.md      # Documentation des sources
+├── tests/                      # Tests automatisés
+│   ├── test_cleaning.py       # Tests de nettoyage
+│   ├── test_pages.py           # Tests des pages Flask
+│   ├── test_api.py             # Tests des endpoints API
+│   ├── test_suivi.py           # Tests de la page de suivi
+│   ├── test_recommendations.py # Tests des recommandations
+│   ├── test_subscription.py   # Tests d'abonnement/notification
+│   └── test_ml.py              # Tests du modèle ML
+├── .env                        # Variables d'environnement
+├── .venv/                      # Environnement virtuel Python
+├── docker-compose.yml          # Configuration Docker (PostgreSQL)
+├── lancer_projet.ps1           # Script de lancement du projet
+├── README.md                   # Documentation du projet
+├── INSTRUCTIONS_FINALES.md     # Instructions finales
+└── COMMANDES_UTILES.md         # Commandes utiles
+```
+
+**Description des répertoires principaux :**
+
+- **backend/** : Contient toute l'application Flask avec les routes, modèles, services et templates HTML
+- **ingestion/** : Scripts pour collecter les données depuis le web, les APIs et les fichiers CSV
+- **processing/** : Scripts de nettoyage, feature engineering et filtrage des données
+- **analytics/** : Scripts d'analyse exploratoire et génération de graphiques
+- **ml/** : Scripts d'entraînement et prédiction avec le modèle Random Forest
+- **database/** : Schéma SQL de la base de données PostgreSQL
+- **data/** : Hiérarchie des données (brutes → traitées → finales)
+- **docs/** : Documentation complète du projet (rapport, captures, présentation)
+- **tests/** : Suite de tests automatisés (39 tests au total)
 
 ### Annexe B : Spécification API
 
-[Liste complète des endpoints API avec paramètres et réponses]
+L'application expose 10 endpoints API REST pour l'accès aux données et aux fonctionnalités ML.
+
+#### 1. GET /api/coupures
+**Description** : Récupérer la liste des coupures avec filtres optionnels
+
+**Paramètres de requête (optionnels)** :
+- `region` : Filtrer par région (ex: "Centre")
+- `ville` : Filtrer par ville (ex: "Ouagadougou")
+- `zone` : Filtrer par zone (ex: "Tanghin")
+- `statut` : Filtrer par statut (ex: "prévue", "en cours", "terminée")
+- `aujourdhui` : Filtrer pour aujourd'hui uniquement ("1" pour activer)
+
+**Réponse** (JSON) :
+```json
+[
+  {
+    "id": 1,
+    "date_debut": "2024-01-15",
+    "heure_debut": "08:00",
+    "region": "Centre",
+    "ville": "Ouagadougou",
+    "zone": "Tanghin",
+    "statut": "terminée",
+    "duree_minutes": 180,
+    "type_coupure": "planifiée",
+    "source": "SONABEL"
+  }
+]
+```
+
+#### 2. GET /api/stats
+**Description** : Récupérer les statistiques globales et KPIs
+
+**Réponse** (JSON) :
+```json
+{
+  "kpis": {
+    "total_coupures": 330,
+    "duree_moyenne": 226.5,
+    "duree_mediane": 240,
+    "duree_max": 480,
+    "duree_totale": 74745,
+    "zones_suivies": 19,
+    "coupures_actives": 5
+  },
+  "par_region": [{"label": "Centre", "value": 150}, ...],
+  "par_zone": [{"label": "Tanghin", "value": 45}, ...],
+  "par_source": [{"label": "officielle", "value": 130}, ...],
+  "par_statut": [{"label": "terminée", "value": 280}, ...],
+  "par_type": [{"label": "planifiée", "value": 200}, ...],
+  "duree_moyenne_region": [{"label": "Centre", "value": 245}, ...],
+  "carte_points": [...]
+}
+```
+
+#### 3. GET /api/map-points
+**Description** : Récupérer les points géographiques pour la carte
+
+**Réponse** (JSON) :
+```json
+[
+  {
+    "region": "Centre",
+    "ville": "Ouagadougou",
+    "zone": "Tanghin",
+    "latitude": 12.358,
+    "longitude": -1.534,
+    "nb_coupures": 45,
+    "duree_moyenne": 245.5,
+    "derniere_coupure": "2024-06-15T08:00:00"
+  }
+]
+```
+
+#### 4. GET /api/data-quality
+**Description** : Récupérer le rapport de qualité des données
+
+**Réponse** (JSON) :
+```json
+{
+  "score_global": 0.85,
+  "completude_par_colonne": {
+    "region": 0.98,
+    "ville": 0.95,
+    "duree_minutes": 0.92
+  },
+  "repartition_sources": {
+    "officielle": 130,
+    "media": 180,
+    "terrain": 20
+  },
+  "anomalies_detectees": 5
+}
+```
+
+#### 5. GET /api/source-traceability
+**Description** : Récupérer la traçabilité des sources de données
+
+**Réponse** (JSON) :
+```json
+{
+  "sources": [
+    {
+      "source_name": "SONABEL Facebook",
+      "source_type": "officielle",
+      "url": "https://facebook.com/sonabel",
+      "date_collecte": "2024-06-01",
+      "fichiers_produits": 5,
+      "niveau_confiance": 0.95
+    }
+  ]
+}
+```
+
+#### 6. GET /api/model-metrics
+**Description** : Récupérer les métriques du modèle ML
+
+**Réponse** (JSON) :
+```json
+{
+  "mae": 117.72,
+  "rmse": 139.4,
+  "r2": -0.135,
+  "accuracy": 0.515,
+  "baseline": 0.53,
+  "distribution_classes": {
+    "courte": 39,
+    "moyenne": 174,
+    "longue": 117
+  },
+  "feature_importance": [
+    {"feature": "temperature_max", "importance": 0.2153},
+    {"feature": "irradiation_solaire", "importance": 0.208}
+  ]
+}
+```
+
+#### 7. GET /api/model-card
+**Description** : Récupérer la fiche technique du modèle ML
+
+**Réponse** (JSON) :
+```json
+{
+  "nom_modele": "Random Forest Regressor",
+  "version": "1.0",
+  "date_entrainement": "2024-06-15",
+  "donnees_entrainement": 264,
+  "donnees_test": 66,
+  "features": ["region", "ville", "type_coupure", "cause", ...],
+  "target": "duree_minutes",
+  "performance": {...}
+}
+```
+
+#### 8. GET /api/model-predictions
+**Description** : Récupérer le rapport de prédictions du modèle
+
+**Réponse** (JSON) :
+```json
+{
+  "predictions": [
+    {
+      "id": 1,
+      "valeur_reelle": 180,
+      "valeur_predite": 195,
+      "ecart": 15,
+      "classe_reelle": "moyenne",
+      "classe_predite": "moyenne"
+    }
+  ],
+  "pire_ecarts": [...],
+  "erreurs_classification": [...]
+}
+```
+
+#### 9. POST /api/predict-duration
+**Description** : Prédire la durée d'une coupure
+
+**Corps de la requête** (JSON) :
+```json
+{
+  "region": "Centre",
+  "ville": "Ouagadougou",
+  "type_coupure": "planifiée",
+  "cause": "maintenance",
+  "temperature_max": 35,
+  "precipitation": 0,
+  "irradiation_solaire": 250
+}
+```
+
+**Réponse** (JSON) :
+```json
+{
+  "duree_predite": 195,
+  "classe_predite": "moyenne",
+  "confiance": 0.65,
+  "intervalle_confiance": [150, 240]
+}
+```
+
+#### 10. GET /api/pipeline-runs
+**Description** : Récupérer le journal des exécutions du pipeline
+
+**Réponse** (JSON) :
+```json
+[
+  {
+    "id_run": 1,
+    "pipeline_name": "ingestion_daily",
+    "date_start": "2024-06-15T08:00:00",
+    "date_end": "2024-06-15T08:05:00",
+    "status": "completed",
+    "records_read": 50,
+    "records_inserted": 45,
+    "records_rejected": 5,
+    "error_message": null
+  }
+]
+```
 
 ### Annexe C : Dictionnaire de données
 
-[Description complète des tables et champs de la base de données]
+La base de données PostgreSQL contient 7 tables principales pour stocker les coupures, signalements, abonnements, notifications, sources, recommandations et exécutions du pipeline.
+
+#### Table 1 : coupures
+Stockage des informations sur les coupures d'électricité
+
+| Champ | Type | Description | Nullable |
+|-------|------|-------------|----------|
+| id_coupure | INTEGER (PK) | Identifiant unique de la coupure | Non |
+| id_source | INTEGER (FK) | Référence à la source documentaire | Oui |
+| date_publication | DATE | Date de publication de l'information | Oui |
+| date_debut | DATE | Date de début de la coupure | Non |
+| heure_debut | TIME | Heure de début de la coupure | Non |
+| date_fin | DATE | Date de fin de la coupure | Oui |
+| heure_fin | TIME | Heure de fin de la coupure | Oui |
+| duree_minutes | INTEGER | Durée de la coupure en minutes | Oui |
+| annee | INTEGER | Année de la coupure | Oui |
+| mois | INTEGER | Mois de la coupure (1-12) | Oui |
+| jour_semaine | VARCHAR(30) | Jour de la semaine (Lundi, Mardi, etc.) | Oui |
+| periode_journee | VARCHAR(30) | Période de la journée (matin, après-midi, soir, nuit) | Oui |
+| region | VARCHAR(100) | Région administrative | Oui |
+| province | VARCHAR(100) | Province | Oui |
+| ville | VARCHAR(100) | Ville | Oui |
+| zone | VARCHAR(150) | Zone/quartier | Oui |
+| latitude | FLOAT | Coordonnée GPS latitude | Oui |
+| longitude | FLOAT | Coordonnée GPS longitude | Oui |
+| type_coupure | VARCHAR(50) | Type de coupure (planifiée, imprévue, etc.) | Oui |
+| cause | TEXT | Cause de la coupure | Oui |
+| statut | VARCHAR(50) | Statut (prévue, en cours, terminée) | Oui |
+| source_name | VARCHAR(100) | Nom de la source | Oui |
+| source_type | VARCHAR(50) | Type de source (officielle, média, terrain) | Oui |
+| url_source | TEXT | URL de la source | Oui |
+| niveau_confiance | FLOAT | Niveau de confiance (0-1) | Oui |
+| niveau_impact | VARCHAR(50) | Niveau d'impact (faible, moyen, élevé) | Oui |
+| temperature_max | FLOAT | Température maximale (°C) | Oui |
+| precipitation | FLOAT | Précipitation (mm) | Oui |
+| irradiation_solaire | FLOAT | Irradiation solaire (W/m²) | Oui |
+| created_at | TIMESTAMP | Date de création de l'enregistrement | Non |
+
+#### Table 2 : signalements
+Signalements utilisateurs de coupures
+
+| Champ | Type | Description | Nullable |
+|-------|------|-------------|----------|
+| id_signalement | INTEGER (PK) | Identifiant unique du signalement | Non |
+| nom_signalant | VARCHAR(100) | Nom du signalant | Oui |
+| telephone | VARCHAR(30) | Téléphone du signalant | Oui |
+| region | VARCHAR(100) | Région concernée | Oui |
+| ville | VARCHAR(100) | Ville concernée | Oui |
+| zone | VARCHAR(150) | Zone concernée | Oui |
+| date_signalement | DATE | Date du signalement | Oui |
+| heure_debut | TIME | Heure de début de la coupure signalée | Oui |
+| heure_fin | TIME | Heure de fin de la coupure signalée | Oui |
+| description | TEXT | Description de la coupure | Oui |
+| statut_confirmation | VARCHAR(50) | Statut de confirmation (en_attente, confirmé, rejeté) | Oui |
+| created_at | TIMESTAMP | Date de création du signalement | Non |
+
+#### Table 3 : abonnements
+Abonnements aux alertes de coupures
+
+| Champ | Type | Description | Nullable |
+|-------|------|-------------|----------|
+| id_abonnement | INTEGER (PK) | Identifiant unique de l'abonnement | Non |
+| nom | VARCHAR(100) | Nom de l'abonné | Oui |
+| contact | VARCHAR(120) | Contact (email, téléphone) | Non |
+| canal | VARCHAR(50) | Canal de notification (web, email, sms, whatsapp) | Oui |
+| region | VARCHAR(100) | Région suivie | Oui |
+| ville | VARCHAR(100) | Ville suivie | Oui |
+| zone | VARCHAR(150) | Zone suivie | Oui |
+| actif | BOOLEAN | Statut de l'abonnement | Non |
+| created_at | TIMESTAMP | Date de création de l'abonnement | Non |
+
+#### Table 4 : notifications
+Historique des notifications envoyées
+
+| Champ | Type | Description | Nullable |
+|-------|------|-------------|----------|
+| id_notification | INTEGER (PK) | Identifiant unique de la notification | Non |
+| id_coupure | INTEGER (FK) | Référence à la coupure concernée | Oui |
+| id_abonnement | INTEGER (FK) | Référence à l'abonnement concerné | Oui |
+| message | TEXT | Message de la notification | Non |
+| canal | VARCHAR(50) | Canal d'envoi | Oui |
+| destinataire | VARCHAR(120) | Destinataire de la notification | Oui |
+| statut_envoi | VARCHAR(50) | Statut d'envoi (simulée, envoyée, échouée) | Oui |
+| date_envoi | TIMESTAMP | Date d'envoi de la notification | Non |
+
+#### Table 5 : source_documents
+Traçabilité des sources de données
+
+| Champ | Type | Description | Nullable |
+|-------|------|-------------|----------|
+| id_source | INTEGER (PK) | Identifiant unique de la source | Non |
+| source_name | VARCHAR(100) | Nom de la source | Non |
+| source_type | VARCHAR(50) | Type de source (officielle, média, terrain) | Oui |
+| url | TEXT | URL de la source | Oui |
+| date_collecte | DATETIME | Date de collecte | Oui |
+| date_publication | DATE | Date de publication originale | Oui |
+| titre | TEXT | Titre du document/article | Oui |
+| texte_original | TEXT | Texte original extrait | Oui |
+| fichier_local | TEXT | Chemin du fichier local | Oui |
+| niveau_confiance | FLOAT | Niveau de confiance de la source (0-1) | Oui |
+
+#### Table 6 : recommandations
+Recommandations énergétiques par zone
+
+| Champ | Type | Description | Nullable |
+|-------|------|-------------|----------|
+| id_recommandation | INTEGER (PK) | Identifiant unique de la recommandation | Non |
+| region | VARCHAR(100) | Région concernée | Oui |
+| ville | VARCHAR(100) | Ville concernée | Oui |
+| zone | VARCHAR(150) | Zone concernée | Oui |
+| type_recommandation | VARCHAR(50) | Type de recommandation | Oui |
+| titre | VARCHAR(200) | Titre de la recommandation | Non |
+| description | TEXT | Description détaillée | Non |
+| priorite | VARCHAR(20) | Priorité (haute, moyenne, basse) | Oui |
+| created_at | TIMESTAMP | Date de création | Non |
+
+#### Table 7 : pipeline_runs
+Journal des exécutions du pipeline de données
+
+| Champ | Type | Description | Nullable |
+|-------|------|-------------|----------|
+| id_run | INTEGER (PK) | Identifiant unique de l'exécution | Non |
+| pipeline_name | VARCHAR(120) | Nom du pipeline exécuté | Non |
+| date_start | TIMESTAMP | Date de début de l'exécution | Non |
+| date_end | TIMESTAMP | Date de fin de l'exécution | Oui |
+| status | VARCHAR(40) | Statut (running, completed, failed) | Non |
+| records_read | INTEGER | Nombre d'enregistrements lus | Oui |
+| records_inserted | INTEGER | Nombre d'enregistrements insérés | Oui |
+| records_rejected | INTEGER | Nombre d'enregistrements rejetés | Oui |
+| error_message | TEXT | Message d'erreur si échec | Oui |
+
+**Relations entre les tables :**
+- `coupures.id_source` → `source_documents.id_source`
+- `coupures` → `signalements` (relation indirecte via géographie)
+- `notifications.id_coupure` → `coupures.id_coupure`
+- `notifications.id_abonnement` → `abonnements.id_abonnement`
 
 ### Annexe D : Fiche modèle ML
 
-[Fiche technique détaillée du modèle de machine learning]
+#### Informations générales
+
+- **Nom du modèle** : Random Forest Regressor
+- **Version** : 1.0
+- **Date d'entraînement** : Juin 2024
+- **Objectif** : Prédiction de la durée des coupures d'électricité (en minutes)
+- **Tâches secondaires** : Classification des durées (courte/moyenne/longue)
+- **Fichier modèle** : `ml/model_real.pkl`
+- **Fichier métriques** : `data/processed/model_metrics_real.json`
+
+#### Données utilisées
+
+- **Source** : `data/final/dataset_coupures_reelles_combine.csv`
+- **Type de données** : Données réelles uniquement (pas de données simulées)
+- **Total enregistrements** : 330 coupures
+- **Enregistrements utilisables** : 330
+- **Entraînement** : 264 lignes (80%)
+- **Test** : 66 lignes (20%)
+- **Période couverte** : 2020-2026
+
+#### Distribution des classes
+
+| Classe | Définition | Nombre | Pourcentage |
+|--------|-----------|--------|------------|
+| Courte | < 120 minutes | 39 | 11.8% |
+| Moyenne | 120-240 minutes | 174 | 52.7% |
+| Longue | > 240 minutes | 117 | 35.5% |
+
+**Déséquilibre des classes** : Ratio 4.46 entre classe majoritaire (moyenne) et minoritaire (courte)
+
+#### Statistiques des durées
+
+- **Minimum** : 60 minutes
+- **Médiane** : 240 minutes
+- **Moyenne** : 226.09 minutes
+- **Maximum** : 480 minutes
+
+#### Métriques de régression
+
+| Métrique | Valeur | Baseline (moyenne) | Interprétation |
+|----------|--------|-------------------|----------------|
+| MAE (Mean Absolute Error) | 117.72 min | 113.50 min | Erreur moyenne de ~2 heures |
+| RMSE (Root Mean Square Error) | 139.40 min | 131.38 min | Erreur quadratique moyenne |
+| R² (Coefficient de détermination) | -0.135 | N/A | Modèle moins performant que la moyenne |
+
+**Note** : Le R² négatif indique que le modèle de régression fait moins bien que la prédiction simple de la moyenne. Cela est dû au volume limité de données réelles.
+
+#### Métriques de classification
+
+| Métrique | Valeur | Baseline (classe majoritaire) | Interprétation |
+|----------|--------|------------------------------|----------------|
+| Accuracy | 51.5% | 53.0% | Légèrement inférieur à la baseline |
+| Macro avg F1-score | 0.312 | N/A | Performance moyenne sur les 3 classes |
+| Weighted avg F1-score | 0.446 | N/A | F1-score pondéré par le support |
+
+#### Rapport de classification par classe
+
+| Classe | Precision | Recall | F1-score | Support |
+|--------|-----------|--------|----------|---------|
+| Courte | 0.0 | 0.0 | 0.0 | 8 |
+| Moyenne | 0.547 | 0.829 | 0.659 | 35 |
+| Longue | 0.385 | 0.217 | 0.278 | 23 |
+
+**Note** : La classe "courte" n'est jamais prédite correctement (precision et recall = 0), ce qui indique un problème de déséquilibre des classes.
+
+#### Matrice de confusion
+
+```
+              Prédite
+              Courte  Moyenne  Longue
+Réelle
+Courte           0        2        6
+Moyenne          0        5       18
+Longue           0        6       29
+```
+
+**Interprétation** : Le modèle tend à prédire majoritairement la classe "moyenne" et "longue", avec une forte confusion entre ces deux classes.
+
+#### Importance des features
+
+**Pour la régression (Top 10)** :
+1. Température maximale : 21.53%
+2. Irradiation solaire : 20.8%
+3. Mois : 11.4%
+4. Précipitation : 10.1%
+5. Heure numérique : 9.84%
+6. Jour numérique : 9.54%
+7. Zone : 6.2%
+8. Type de coupure : 4.32%
+9. Ville : 3.31%
+10. Région : 2.95%
+
+**Pour la classification (Top 10)** :
+1. Irradiation solaire : 14.87%
+2. Température maximale : 13.36%
+3. Mois : 10.85%
+4. Zone : 10.79%
+5. Précipitation : 10.61%
+6. Heure numérique : 9.43%
+7. Ville : 7.95%
+8. Type de coupure : 7.65%
+9. Jour numérique : 7.38%
+10. Région : 7.11%
+
+#### Paramètres du modèle
+
+- **Algorithme** : Random Forest
+- **Nombre d'estimateurs** : 160 arbres
+- **Taille de test** : 20%
+- **État aléatoire** : 42 (reproductibilité)
+- **Poids des classes** : Non ajusté (class_weight=None)
+
+#### Interprétation et limites
+
+**Forces** :
+- Chaîne complète de préparation, entraînement, sauvegarde et prédiction implémentée
+- Utilisation de features enrichies (météo, solaire)
+- Importance des features cohérente (température et irradiation solaire sont les plus importantes)
+- Classification fonctionnelle pour les classes majoritaires
+
+**Limites** :
+- Volume de données réelles limité (330 enregistrements)
+- Déséquilibre des classes (ratio 4.46)
+- Performance inférieure à la baseline pour la classification (51.5% vs 53%)
+- R² négatif pour la régression (modèle moins performant que la moyenne)
+- Classe "courte" jamais prédite correctement
+
+**Conclusion** : Le modèle ML actuel sert principalement de démonstrateur technique. Il n'est pas adapté pour une utilisation en production mais constitue une base solide pour des améliorations futures avec plus de données réelles.
+
+#### Recommandations d'amélioration
+
+1. **Collecter plus de données réelles** : Augmenter le volume pour améliorer l'apprentissage
+2. **Équilibrer les classes** : Utiliser des techniques de sur-échantillonnage ou sous-échantillonnage
+3. **Ajuster les poids des classes** : Utiliser class_weight='balanced' dans Random Forest
+4. **Feature engineering avancé** : Créer des features plus discriminantes
+5. **Essayer d'autres algorithmes** : XGBoost, LightGBM, ou réseaux de neurones
+6. **Validation croisée** : Utiliser k-fold cross-validation pour une évaluation plus robuste
 
 ### Annexe E : Captures d'écran
 
