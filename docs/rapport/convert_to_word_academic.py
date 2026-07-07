@@ -9,8 +9,14 @@ from docx.oxml import OxmlElement
 # Configuration
 ROOT_DIR = Path(__file__).resolve().parents[2]
 MD_FILE = ROOT_DIR / "docs" / "rapport" / "rapport_final.md"
-WORD_OUTPUT = ROOT_DIR / "docs" / "rapport" / "rapport_final_academique.docx"
+WORD_OUTPUT = ROOT_DIR / "docs" / "rapport" / "rapport_final_universitaire.docx"
 CAPTURES_DIR = ROOT_DIR / "docs" / "captures"
+
+# Compteurs pour les listes
+figure_counter = 0
+table_counter = 0
+figures_list = []
+tables_list = []
 
 def set_margins(doc, margin_cm=2.5):
     """Définir les marges du document"""
@@ -108,7 +114,9 @@ def add_paragraph(doc, text):
     return None
 
 def add_image(doc, image_path, caption=None):
-    """Ajouter une image avec légende"""
+    """Ajouter une image avec légende et incrémenter le compteur"""
+    global figure_counter, figures_list
+    
     full_path = ROOT_DIR / image_path.replace("../", "")
     
     if not full_path.exists():
@@ -128,17 +136,26 @@ def add_image(doc, image_path, caption=None):
             run.add_picture(str(full_path), width=Inches(5.5))
             
             if caption:
-                caption_para = doc.add_paragraph(caption)
+                figure_counter += 1
+                # Nettoyer la légende (supprimer astérisques)
+                clean_caption = caption.replace('*', '').strip()
+                clean_caption = clean_caption.replace('Figure X :', f'Figure {figure_counter} :')
+                
+                caption_para = doc.add_paragraph(clean_caption)
                 caption_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 set_font_style(caption_para.runs[0], size=10, italic=True)
                 set_paragraph_format(caption_para, space_before=3, space_after=3)
+                
+                figures_list.append(clean_caption)
         except Exception as e:
             doc.add_paragraph(f"[Image non disponible : {Path(image_path).name}]")
     else:
         doc.add_paragraph(f"[Image non disponible : {Path(image_path).name}]")
 
 def add_table(doc, headers, rows):
-    """Ajouter un tableau avec style uniforme"""
+    """Ajouter un tableau avec style uniforme et incrémenter le compteur"""
+    global table_counter, tables_list
+    
     table = doc.add_table(rows=1, cols=len(headers))
     table.style = 'Light Grid Accent 1'
     
@@ -156,6 +173,9 @@ def add_table(doc, headers, rows):
             row_cells[i].text = str(cell_data)
             set_font_style(row_cells[i].paragraphs[0].runs[0], size=11)
             row_cells[i].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+    
+    table_counter += 1
+    tables_list.append(f"Tableau {table_counter} : {headers[0]}")
     
     return table
 
@@ -176,8 +196,87 @@ def parse_markdown_table(table_text):
     
     return headers, rows
 
+def add_page_break(doc):
+    """Ajouter un saut de page"""
+    doc.add_page_break()
+
+def add_toc(doc):
+    """Ajouter une table des matières automatique"""
+    paragraph = doc.add_paragraph()
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = paragraph.add_run('Table des matières')
+    run.bold = True
+    run.font.size = Pt(16)
+    set_font_style(run, size=16, bold=True)
+    
+    toc_para = doc.add_paragraph()
+    run = toc_para.add_run()
+    fldChar1 = OxmlElement('w:fldChar')
+    fldChar1.set(qn('w:fldCharType'), 'begin')
+    
+    instrText = OxmlElement('w:instrText')
+    instrText.set(qn('xml:space'), 'preserve')
+    instrText.text = 'TOC \\o "1-3" \\h \\z \\u'
+    
+    fldChar2 = OxmlElement('w:fldChar')
+    fldChar2.set(qn('w:fldCharType'), 'separate')
+    
+    fldChar3 = OxmlElement('w:fldChar')
+    fldChar3.set(qn('w:fldCharType'), 'end')
+    
+    run._r.append(fldChar1)
+    run._r.append(instrText)
+    run._r.append(fldChar2)
+    run._r.append(fldChar3)
+    
+    set_paragraph_format(toc_para, space_before=6, space_after=12)
+
+def add_figures_list(doc):
+    """Ajouter la liste des figures"""
+    global figures_list
+    
+    add_page_break(doc)
+    
+    paragraph = doc.add_paragraph()
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = paragraph.add_run('Liste des figures')
+    run.bold = True
+    set_font_style(run, size=16, bold=True)
+    set_paragraph_format(paragraph, space_before=12, space_after=6)
+    
+    for fig in figures_list:
+        para = doc.add_paragraph(fig)
+        set_font_style(para.runs[0], size=12)
+        set_paragraph_format(para, space_before=3, space_after=3)
+
+def add_tables_list(doc):
+    """Ajouter la liste des tableaux"""
+    global tables_list
+    
+    add_page_break(doc)
+    
+    paragraph = doc.add_paragraph()
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = paragraph.add_run('Liste des tableaux')
+    run.bold = True
+    set_font_style(run, size=16, bold=True)
+    set_paragraph_format(paragraph, space_before=12, space_after=6)
+    
+    for table in tables_list:
+        para = doc.add_paragraph(table)
+        set_font_style(para.runs[0], size=12)
+        set_paragraph_format(para, space_before=3, space_after=3)
+
 def convert_markdown_to_docx(md_file, output_file):
     """Convertir Markdown en Word avec style académique"""
+    global figure_counter, table_counter, figures_list, tables_list
+    
+    # Réinitialiser les compteurs
+    figure_counter = 0
+    table_counter = 0
+    figures_list = []
+    tables_list = []
+    
     doc = Document()
     
     # Configuration du document
@@ -197,8 +296,31 @@ def convert_markdown_to_docx(md_file, output_file):
     lines = content.split('\n')
     i = 0
     
+    toc_added = False
+    
     while i < len(lines):
         line = lines[i]
+        
+        # Images (priorité)
+        if '![' in line:
+            match = re.search(r'!\[(.*?)\]\((.*?)\)', line)
+            if match:
+                image_path = match.group(2)
+                caption = None
+                # Chercher la légende sur les lignes suivantes (en sautant les lignes vides)
+                j = i + 1
+                while j < len(lines) and not lines[j].strip():
+                    j += 1
+                if j < len(lines) and lines[j].strip().startswith('*'):
+                    caption = lines[j].strip().strip('*')
+                    i = j  # Avancer jusqu'à la ligne de légende
+                add_image(doc, image_path, caption)
+                i += 1
+                continue
+            else:
+                # Si la ligne contient ![ mais ne matche pas, passer à la ligne suivante
+                i += 1
+                continue
         
         # Titres
         if line.startswith('#'):
@@ -206,6 +328,13 @@ def convert_markdown_to_docx(md_file, output_file):
             if level <= 6:
                 heading_text = line.lstrip('#').strip()
                 add_heading(doc, heading_text, level)
+                
+                # Ajouter TOC après le résumé
+                if not toc_added and 'Introduction' in heading_text:
+                    add_page_break(doc)
+                    add_toc(doc)
+                    toc_added = True
+                
                 i += 1
                 continue
         
@@ -229,19 +358,6 @@ def convert_markdown_to_docx(md_file, output_file):
             set_paragraph_format(para, line_spacing=1.0)
             i += 1
             continue
-        
-        # Images
-        if line.strip().startswith('!['):
-            match = re.match(r'!\[(.*?)\]\((.*?)\)', line.strip())
-            if match:
-                image_path = match.group(2)
-                caption = None
-                if i + 1 < len(lines) and lines[i + 1].strip().startswith('*'):
-                    caption = lines[i + 1].strip().strip('*')
-                    i += 1
-                add_image(doc, image_path, caption)
-                i += 1
-                continue
         
         # Tableaux
         if '|' in line and line.strip().startswith('|'):
@@ -294,9 +410,16 @@ def convert_markdown_to_docx(md_file, output_file):
         
         i += 1
     
+    # Ajouter les listes des figures et tableaux à la fin
+    add_figures_list(doc)
+    add_tables_list(doc)
+    
     # Sauvegarder
     doc.save(output_file)
     print(f"Document Word académique généré : {output_file}")
+    print(f"\nStatistiques :")
+    print(f"- Figures : {figure_counter}")
+    print(f"- Tableaux : {table_counter}")
 
 if __name__ == "__main__":
     print(f"Conversion académique de {MD_FILE} vers Word...")

@@ -17,6 +17,8 @@ WattWatcher BF est une application web Flask qui centralise les informations rel
 
 ## 1. Introduction
 
+Ce chapitre présente le contexte général du projet, la problématique soulevée ainsi que les objectifs visés. Il situe l'étude dans son environnement et justifie la pertinence de la démarche entreprise.
+
 ### 1.1 Contexte
 
 Les coupures d'électricité perturbent les activités des ménages, des entreprises, des commerces et des services publics au Burkina Faso. Les informations existent souvent sous forme de communiqués officiels, d'articles de presse ou de signalements dispersés, ce qui rend difficile leur exploitation pour une planification énergétique efficace.
@@ -35,9 +37,15 @@ Comment collecter, structurer et analyser les informations relatives aux coupure
 - Proposer des recommandations énergétiques adaptées aux données
 - Développer un modèle de prédiction de la durée des coupures
 
+**Synthèse du chapitre**
+
+L'introduction a permis de situer le projet dans son contexte, de formuler la problématique et de définir les objectifs. Le chapitre suivant détaille l'analyse des besoins fonctionnels et non fonctionnels de l'application.
+
 ---
 
 ## 2. Analyse des besoins
+
+Ce chapitre identifie les utilisateurs cibles du projet et précise leurs besoins fonctionnels et non fonctionnels. Cette analyse constitue la base de la conception du système.
 
 ### 2.1 Utilisateurs cibles
 
@@ -59,9 +67,15 @@ Les utilisateurs cibles sont les ménages, commerces, PME, étudiants et service
 - Sécurité : protection des données personnelles
 - Scalabilité : capacité à gérer un volume croissant de données
 
+**Synthèse du chapitre**
+
+L'analyse des besoins a permis d'identifier les utilisateurs cibles et de préciser les exigences fonctionnelles et non fonctionnelles. Le chapitre suivant décrit les données utilisées dans le projet.
+
 ---
 
 ## 3. Description des données
+
+Ce chapitre présente les sources de données utilisées, leur enrichissement, les variables disponibles ainsi que les statistiques descriptives. Il permet de comprendre la nature et la qualité des données exploitées.
 
 ### 3.1 Sources de données
 
@@ -97,11 +111,17 @@ Les données sont enrichies avec des variables météorologiques et solaires pro
 - **Durée moyenne** : 226 minutes
 - **Durée médiane** : 240 minutes
 
+**Synthèse du chapitre**
+
+La description des données a permis de présenter les sources, l'enrichissement, les variables disponibles et les statistiques descriptives. Le chapitre suivant aborde la préparation et l'exploration des données.
+
 ---
 
 ## 4. Préparation et exploration des données
 
-### 4.1 Nettoyage des données
+Ce chapitre détaille les étapes de préparation des données, incluant le nettoyage, le feature engineering, le filtrage des données réelles et la génération d'indicateurs et de visualisations.
+
+### 4.1 Nettoyage des données:
 
 Le script `processing/clean_coupures.py` effectue les opérations suivantes :
 - normalisation des dates et heures
@@ -125,9 +145,15 @@ Le script `processing/filter_real_data.py` exclut les données simulées et ne c
 - `analytics/generate_indicators.py` : production des indicateurs JSON
 - `analytics/eda.py` : génération des graphiques HTML avec Plotly
 
+**Synthèse du chapitre**
+
+La préparation et l'exploration des données ont permis de nettoyer, enrichir et structurer les données pour l'analyse. Le chapitre suivant présente la conception et la modélisation du système.
+
 ---
 
 ## 5. Conception et modélisation
+
+Ce chapitre présente l'architecture technique du système, le schéma de la base de données et l'API REST. Il décrit la structure globale de l'application et les choix de conception.
 
 ### 5.1 Architecture technique
 
@@ -153,9 +179,15 @@ La base de données PostgreSQL contient sept tables :
 
 L'application expose dix endpoints API pour l'accès aux données et aux fonctionnalités de machine learning.
 
+**Synthèse du chapitre**
+
+La conception et la modélisation ont permis de définir l'architecture technique, le schéma de la base de données et l'API REST. Le chapitre suivant détaille l'implémentation technique du projet.
+
 ---
 
 ## 6. Implémentation
+
+Ce chapitre décrit la stack technologique utilisée, la structure du projet et les fonctionnalités implémentées. Il présente également les scripts clés illustrant l'implémentation technique.
 
 ### 6.1 Stack technologique
 
@@ -280,9 +312,15 @@ Ces scripts démontrent la chaîne complète de traitement des données : collec
 
 *Figure 16 : Schéma de base de données PostgreSQL*
 
+**Synthèse du chapitre**
+
+L'implémentation a permis de présenter la stack technologique, la structure du projet et les fonctionnalités développées. Le chapitre suivant expose les résultats obtenus.
+
 ---
 
 ## 7. Résultats
+
+Ce chapitre présente les indicateurs obtenus, les résultats du modèle de machine learning et les visualisations analytiques. Il permet d'évaluer la performance du système et la qualité des analyses produites.
 
 ### 7.1 Indicateurs obtenus
 
@@ -369,9 +407,15 @@ Les graphiques ci-dessous illustrent l'analyse des données de coupures d'élect
 
 *Figure 26 : Top 15 des provinces les plus touchées*
 
+**Synthèse du chapitre**
+
+Les résultats ont permis de présenter les indicateurs obtenus, les performances du modèle de machine learning et les visualisations analytiques. Le chapitre suivant aborde les tests et la validation.
+
 ---
 
 ## 8. Tests et validation
+
+Ce chapitre présente les tests automatisés, leurs résultats et les commandes de validation. Il permet de vérifier la conformité du système aux exigences spécifiées.
 
 ### 8.1 Tests automatisés
 
@@ -394,9 +438,15 @@ Les tests automatisés vérifient :
 
 Les commandes de validation détaillées sont présentées en annexe F.
 
+**Synthèse du chapitre**
+
+Les tests et la validation ont permis de vérifier le bon fonctionnement du système et sa conformité aux exigences. Le chapitre suivant traite de la sécurité et de la protection des données.
+
 ---
 
 ## 9. Sécurité et protection des données
+
+Ce chapitre aborde les aspects de sécurité, notamment la protection des données personnelles, les mesures de sécurité actuelles et les améliorations nécessaires pour une version de production.
 
 ### 9.1 Données personnelles
 
@@ -418,9 +468,15 @@ Pour une version de production, il faudra ajouter :
 - protection contre les injections et formulaires abusifs
 - HTTPS obligatoire
 
+**Synthèse du chapitre**
+
+La sécurité et la protection des données ont été analysées, avec un focus sur les données personnelles, les mesures actuelles et les améliorations pour la production. Le chapitre suivant présente les limites du projet.
+
 ---
 
 ## 10. Limites
+
+Ce chapitre identifie les principales limites du projet, notamment le volume de données, les alertes simulées, la dépendance au scraping et les performances du modèle prédictif.
 
 ### 10.1 Volume de données
 
@@ -438,9 +494,15 @@ Le scraping dépend de la disponibilité des sites web et de la stabilité de le
 
 Les métriques comparées aux baselines montrent que le modèle prédictif ne doit pas être présenté comme performant en production ; il démontre surtout la chaîne complète de préparation, d'entraînement, de sauvegarde et de prédiction.
 
+**Synthèse du chapitre**
+
+Les limites identifiées concernent le volume de données, les alertes simulées, le scraping et le modèle prédictif. Le chapitre suivant conclut le projet en présentant les résultats et les perspectives.
+
 ---
 
 ## 11. Conclusion et perspectives
+
+Ce chapitre conclut le projet en rappelant les objectifs, en présentant les résultats obtenus, en identifiant les perspectives d'amélioration et en évaluant la conformité au cahier des charges.
 
 ### 11.1 Conclusion
 
