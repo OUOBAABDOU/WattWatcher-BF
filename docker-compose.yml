@@ -1,4 +1,5 @@
-﻿services:
+﻿version: '3.9'
+services:
   postgres:
     image: postgres:16
     container_name: wattwatcher_postgres
@@ -11,5 +12,30 @@
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+
+  web:
+    build: .
+    container_name: wattwatcher_web
+    depends_on:
+      - postgres
+    command: ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "backend.app:app"]
+    environment:
+      FLASK_ENV: production
+      SECRET_KEY: change-me
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@postgres:5432/wattwatcher_db
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: wattwatcher_nginx
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+
 volumes:
   postgres_data:

@@ -3,6 +3,7 @@
 ## Page de garde
 
 **Sujet 21 :** Application de suivi des coupures d'électricité et de gestion énergétique
+**Étudiant :** OUOBA Abdou Rasmané
 **Filière :** Génie logiciel — Licence 3 Analyse de données
 **Projet :** WattWatcher BF
 **Date :** Juillet 2026
@@ -121,7 +122,7 @@ La description des données a permis de présenter les sources, l'enrichissement
 
 Ce chapitre détaille les étapes de préparation des données, incluant le nettoyage, le feature engineering, le filtrage des données réelles et la génération d'indicateurs et de visualisations.
 
-### 4.1 Nettoyage des données:
+### 4.1 Nettoyage des données
 
 Le script `processing/clean_coupures.py` effectue les opérations suivantes :
 - normalisation des dates et heures
@@ -246,7 +247,7 @@ tests/         Tests automatisés (39 tests)
 
 *Figure 6 : Traçabilité des sources de données*
 
-#### 6.3.3 Machine Learning
+#### 6.3.2 Machine Learning
 - modèle Random Forest pour la prédiction de durée
 - classification des coupures (courte/moyenne/longue)
 - interface de prédiction interactive
@@ -273,12 +274,12 @@ tests/         Tests automatisés (39 tests)
 
 *Figure 11 : Exemple de prédiction de durée*
 
-#### 6.3.4 Alertes et recommandations
+#### 6.3.3 Alertes et recommandations
 - système d'abonnements par région, ville ou zone
 - génération de notifications simulées
 - recommandations énergétiques personnalisées
 
-### 6.3.5 Scripts et architecture technique
+#### 6.3.4 Scripts et architecture technique
 
 Le projet comprend plusieurs scripts clés qui illustrent l'implémentation technique :
 
@@ -290,7 +291,7 @@ Le projet comprend plusieurs scripts clés qui illustrent l'implémentation tech
 
 Ces scripts démontrent la chaîne complète de traitement des données : collecte → nettoyage → stockage → analyse → prédiction.
 
-### 6.3.6 Scripts et code source
+#### 6.3.5 Scripts et code source
 
 ![backend/app.py](../captures/21_app_principal.png)
 
@@ -523,6 +524,22 @@ Le projet WattWatcher BF répond au sujet 21 en proposant une application foncti
 **Qualité des données** : ✅ 100 % réelles
 **Tests automatisés** : ✅ 39/39 passés
 **Application** : ✅ fonctionnelle
+
+---
+
+## Bibliographie et sources
+
+- SONABEL. Communiqués officiels relatifs aux coupures d'électricité au Burkina Faso.
+- Wakat Séra. Articles de presse relatifs aux coupures d'électricité et à la situation énergétique au Burkina Faso.
+- Lefaso.net. Articles de presse relatifs aux coupures d'électricité et à la situation énergétique au Burkina Faso.
+- Faso Actu. Articles de presse relatifs aux coupures d'électricité et à la situation énergétique au Burkina Faso.
+- Open-Meteo. Documentation de l'API Historical Weather.
+- NASA POWER. Documentation de l'API Daily.
+- Banque mondiale. Indicateurs d'accès à l'électricité.
+- Flask. Documentation officielle du framework web.
+- PostgreSQL. Documentation officielle du système de gestion de base de données.
+- Pandas. Documentation officielle de la bibliothèque d'analyse de données.
+- Scikit-learn. Documentation officielle de la bibliothèque de machine learning.
 
 ---
 

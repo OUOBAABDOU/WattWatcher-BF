@@ -63,7 +63,27 @@ docker compose up -d
 
 ### Lancer l'application
 
+#### Option 1 : Lancement complet en une seule commande (recommandé)
+
 ```powershell
+.\lancer_projet.ps1
+```
+
+Ce script automatise :
+1. Démarrage de PostgreSQL avec Docker
+2. Chargement des données réelles dans PostgreSQL
+3. Démarrage de l'application Flask
+
+#### Option 2 : Lancement manuel
+
+```powershell
+# Demarrer PostgreSQL
+docker compose up -d
+
+# Charger les donnees reelles
+.\.venv\Scripts\python.exe ingestion\load_to_postgres.py --csv data\final\dataset_coupures_reelles_combine.csv --replace-coupures
+
+# Lancer l'application
 .\.venv\Scripts\python.exe backend\app.py
 ```
 

@@ -1,4 +1,5 @@
-﻿from datetime import date, datetime
+﻿import os
+from datetime import date, datetime
 import csv
 import json
 from pathlib import Path
@@ -359,5 +360,8 @@ def load_sample_if_empty(app):
 app = create_app()
 if __name__ == '__main__':
     load_sample_if_empty(app)
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    debug_mode = os.getenv('FLASK_DEBUG', 'false').lower() in ('1', 'true', 'yes')
+    host = os.getenv('FLASK_RUN_HOST', '0.0.0.0')
+    port = int(os.getenv('FLASK_RUN_PORT', 5000))
+    app.run(debug=debug_mode, host=host, port=port)
 
