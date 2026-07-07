@@ -183,22 +183,16 @@ tests/         Tests automatisés (39 tests)
 
 ### 6.3 Fonctionnalités implémentées
 
-#### 6.3.1 Collecte de données
-- Scraping web automatisé des médias burkinabé
-- Téléchargement des données météo et solaires via APIs
-- Formulaire de signalement utilisateur
-- Extraction PDF et OCR (disponible)
-
-![Dashboard principal](../captures/01_tableau_bord_coupures.png)
-
-*Figure 11 : Tableau de bord des coupures d'électricité avec KPIs et graphiques interactifs*
-
-#### 6.3.2 Tableau de bord
-- Dashboard principal avec KPIs et graphiques
+#### 6.3.1 Tableau de bord et interface principale
+- Dashboard principal avec KPIs et graphiques interactifs
 - Suivi temps réel par région et zone
 - Carte géographique interactive des zones touchées
 - Page de qualité des données
 - Page de traçabilité des sources
+
+![Dashboard principal](../captures/01_tableau_bord_coupures.png)
+
+*Figure 11 : Tableau de bord des coupures d'électricité avec KPIs et graphiques interactifs*
 
 ![Coupures par région](../captures/02_coupures_par_region.png)
 
@@ -212,29 +206,13 @@ tests/         Tests automatisés (39 tests)
 
 *Figure 14 : Interface CRUD pour la gestion des coupures*
 
-![Répartition par source](../captures/05_repartition_source.png)
-
-*Figure 15 : Répartition des coupures par source de données*
-
-![Répartition par statut](../captures/06_repartition_statut.png)
-
-*Figure 16 : Répartition des coupures par statut*
-
-![Recommandations énergétiques](../captures/07_recommandations_energetiques.png)
-
-*Figure 17 : Recommandations énergétiques personnalisées*
-
 ![Qualité des données](../captures/08_qualite_donnees.png)
 
-*Figure 18 : Rapport sur la qualité des données*
+*Figure 15 : Rapport sur la qualité des données*
 
 ![Traçabilité des sources](../captures/09_tracabilite_sources.png)
 
-*Figure 19 : Traçabilité des sources de données*
-
-![Zones cartographiées](../captures/10_zones_cartographiees.png)
-
-*Figure 20 : Zones cartographiées et journal d'exécution*
+*Figure 16 : Traçabilité des sources de données*
 
 #### 6.3.3 Machine Learning
 - Modèle Random Forest pour la prédiction de durée
@@ -280,49 +258,27 @@ Le projet comprend plusieurs scripts clés qui illustrent l'implémentation tech
 
 Ces scripts démontrent la chaîne complète de traitement des données : collecte → nettoyage → stockage → analyse → prédiction.
 
-### 6.3.6 Détails et démonstration de l'interface
-
-![Navigation](../captures/16_navigation_menu.png)
-
-*Figure 26 : Navigation et menu de l'application*
-
-![Dashboard KPIs](../captures/17_dashboard_kpis.png)
-
-*Figure 27 : Zoom sur les indicateurs clés de performance (KPIs)*
-
-![Dashboard graphiques](../captures/18_dashboard_graphiques.png)
-
-*Figure 28 : Zoom sur les visualisations du dashboard*
-
-![Coupures actives](../captures/19_suivi_actives.png)
-
-*Figure 29 : Section des coupures actives en cours*
-
-![Vue d'ensemble](../captures/20_accueil_complet.png)
-
-*Figure 30 : Vue d'ensemble complète de l'interface*
-
-### 6.3.7 Scripts et code source
+### 6.3.6 Scripts et code source
 
 ![backend/app.py](../captures/21_app_principal.png)
 
-*Figure 31 : Code source de l'application Flask principale*
+*Figure 17 : Code source de l'application Flask principale*
 
 ![ingestion/scrape_medias.py](../captures/22_scrape_medias.png)
 
-*Figure 32 : Script de scraping web des médias*
+*Figure 18 : Script de scraping web des médias*
 
 ![processing/clean_coupures.py](../captures/23_clean_coupures.png)
 
-*Figure 33 : Script de nettoyage des données*
+*Figure 19 : Script de nettoyage des données*
 
 ![ml/train_model.py](../captures/24_train_model.png)
 
-*Figure 34 : Script d'entraînement du modèle ML*
+*Figure 20 : Script d'entraînement du modèle ML*
 
 ![database/schema.sql](../captures/25_schema_sql.png)
 
-*Figure 35 : Schéma de base de données PostgreSQL*
+*Figure 21 : Schéma de base de données PostgreSQL*
 
 ---
 
@@ -375,43 +331,43 @@ Les graphiques ci-dessous illustrent l'analyse des données de coupures d'élect
 
 ![Durée moyenne par région](../captures/graphique_duree_moyenne_region.png)
 
-*Figure 1 : Durée moyenne des coupures par région administrative*
+*Figure 22 : Durée moyenne des coupures par région administrative*
 
 ![Distribution des durées](../captures/graphique_distribution_durees.png)
 
-*Figure 2 : Distribution des durées de coupures avec moyenne et médiane*
+*Figure 23 : Distribution des durées de coupures avec moyenne et médiane*
 
 ![Coupures par jour de semaine](../captures/graphique_coupures_jour_semaine.png)
 
-*Figure 3 : Répartition des coupures selon les jours de la semaine*
+*Figure 24 : Répartition des coupures selon les jours de la semaine*
 
 ![Coupures par période journée](../captures/graphique_coupures_periode_journee.png)
 
-*Figure 4 : Répartition selon les périodes de la journée*
+*Figure 25 : Répartition selon les périodes de la journée*
 
 ![Coupures par cause](../captures/graphique_coupures_par_cause.png)
 
-*Figure 5 : Top 10 des causes principales des coupures*
+*Figure 26 : Top 10 des causes principales des coupures*
 
 ![Évolution annuelle](../captures/graphique_evolution_annuelle.png)
 
-*Figure 6 : Évolution du nombre de coupures et de la durée moyenne par année*
+*Figure 27 : Évolution du nombre de coupures et de la durée moyenne par année*
 
 ![Top 10 villes](../captures/graphique_top10_villes.png)
 
-*Figure 7 : Les 10 villes les plus touchées par les coupures*
+*Figure 28 : Les 10 villes les plus touchées par les coupures*
 
 ![Boxplot durée par type](../captures/graphique_boxplot_duree_type.png)
 
-*Figure 8 : Distribution des durées selon le type de coupure*
+*Figure 29 : Distribution des durées selon le type de coupure*
 
 ![Heatmap région x mois](../captures/graphique_heatmap_region_mois.png)
 
-*Figure 9 : Matrice chaleur des coupures par région et mois*
+*Figure 30 : Matrice chaleur des coupures par région et mois*
 
 ![Coupures par province](../captures/graphique_coupures_par_province.png)
 
-*Figure 10 : Top 15 des provinces les plus touchées*
+*Figure 31 : Top 15 des provinces les plus touchées*
 
 ---
 
