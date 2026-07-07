@@ -285,6 +285,20 @@ Utilisez **Windows + Shift + S** pour ouvrir l'outil de capture d'écran Windows
 - 24_train_model.png
 - 25_schema_sql.png
 
+**Section 5 - Graphiques analytiques (10 graphiques générés automatiquement) :**
+- graphique_duree_moyenne_region.png
+- graphique_distribution_durees.png
+- graphique_coupures_jour_semaine.png
+- graphique_coupures_periode_journee.png
+- graphique_coupures_par_cause.png
+- graphique_evolution_annuelle.png
+- graphique_top10_villes.png
+- graphique_boxplot_duree_type.png
+- graphique_heatmap_region_mois.png
+- graphique_coupures_par_province.png
+
+**Note** : Les graphiques de la Section 5 sont générés automatiquement avec le script `analytics/generate_graphiques.py`.
+
 ## Conseils pour de bonnes captures
 
 - **Mode plein écran** : Appuyez sur F11 avant de capturer

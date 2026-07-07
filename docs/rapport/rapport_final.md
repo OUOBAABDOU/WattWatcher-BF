@@ -424,6 +424,19 @@ Le projet WattWatcher BF répond au sujet 21 en proposant une application foncti
 24. **ml/train_model.py** - Script d'entraînement ML
 25. **database/schema.sql** - Schéma de base de données
 
+### Section 5 - Graphiques analytiques (10 graphiques)
+
+26. **Durée moyenne par région** - Analyse des durées moyennes des coupures par région administrative
+27. **Distribution des durées** - Histogramme de la distribution des durées de coupures avec moyenne et médiane
+28. **Coupures par jour de semaine** - Répartition des coupures selon les jours de la semaine
+29. **Coupures par période journée** - Répartition selon les périodes de la journée (matin, après-midi, soir, nuit)
+30. **Coupures par cause** - Top 10 des causes principales des coupures
+31. **Évolution annuelle** - Évolution du nombre de coupures et de la durée moyenne par année
+32. **Top 10 villes** - Les 10 villes les plus touchées par les coupures
+33. **Boxplot durée par type** - Distribution des durées selon le type de coupure
+34. **Heatmap région x mois** - Matrice chaleur des coupures par région et mois
+35. **Coupures par province** - Top 15 des provinces les plus touchées
+
 **Note** : Les captures d'écran sont disponibles dans le dossier `docs/captures/` et illustrent toutes les fonctionnalités du projet avec des données réelles (330 coupures).
 
 ---
