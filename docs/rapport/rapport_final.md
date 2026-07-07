@@ -2,16 +2,16 @@
 
 ## Page de garde
 
-**Sujet 21 :** Application de suivi des coupures d'électricité et de gestion énergétique  
-**Filière :** Génie logiciel — Licence 3 Analyse de données  
-**Projet :** WattWatcher BF  
+**Sujet 21 :** Application de suivi des coupures d'électricité et de gestion énergétique
+**Filière :** Génie logiciel — Licence 3 Analyse de données
+**Projet :** WattWatcher BF
 **Date :** Juillet 2026
 
 ---
 
 ## Résumé
 
-WattWatcher BF est une application web Flask qui centralise les informations sur les coupures d'électricité au Burkina Faso, les stocke dans PostgreSQL, les analyse avec Pandas/Scikit-learn et les présente dans un tableau de bord interactif. Le système propose un suivi par région, des signalements communautaires, des alertes simulées et des recommandations énergétiques. Le projet utilise exclusivement des données réelles collectées depuis les sources officielles SONABEL, les médias burkinabé et les signalements utilisateurs.
+WattWatcher BF est une application web Flask qui centralise les informations relatives aux coupures d'électricité au Burkina Faso, les stocke dans PostgreSQL, les analyse avec Pandas et Scikit-learn, puis les présente dans un tableau de bord interactif. Le système propose un suivi par région, des signalements communautaires, des alertes simulées et des recommandations énergétiques. Le projet utilise exclusivement des données réelles collectées depuis les sources officielles SONABEL, les médias burkinabés et les signalements utilisateurs.
 
 ---
 
@@ -19,11 +19,11 @@ WattWatcher BF est une application web Flask qui centralise les informations sur
 
 ### 1.1 Contexte
 
-Les coupures d'électricité perturbent les activités des ménages, entreprises, commerces et services publics au Burkina Faso. Les informations existent souvent sous forme de communiqués officiels, d'articles de presse ou de signalements dispersés, rendant difficile leur exploitation pour une planification énergétique efficace.
+Les coupures d'électricité perturbent les activités des ménages, des entreprises, des commerces et des services publics au Burkina Faso. Les informations existent souvent sous forme de communiqués officiels, d'articles de presse ou de signalements dispersés, ce qui rend difficile leur exploitation pour une planification énergétique efficace.
 
 ### 1.2 Problématique
 
-Comment collecter, structurer et analyser les informations de coupures d'électricité afin d'aider les utilisateurs à mieux anticiper et gérer leur consommation énergétique ?
+Comment collecter, structurer et analyser les informations relatives aux coupures d'électricité afin d'aider les utilisateurs à mieux anticiper et gérer leur consommation énergétique ?
 
 ### 1.3 Objectifs
 
@@ -33,7 +33,7 @@ Comment collecter, structurer et analyser les informations de coupures d'électr
 - Suivre les coupures prévues, en cours et terminées
 - Générer des alertes simulées pour les zones suivies
 - Proposer des recommandations énergétiques adaptées aux données
-- Développer un modèle de prédiction de durée des coupures
+- Développer un modèle de prédiction de la durée des coupures
 
 ---
 
@@ -54,10 +54,10 @@ Les utilisateurs cibles sont les ménages, commerces, PME, étudiants et service
 
 ### 2.3 Besoins non fonctionnels
 
-- Performance : Temps de réponse < 2 secondes
-- Disponibilité : Application accessible 24/7
-- Sécurité : Protection des données personnelles
-- Scalabilité : Capacité à gérer un volume croissant de données
+- Performance : temps de réponse inférieur à 2 secondes
+- Disponibilité : application accessible 24/7
+- Sécurité : protection des données personnelles
+- Scalabilité : capacité à gérer un volume croissant de données
 
 ---
 
@@ -65,7 +65,7 @@ Les utilisateurs cibles sont les ménages, commerces, PME, étudiants et service
 
 ### 3.1 Sources de données
 
-Le projet utilise exclusivement des données réelles dans sa version de production. Le dataset principal contient **330 coupures réelles** collectées depuis plusieurs sources :
+Le projet utilise exclusivement des données réelles dans sa version de production. Le jeu de données principal contient **330 coupures réelles** collectées depuis plusieurs sources :
 
 - **Sources officielles SONABEL** (communiqués Facebook) : ~40%
 - **Médias burkinabé** (Wakat Séra, Lefaso.net, Faso Actu) : ~50%
@@ -73,10 +73,10 @@ Le projet utilise exclusivement des données réelles dans sa version de product
 
 ### 3.2 Enrichissement des données
 
-Les données sont enrichies avec des variables météorologiques et solaires provenant d'APIs externes :
-- **Open-Meteo Historical Weather API** : Température maximale et précipitations
-- **NASA POWER Daily API** : Irradiation solaire
-- **Banque mondiale** : Indicateur d'accès à l'électricité
+Les données sont enrichies avec des variables météorologiques et solaires provenant d'API externes :
+- **Open-Meteo Historical Weather API** : température maximale et précipitations
+- **NASA POWER Daily API** : irradiation solaire
+- **Banque mondiale** : indicateur d'accès à l'électricité
 
 ### 3.3 Variables disponibles
 
@@ -104,17 +104,17 @@ Les données sont enrichies avec des variables météorologiques et solaires pro
 ### 4.1 Nettoyage des données
 
 Le script `processing/clean_coupures.py` effectue les opérations suivantes :
-- Normalisation des dates et heures
-- Standardisation des noms de régions, villes et zones
-- Calcul des durées en minutes
-- Gestion des valeurs manquantes
+- normalisation des dates et heures
+- standardisation des noms de régions, villes et zones
+- calcul des durées en minutes
+- gestion des valeurs manquantes
 
 ### 4.2 Feature engineering
 
 Le script `processing/feature_engineering.py` ajoute des variables dérivées :
-- Variables temporelles : heure_num, jour_num, weekend
-- Classe de durée : courte (< 120 min), moyenne (120-240 min), longue (> 240 min)
-- Risque par zone basé sur la fréquence des coupures
+- variables temporelles : heure_num, jour_num, weekend
+- classe de durée : courte (< 120 min), moyenne (120-240 min), longue (> 240 min)
+- risque par zone basé sur la fréquence des coupures
 
 ### 4.3 Filtrage des données réelles
 
@@ -122,8 +122,8 @@ Le script `processing/filter_real_data.py` exclut les données simulées et ne c
 
 ### 4.4 Indicateurs et visualisations
 
-- `analytics/generate_indicators.py` : Produit les indicateurs JSON
-- `analytics/eda.py` : Génère les graphiques HTML avec Plotly
+- `analytics/generate_indicators.py` : production des indicateurs JSON
+- `analytics/eda.py` : génération des graphiques HTML avec Plotly
 
 ---
 
@@ -139,19 +139,19 @@ Sources web/CSV/signalements → Ingestion → Nettoyage → PostgreSQL → Flas
 
 ### 5.2 Schéma de base de données
 
-La base de données PostgreSQL contient 7 tables :
+La base de données PostgreSQL contient sept tables :
 
-1. **coupures** : Stockage des coupures d'électricité
-2. **signalements** : Signalements utilisateurs
-3. **abonnements** : Abonnements aux alertes
-4. **notifications** : Historique des notifications
-5. **source_documents** : Traçabilité des sources
-6. **recommandations** : Recommandations énergétiques
-7. **pipeline_runs** : Journal des exécutions du pipeline
+1. **coupures** : stockage des coupures d'électricité
+2. **signalements** : signalements utilisateurs
+3. **abonnements** : abonnements aux alertes
+4. **notifications** : historique des notifications
+5. **source_documents** : traçabilité des sources
+6. **recommandations** : recommandations énergétiques
+7. **pipeline_runs** : journal des exécutions du pipeline
 
 ### 5.3 API REST
 
-L'application expose 10 endpoints API pour l'accès aux données et aux fonctionnalités ML.
+L'application expose dix endpoints API pour l'accès aux données et aux fonctionnalités de machine learning.
 
 ---
 
@@ -161,7 +161,7 @@ L'application expose 10 endpoints API pour l'accès aux données et aux fonction
 
 - **Backend** : Flask 3.0.3, Flask-SQLAlchemy 3.1.1
 - **Base de données** : PostgreSQL 16 (Docker)
-- **Data processing** : Pandas 2.2.2, NumPy 1.26.4
+- **Traitement des données** : Pandas 2.2.2, NumPy 1.26.4
 - **Machine Learning** : Scikit-learn 1.5.1
 - **Web scraping** : Requests 2.32.3, BeautifulSoup 4.12.3
 - **Visualisation** : Plotly 5.22.0
@@ -185,76 +185,76 @@ tests/         Tests automatisés (39 tests)
 
 #### 6.3.1 Tableau de bord et interface principale
 - Dashboard principal avec KPIs et graphiques interactifs
-- Suivi temps réel par région et zone
-- Carte géographique interactive des zones touchées
-- Page de qualité des données
-- Page de traçabilité des sources
+- suivi en temps réel par région et zone
+- carte géographique interactive des zones touchées
+- page de qualité des données
+- page de traçabilité des sources
 
 ![Dashboard principal](../captures/01_tableau_bord_coupures.png)
 
-*Figure 11 : Tableau de bord des coupures d'électricité avec KPIs et graphiques interactifs*
+*Figure 1 : Tableau de bord des coupures d'électricité avec KPIs et graphiques interactifs*
 
 ![Coupures par région](../captures/02_coupures_par_region.png)
 
-*Figure 12 : Page de suivi des coupures par région*
+*Figure 2 : Page de suivi des coupures par région*
 
 ![Carte des zones touchées](../captures/03_carte_zones_touchees.png)
 
-*Figure 13 : Carte géographique interactive des zones touchées*
+*Figure 3 : Carte géographique interactive des zones touchées*
 
 ![Gestion des coupures](../captures/04_gestion_coupures.png)
 
-*Figure 14 : Interface CRUD pour la gestion des coupures*
+*Figure 4 : Interface CRUD pour la gestion des coupures*
 
 ![Qualité des données](../captures/08_qualite_donnees.png)
 
-*Figure 15 : Rapport sur la qualité des données*
+*Figure 5 : Rapport sur la qualité des données*
 
 ![Traçabilité des sources](../captures/09_tracabilite_sources.png)
 
-*Figure 16 : Traçabilité des sources de données*
+*Figure 6 : Traçabilité des sources de données*
 
 #### 6.3.3 Machine Learning
-- Modèle Random Forest pour la prédiction de durée
-- Classification des coupures (courte/moyenne/longue)
-- Interface de prédiction interactive
-- Fiche modèle générée automatiquement
-- Analyse des erreurs de prédiction
+- modèle Random Forest pour la prédiction de durée
+- classification des coupures (courte/moyenne/longue)
+- interface de prédiction interactive
+- fiche modèle générée automatiquement
+- analyse des erreurs de prédiction
 
 ![Modèle prédictif ML](../captures/11_modele_predictif_ml.png)
 
-*Figure 21 : Page du modèle prédictif ML avec métriques d'entraînement*
+*Figure 7 : Page du modèle prédictif ML avec métriques d'entraînement*
 
 ![Fiche modèle](../captures/12_fiche_modele.png)
 
-*Figure 22 : Fiche technique du modèle ML*
+*Figure 8 : Fiche technique du modèle ML*
 
 ![Erreurs ML](../captures/13_erreurs_modele.png)
 
-*Figure 23 : Analyse des erreurs de prédiction du modèle*
+*Figure 9 : Analyse des erreurs de prédiction du modèle*
 
 ![Prédiction de durée (avant)](../captures/14_prediction_duree_avant.png)
 
-*Figure 24 : Interface de prédiction vide*
+*Figure 10 : Interface de prédiction vide*
 
 ![Prédiction de durée (après)](../captures/15_prediction_duree_apres.png)
 
-*Figure 25 : Exemple de prédiction de durée*
+*Figure 11 : Exemple de prédiction de durée*
 
 #### 6.3.4 Alertes et recommandations
-- Système d'abonnements par région, ville ou zone
-- Génération de notifications simulées
-- Recommandations énergétiques personnalisées
+- système d'abonnements par région, ville ou zone
+- génération de notifications simulées
+- recommandations énergétiques personnalisées
 
 ### 6.3.5 Scripts et architecture technique
 
 Le projet comprend plusieurs scripts clés qui illustrent l'implémentation technique :
 
-- **backend/app.py** : Application Flask principale avec routes et connexion à PostgreSQL
-- **ingestion/scrape_medias.py** : Script de scraping web pour collecter les données des médias
-- **processing/clean_coupures.py** : Script de nettoyage et normalisation des données
-- **ml/train_model.py** : Script d'entraînement du modèle Random Forest
-- **database/schema.sql** : Schéma de base de données avec 7 tables
+- **backend/app.py** : application Flask principale avec routes et connexion à PostgreSQL
+- **ingestion/scrape_medias.py** : script de scraping web pour collecter les données des médias
+- **processing/clean_coupures.py** : script de nettoyage et normalisation des données
+- **ml/train_model.py** : script d'entraînement du modèle Random Forest
+- **database/schema.sql** : schéma de base de données avec sept tables
 
 Ces scripts démontrent la chaîne complète de traitement des données : collecte → nettoyage → stockage → analyse → prédiction.
 
@@ -262,23 +262,23 @@ Ces scripts démontrent la chaîne complète de traitement des données : collec
 
 ![backend/app.py](../captures/21_app_principal.png)
 
-*Figure 17 : Code source de l'application Flask principale*
+*Figure 12 : Code source de l'application Flask principale*
 
 ![ingestion/scrape_medias.py](../captures/22_scrape_medias.png)
 
-*Figure 18 : Script de scraping web des médias*
+*Figure 13 : Script de scraping web des médias*
 
 ![processing/clean_coupures.py](../captures/23_clean_coupures.png)
 
-*Figure 19 : Script de nettoyage des données*
+*Figure 14 : Script de nettoyage des données*
 
 ![ml/train_model.py](../captures/24_train_model.png)
 
-*Figure 20 : Script d'entraînement du modèle ML*
+*Figure 15 : Script d'entraînement du modèle ML*
 
 ![database/schema.sql](../captures/25_schema_sql.png)
 
-*Figure 21 : Schéma de base de données PostgreSQL*
+*Figure 16 : Schéma de base de données PostgreSQL*
 
 ---
 
@@ -287,11 +287,11 @@ Ces scripts démontrent la chaîne complète de traitement des données : collec
 ### 7.1 Indicateurs obtenus
 
 Sur les données réelles combinées (330 coupures) :
-- Durée moyenne : 226 minutes
-- Durée médiane : 240 minutes
-- 7 régions suivies
+- durée moyenne : 226 minutes
+- durée médiane : 240 minutes
+- sept régions suivies
 - 19 zones suivies
-- Sources principalement officielles et médias
+- sources principalement officielles et médias
 
 ### 7.2 Résultats Machine Learning
 
@@ -299,31 +299,31 @@ Sur les données réelles combinées (330 coupures) :
 
 - **Données d'entraînement** : 264 lignes
 - **Données de test** : 66 lignes
-- **MAE (Mean Absolute Error)** : 117.72 minutes
-- **RMSE** : 139.4 minutes
-- **R²** : -0.135 (régression moins performante que la moyenne)
-- **Accuracy classification** : 51.5%
-- **Baseline (classe majoritaire)** : 53%
+- **MAE (Mean Absolute Error)** : 117,72 minutes
+- **RMSE** : 139,4 minutes
+- **R²** : -0,135 (régression moins performante que la moyenne)
+- **Accuracy classification** : 51,5 %
+- **Baseline (classe majoritaire)** : 53 %
 
 #### Distribution des classes
 
-- **Courte** (< 120 min) : 39 lignes (11.8%)
-- **Moyenne** (120-240 min) : 174 lignes (52.7%)
-- **Longue** (> 240 min) : 117 lignes (35.5%)
+- **Courte** (< 120 min) : 39 lignes (11,8 %)
+- **Moyenne** (120-240 min) : 174 lignes (52,7 %)
+- **Longue** (> 240 min) : 117 lignes (35,5 %)
 
 #### Variables les plus importantes
 
-1. Température maximale : 21.53%
-2. Irradiation solaire : 20.8%
-3. Mois : 11.4%
-4. Précipitation : 10.1%
-5. Heure : 9.84%
+1. Température maximale : 21,53 %
+2. Irradiation solaire : 20,8 %
+3. Mois : 11,4 %
+4. Précipitation : 10,1 %
+5. Heure : 9,84 %
 
 ### 7.3 Analyse des résultats
 
-Le modèle ML actuel sert principalement de démonstrateur technique. L'accuracy de classification (51.5%) est légèrement inférieure à la baseline (53%), ce qui indique que le volume de données réelles reste limité pour un apprentissage robuste. La régression avec un R² négatif montre que le modèle fait moins bien que la prédiction moyenne simple.
+Le modèle de machine learning actuel sert principalement de démonstrateur technique. L'accuracy de classification (51,5 %) est légèrement inférieure à la baseline (53 %), ce qui indique que le volume de données réelles reste limité pour un apprentissage robuste. La régression avec un R² négatif montre que le modèle fait moins bien que la prédiction moyenne simple.
 
-Cependant, le projet démontre la chaîne complète de préparation, entraînement, sauvegarde et prédiction, ce qui constitue une base solide pour des améliorations futures avec plus de données.
+Cependant, le projet démontre la chaîne complète de préparation, d'entraînement, de sauvegarde et de prédiction, ce qui constitue une base solide pour des améliorations futures avec davantage de données.
 
 ### 7.4 Visualisations analytiques
 
@@ -331,43 +331,43 @@ Les graphiques ci-dessous illustrent l'analyse des données de coupures d'élect
 
 ![Durée moyenne par région](../captures/graphique_duree_moyenne_region.png)
 
-*Figure 22 : Durée moyenne des coupures par région administrative*
+*Figure 17 : Durée moyenne des coupures par région administrative*
 
 ![Distribution des durées](../captures/graphique_distribution_durees.png)
 
-*Figure 23 : Distribution des durées de coupures avec moyenne et médiane*
+*Figure 18 : Distribution des durées de coupures avec moyenne et médiane*
 
 ![Coupures par jour de semaine](../captures/graphique_coupures_jour_semaine.png)
 
-*Figure 24 : Répartition des coupures selon les jours de la semaine*
+*Figure 19 : Répartition des coupures selon les jours de la semaine*
 
 ![Coupures par période journée](../captures/graphique_coupures_periode_journee.png)
 
-*Figure 25 : Répartition selon les périodes de la journée*
+*Figure 20 : Répartition selon les périodes de la journée*
 
 ![Coupures par cause](../captures/graphique_coupures_par_cause.png)
 
-*Figure 26 : Top 10 des causes principales des coupures*
+*Figure 21 : Top 10 des causes principales des coupures*
 
 ![Évolution annuelle](../captures/graphique_evolution_annuelle.png)
 
-*Figure 27 : Évolution du nombre de coupures et de la durée moyenne par année*
+*Figure 22 : Évolution du nombre de coupures et de la durée moyenne par année*
 
 ![Top 10 villes](../captures/graphique_top10_villes.png)
 
-*Figure 28 : Les 10 villes les plus touchées par les coupures*
+*Figure 23 : Les 10 villes les plus touchées par les coupures*
 
 ![Boxplot durée par type](../captures/graphique_boxplot_duree_type.png)
 
-*Figure 29 : Distribution des durées selon le type de coupure*
+*Figure 24 : Distribution des durées selon le type de coupure*
 
 ![Heatmap région x mois](../captures/graphique_heatmap_region_mois.png)
 
-*Figure 30 : Matrice chaleur des coupures par région et mois*
+*Figure 25 : Matrice chaleur des coupures par région et mois*
 
 ![Coupures par province](../captures/graphique_coupures_par_province.png)
 
-*Figure 31 : Top 15 des provinces les plus touchées*
+*Figure 26 : Top 15 des provinces les plus touchées*
 
 ---
 
@@ -376,30 +376,23 @@ Les graphiques ci-dessous illustrent l'analyse des données de coupures d'élect
 ### 8.1 Tests automatisés
 
 Les tests automatisés vérifient :
-- Le nettoyage des données
-- Les pages Flask
-- Les endpoints API
-- La page de suivi
-- Les recommandations
-- Le mécanisme d'abonnement/notification
-- Le modèle ML
+- le nettoyage des données
+- les pages Flask
+- les endpoints API
+- la page de suivi
+- les recommandations
+- le mécanisme d'abonnement/notification
+- le modèle de machine learning
 
 ### 8.2 Résultats des tests
 
 - **Total tests** : 39
-- **Statut** : 39/39 passés (100%)
-- **Couverture** : Fonctionnelle complète
+- **Statut** : 39/39 passés (100 %)
+- **Couverture** : fonctionnelle complète
 
 ### 8.3 Commandes de validation
 
-```powershell
-python -m pytest -q
-python processing/filter_real_data.py --out data/final/dataset_coupures_reelles.csv
-python processing/merge_real_datasets.py --base data/final/dataset_coupures_2020_2026.csv --collected data/final/dataset_coupures_reelles_collectees.csv --out data/final/dataset_coupures_reelles_combine.csv
-python processing/clean_coupures.py --input data/final/dataset_coupures_2020_2026.csv --out data/processed/coupures_clean.csv
-python ml/train_model.py --input data/final/dataset_coupures_reelles_combine.csv --real-only --out ml/model_real.pkl --metrics-out data/processed/model_metrics_real.json
-python ml/predict.py
-```
+Les commandes de validation détaillées sont présentées en annexe F.
 
 ---
 
@@ -407,22 +400,22 @@ python ml/predict.py
 
 ### 9.1 Données personnelles
 
-Les données personnelles sont limitées aux contacts d'abonnement et signalements (nom, téléphone, email).
+Les données personnelles sont limitées aux contacts d'abonnement et aux signalements (nom, téléphone, e-mail).
 
 ### 9.2 Mesures de sécurité actuelles
 
-- Variables d'environnement pour les secrets
-- Chiffrement des mots de passe en base de données
-- Validation des entrées utilisateur
+- variables d'environnement pour les secrets
+- chiffrement des mots de passe en base de données
+- validation des entrées utilisateur
 
 ### 9.3 Améliorations pour la production
 
 Pour une version de production, il faudra ajouter :
-- Authentification utilisateur
-- Chiffrement des secrets
-- Consentement utilisateur explicite
-- Possibilité de suppression des abonnements
-- Protection contre les injections et formulaires abusifs
+- authentification utilisateur
+- chiffrement des secrets
+- consentement utilisateur explicite
+- possibilité de suppression des abonnements
+- protection contre les injections et formulaires abusifs
 - HTTPS obligatoire
 
 ---
@@ -431,19 +424,19 @@ Pour une version de production, il faudra ajouter :
 
 ### 10.1 Volume de données
 
-Le volume de données réelles reste limité (330 coupures), ce qui affecte les performances du modèle ML. Plus de données réelles sont nécessaires pour améliorer la précision des prédictions.
+Le volume de données réelles reste limité (330 coupures), ce qui affecte les performances du modèle de machine learning. Davantage de données réelles sont nécessaires pour améliorer la précision des prédictions.
 
 ### 10.2 Alertes
 
-Les alertes email/SMS/WhatsApp sont simulées dans cette version. Une intégration avec un fournisseur réel (Twilio, etc.) serait nécessaire pour la production.
+Les alertes e-mail/SMS/WhatsApp sont simulées dans cette version. Une intégration avec un fournisseur réel (Twilio, etc.) serait nécessaire pour la production.
 
 ### 10.3 Scraping
 
-Le scraping dépend de la disponibilité des sites web et de la stabilité de leur structure HTML. Des modifications du site peuvent casser le scraping.
+Le scraping dépend de la disponibilité des sites web et de la stabilité de leur structure HTML. Des modifications du site peuvent interrompre le scraping.
 
 ### 10.4 Modèle prédictif
 
-Les métriques comparées aux baselines montrent que le modèle prédictif ne doit pas être présenté comme performant en production ; il démontre surtout la chaîne complète de préparation, entraînement, sauvegarde et prédiction.
+Les métriques comparées aux baselines montrent que le modèle prédictif ne doit pas être présenté comme performant en production ; il démontre surtout la chaîne complète de préparation, d'entraînement, de sauvegarde et de prédiction.
 
 ---
 
@@ -451,23 +444,23 @@ Les métriques comparées aux baselines montrent que le modèle prédictif ne do
 
 ### 11.1 Conclusion
 
-Le projet WattWatcher BF répond au sujet 21 en proposant une application fonctionnelle de suivi, analyse, stockage, alertes et recommandations énergétiques. Toutes les fonctionnalités requises par le cahier des charges ont été implémentées et testées avec succès. Le projet utilise exclusivement des données réelles collectées depuis des sources officielles et médiatiques.
+Le projet WattWatcher BF répond au sujet 21 en proposant une application fonctionnelle de suivi, d'analyse, de stockage, d'alertes et de recommandations énergétiques. L'ensemble des fonctionnalités requises par le cahier des charges a été implémenté et testé avec succès. Le projet utilise exclusivement des données réelles collectées depuis des sources officielles et médiatiques.
 
 ### 11.2 Perspectives principales
 
-- **Intégration SMS réelle** : Branchement sur un fournisseur de SMS pour des alertes opérationnelles
-- **Collecte officielle SONABEL** : Intégration API officielle si disponible pour des données plus robustes
-- **Application mobile** : Développement d'une application mobile pour une meilleure accessibilité
-- **Amélioration du modèle prédictif** : Collecte de plus de données réelles et features avancés
-- **Carte interactive avancée** : Amélioration de l'interactivité et des filtres géographiques
-- **Sécurité renforcée** : Implémentation complète de l'authentification et du chiffrement
+- **Intégration SMS réelle** : branchement sur un fournisseur de SMS pour des alertes opérationnelles
+- **Collecte officielle SONABEL** : intégration API officielle si disponible pour des données plus robustes
+- **Application mobile** : développement d'une application mobile pour une meilleure accessibilité
+- **Amélioration du modèle prédictif** : collecte de davantage de données réelles et features avancés
+- **Carte interactive avancée** : amélioration de l'interactivité et des filtres géographiques
+- **Sécurité renforcée** : implémentation complète de l'authentification et du chiffrement
 
 ### 11.3 Conformité
 
-**Conformité au cahier des charges** : ✅ 100%  
-**Qualité des données** : ✅ 100% réelles  
-**Tests automatisés** : ✅ 39/39 passés  
-**Application** : ✅ Fonctionnelle
+**Conformité au cahier des charges** : ✅ 100 %
+**Qualité des données** : ✅ 100 % réelles
+**Tests automatisés** : ✅ 39/39 passés
+**Application** : ✅ fonctionnelle
 
 ---
 
@@ -477,331 +470,56 @@ Le projet WattWatcher BF répond au sujet 21 en proposant une application foncti
 
 ```
 wattwatcher-bf/
-├── backend/                    # Application Flask
-│   ├── app.py                 # Application principale avec routes
-│   ├── config.py              # Configuration de l'application
-│   ├── models.py              # Modèles SQLAlchemy (Coupure, Signalement, etc.)
-│   ├── extensions.py          # Initialisation de la base de données
-│   ├── services/               # Services métier
-│   │   ├── analytics_service.py        # Calcul des KPIs et graphiques
-│   │   ├── data_quality_service.py    # Rapport qualité des données
-│   │   ├── model_card_service.py       # Génération de la fiche modèle
-│   │   ├── model_metrics_service.py   # Chargement des métriques ML
-│   │   ├── model_predictions_service.py # Rapport de prédictions
-│   │   ├── pipeline_service.py        # Journal des exécutions pipeline
-│   │   ├── prediction_service.py      # Service de prédiction
-│   │   ├── recommendation_service.py  # Recommandations énergétiques
-│   │   └── source_traceability_service.py # Traçabilité des sources
-│   └── templates/              # Templates HTML
-│       ├── base.html           # Template de base
-│       ├── index.html         # Dashboard principal
-│       ├── suivi.html          # Page de suivi des coupures
-│       ├── carte.html          # Carte géographique
-│       ├── coupures.html       # Liste des coupures (CRUD)
-│       ├── signalements.html   # Formulaire de signalement
-│       ├── notifications.html   # Page des notifications
-│       ├── recommandations.html # Recommandations énergétiques
-│       ├── qualite.html        # Rapport qualité des données
-│       ├── sources.html        # Traçabilité des sources
-│       ├── modele.html         # Page du modèle ML
-│       ├── prediction.html     # Interface de prédiction
-│       └── pipeline.html       # Journal d'exécution
-├── ingestion/                  # Collecte des données
-│   ├── scrape_medias.py        # Scraping web des médias burkinabé
-│   ├── download_weather.py     # Téléchargement données météo
-│   ├── download_solar.py       # Téléchargement données solaires
-│   └── load_to_postgres.py     # Chargement CSV vers PostgreSQL
-├── processing/                 # Traitement des données
-│   ├── clean_coupures.py       # Nettoyage et normalisation
-│   ├── feature_engineering.py  # Création de variables dérivées
-│   ├── filter_real_data.py     # Filtrage des données réelles
-│   └── merge_real_datasets.py # Fusion des datasets réels
-├── analytics/                  # Analyse et visualisation
-│   ├── generate_indicators.py # Génération des indicateurs JSON
-│   ├── eda.py                  # Analyse exploratoire des données
-│   └── generate_graphiques.py  # Génération des graphiques analytiques
-├── ml/                         # Machine Learning
-│   ├── train_model.py          # Entraînement du modèle Random Forest
-│   ├── predict.py              # Prédiction de durée
-│   ├── model_real.pkl          # Modèle entraîné (données réelles)
-│   └── model_metrics_real.json # Métriques du modèle
-├── database/                   # Base de données
-│   └── schema.sql              # Schéma PostgreSQL (7 tables)
-├── data/                       # Données
-│   ├── raw/                    # Données brutes
-│   ├── processed/              # Données traitées
-│   └── final/                  # Données finales
-│       ├── dataset_coupures_2020_2026.csv
-│       ├── dataset_coupures_reelles.csv
-│       ├── dataset_coupures_reelles_collectees.csv
-│       └── dataset_coupures_reelles_combine.csv
-├── docs/                       # Documentation
-│   ├── rapport/                # Rapport du projet
-│   │   └── rapport_final.md    # Rapport principal
-│   ├── captures/               # Captures d'écran et graphiques
-│   │   ├── instructions_captures.md
-│   │   ├── guide_graphiques.md
-│   │   └── graphiques_analytiques.md
-│   ├── presentation/           # Support de présentation
-│   │   └── support_soutenance.md
-│   └── sources_donnees.md      # Documentation des sources
-├── tests/                      # Tests automatisés
-│   ├── test_cleaning.py       # Tests de nettoyage
-│   ├── test_pages.py           # Tests des pages Flask
-│   ├── test_api.py             # Tests des endpoints API
-│   ├── test_suivi.py           # Tests de la page de suivi
-│   ├── test_recommendations.py # Tests des recommandations
-│   ├── test_subscription.py   # Tests d'abonnement/notification
-│   └── test_ml.py              # Tests du modèle ML
-├── .env                        # Variables d'environnement
-├── .venv/                      # Environnement virtuel Python
-├── docker-compose.yml          # Configuration Docker (PostgreSQL)
-├── lancer_projet.ps1           # Script de lancement du projet
-├── README.md                   # Documentation du projet
-├── INSTRUCTIONS_FINALES.md     # Instructions finales
-└── COMMANDES_UTILES.md         # Commandes utiles
+├── backend/          Application Flask (routes, modèles, services, templates)
+├── ingestion/       Collecte des données (scraping, APIs, chargement)
+├── processing/      Traitement des données (nettoyage, feature engineering)
+├── analytics/       Analyse et visualisation (indicateurs, graphiques)
+├── ml/              Machine Learning (entraînement, prédiction, modèle)
+├── database/        Schéma PostgreSQL
+├── data/            Données (brutes, traitées, finales)
+├── docs/            Documentation (rapport, captures, présentation)
+├── tests/           Tests automatisés (39 tests)
+└── docker-compose.yml Configuration Docker
 ```
 
 **Description des répertoires principaux :**
 
-- **backend/** : Contient toute l'application Flask avec les routes, modèles, services et templates HTML
-- **ingestion/** : Scripts pour collecter les données depuis le web, les APIs et les fichiers CSV
-- **processing/** : Scripts de nettoyage, feature engineering et filtrage des données
-- **analytics/** : Scripts d'analyse exploratoire et génération de graphiques
-- **ml/** : Scripts d'entraînement et prédiction avec le modèle Random Forest
-- **database/** : Schéma SQL de la base de données PostgreSQL
-- **data/** : Hiérarchie des données (brutes → traitées → finales)
-- **docs/** : Documentation complète du projet (rapport, captures, présentation)
-- **tests/** : Suite de tests automatisés (39 tests au total)
+- **backend/** : contient l'application Flask avec les routes, modèles, services et templates HTML
+- **ingestion/** : scripts pour collecter les données depuis le web, les APIs et les fichiers CSV
+- **processing/** : scripts de nettoyage, feature engineering et filtrage des données
+- **analytics/** : scripts d'analyse exploratoire et génération de graphiques
+- **ml/** : scripts d'entraînement et prédiction avec le modèle Random Forest
+- **database/** : schéma SQL de la base de données PostgreSQL
+- **data/** : hiérarchie des données (brutes → traitées → finales)
+- **docs/** : documentation complète du projet (rapport, captures, présentation)
+- **tests/** : suite de tests automatisés (39 tests)
 
 ### Annexe B : Spécification API
 
-L'application expose 10 endpoints API REST pour l'accès aux données et aux fonctionnalités ML.
+L'application expose dix endpoints API REST pour l'accès aux données et aux fonctionnalités de machine learning.
 
-#### 1. GET /api/coupures
-**Description** : Récupérer la liste des coupures avec filtres optionnels
+#### Tableau synthétique des endpoints
 
-**Paramètres de requête (optionnels)** :
-- `region` : Filtrer par région (ex: "Centre")
-- `ville` : Filtrer par ville (ex: "Ouagadougou")
-- `zone` : Filtrer par zone (ex: "Tanghin")
-- `statut` : Filtrer par statut (ex: "prévue", "en cours", "terminée")
-- `aujourdhui` : Filtrer pour aujourd'hui uniquement ("1" pour activer)
+| Endpoint | Méthode | Description |
+|----------|---------|-------------|
+| /api/coupures | GET | Récupérer la liste des coupures avec filtres optionnels |
+| /api/stats | GET | Récupérer les statistiques globales et KPIs |
+| /api/map-points | GET | Récupérer les points géographiques pour la carte |
+| /api/data-quality | GET | Récupérer le rapport de qualité des données |
+| /api/source-traceability | GET | Récupérer la traçabilité des sources de données |
+| /api/model-metrics | GET | Récupérer les métriques du modèle ML |
+| /api/model-card | GET | Récupérer la fiche technique du modèle ML |
+| /api/model-predictions | GET | Récupérer le rapport de prédictions du modèle |
+| /api/predict-duration | POST | Prédire la durée d'une coupure |
+| /api/pipeline-runs | GET | Récupérer le journal des exécutions du pipeline |
 
-**Réponse** (JSON) :
-```json
-[
-  {
-    "id": 1,
-    "date_debut": "2024-01-15",
-    "heure_debut": "08:00",
-    "region": "Centre",
-    "ville": "Ouagadougou",
-    "zone": "Tanghin",
-    "statut": "terminée",
-    "duree_minutes": 180,
-    "type_coupure": "planifiée",
-    "source": "SONABEL"
-  }
-]
-```
-
-#### 2. GET /api/stats
-**Description** : Récupérer les statistiques globales et KPIs
-
-**Réponse** (JSON) :
-```json
-{
-  "kpis": {
-    "total_coupures": 330,
-    "duree_moyenne": 226.5,
-    "duree_mediane": 240,
-    "duree_max": 480,
-    "duree_totale": 74745,
-    "zones_suivies": 19,
-    "coupures_actives": 5
-  },
-  "par_region": [{"label": "Centre", "value": 150}, ...],
-  "par_zone": [{"label": "Tanghin", "value": 45}, ...],
-  "par_source": [{"label": "officielle", "value": 130}, ...],
-  "par_statut": [{"label": "terminée", "value": 280}, ...],
-  "par_type": [{"label": "planifiée", "value": 200}, ...],
-  "duree_moyenne_region": [{"label": "Centre", "value": 245}, ...],
-  "carte_points": [...]
-}
-```
-
-#### 3. GET /api/map-points
-**Description** : Récupérer les points géographiques pour la carte
-
-**Réponse** (JSON) :
-```json
-[
-  {
-    "region": "Centre",
-    "ville": "Ouagadougou",
-    "zone": "Tanghin",
-    "latitude": 12.358,
-    "longitude": -1.534,
-    "nb_coupures": 45,
-    "duree_moyenne": 245.5,
-    "derniere_coupure": "2024-06-15T08:00:00"
-  }
-]
-```
-
-#### 4. GET /api/data-quality
-**Description** : Récupérer le rapport de qualité des données
-
-**Réponse** (JSON) :
-```json
-{
-  "score_global": 0.85,
-  "completude_par_colonne": {
-    "region": 0.98,
-    "ville": 0.95,
-    "duree_minutes": 0.92
-  },
-  "repartition_sources": {
-    "officielle": 130,
-    "media": 180,
-    "terrain": 20
-  },
-  "anomalies_detectees": 5
-}
-```
-
-#### 5. GET /api/source-traceability
-**Description** : Récupérer la traçabilité des sources de données
-
-**Réponse** (JSON) :
-```json
-{
-  "sources": [
-    {
-      "source_name": "SONABEL Facebook",
-      "source_type": "officielle",
-      "url": "https://facebook.com/sonabel",
-      "date_collecte": "2024-06-01",
-      "fichiers_produits": 5,
-      "niveau_confiance": 0.95
-    }
-  ]
-}
-```
-
-#### 6. GET /api/model-metrics
-**Description** : Récupérer les métriques du modèle ML
-
-**Réponse** (JSON) :
-```json
-{
-  "mae": 117.72,
-  "rmse": 139.4,
-  "r2": -0.135,
-  "accuracy": 0.515,
-  "baseline": 0.53,
-  "distribution_classes": {
-    "courte": 39,
-    "moyenne": 174,
-    "longue": 117
-  },
-  "feature_importance": [
-    {"feature": "temperature_max", "importance": 0.2153},
-    {"feature": "irradiation_solaire", "importance": 0.208}
-  ]
-}
-```
-
-#### 7. GET /api/model-card
-**Description** : Récupérer la fiche technique du modèle ML
-
-**Réponse** (JSON) :
-```json
-{
-  "nom_modele": "Random Forest Regressor",
-  "version": "1.0",
-  "date_entrainement": "2024-06-15",
-  "donnees_entrainement": 264,
-  "donnees_test": 66,
-  "features": ["region", "ville", "type_coupure", "cause", ...],
-  "target": "duree_minutes",
-  "performance": {...}
-}
-```
-
-#### 8. GET /api/model-predictions
-**Description** : Récupérer le rapport de prédictions du modèle
-
-**Réponse** (JSON) :
-```json
-{
-  "predictions": [
-    {
-      "id": 1,
-      "valeur_reelle": 180,
-      "valeur_predite": 195,
-      "ecart": 15,
-      "classe_reelle": "moyenne",
-      "classe_predite": "moyenne"
-    }
-  ],
-  "pire_ecarts": [...],
-  "erreurs_classification": [...]
-}
-```
-
-#### 9. POST /api/predict-duration
-**Description** : Prédire la durée d'une coupure
-
-**Corps de la requête** (JSON) :
-```json
-{
-  "region": "Centre",
-  "ville": "Ouagadougou",
-  "type_coupure": "planifiée",
-  "cause": "maintenance",
-  "temperature_max": 35,
-  "precipitation": 0,
-  "irradiation_solaire": 250
-}
-```
-
-**Réponse** (JSON) :
-```json
-{
-  "duree_predite": 195,
-  "classe_predite": "moyenne",
-  "confiance": 0.65,
-  "intervalle_confiance": [150, 240]
-}
-```
-
-#### 10. GET /api/pipeline-runs
-**Description** : Récupérer le journal des exécutions du pipeline
-
-**Réponse** (JSON) :
-```json
-[
-  {
-    "id_run": 1,
-    "pipeline_name": "ingestion_daily",
-    "date_start": "2024-06-15T08:00:00",
-    "date_end": "2024-06-15T08:05:00",
-    "status": "completed",
-    "records_read": 50,
-    "records_inserted": 45,
-    "records_rejected": 5,
-    "error_message": null
-  }
-]
-```
+Les réponses JSON détaillées de chaque endpoint sont disponibles en annexe G.
 
 ### Annexe C : Dictionnaire de données
 
-La base de données PostgreSQL contient 7 tables principales pour stocker les coupures, signalements, abonnements, notifications, sources, recommandations et exécutions du pipeline.
+La base de données PostgreSQL contient sept tables principales pour stocker les coupures, signalements, abonnements, notifications, sources, recommandations et exécutions du pipeline.
 
-#### Table 1 : coupures
+#### Tableau 1 : coupures
 Stockage des informations sur les coupures d'électricité
 
 | Champ | Type | Description | Nullable |
@@ -837,7 +555,7 @@ Stockage des informations sur les coupures d'électricité
 | irradiation_solaire | FLOAT | Irradiation solaire (W/m²) | Oui |
 | created_at | TIMESTAMP | Date de création de l'enregistrement | Non |
 
-#### Table 2 : signalements
+#### Tableau 2 : signalements
 Signalements utilisateurs de coupures
 
 | Champ | Type | Description | Nullable |
@@ -855,7 +573,7 @@ Signalements utilisateurs de coupures
 | statut_confirmation | VARCHAR(50) | Statut de confirmation (en_attente, confirmé, rejeté) | Oui |
 | created_at | TIMESTAMP | Date de création du signalement | Non |
 
-#### Table 3 : abonnements
+#### Tableau 3 : abonnements
 Abonnements aux alertes de coupures
 
 | Champ | Type | Description | Nullable |
@@ -870,7 +588,7 @@ Abonnements aux alertes de coupures
 | actif | BOOLEAN | Statut de l'abonnement | Non |
 | created_at | TIMESTAMP | Date de création de l'abonnement | Non |
 
-#### Table 4 : notifications
+#### Tableau 4 : notifications
 Historique des notifications envoyées
 
 | Champ | Type | Description | Nullable |
@@ -884,7 +602,7 @@ Historique des notifications envoyées
 | statut_envoi | VARCHAR(50) | Statut d'envoi (simulée, envoyée, échouée) | Oui |
 | date_envoi | TIMESTAMP | Date d'envoi de la notification | Non |
 
-#### Table 5 : source_documents
+#### Tableau 5 : source_documents
 Traçabilité des sources de données
 
 | Champ | Type | Description | Nullable |
@@ -900,7 +618,7 @@ Traçabilité des sources de données
 | fichier_local | TEXT | Chemin du fichier local | Oui |
 | niveau_confiance | FLOAT | Niveau de confiance de la source (0-1) | Oui |
 
-#### Table 6 : recommandations
+#### Tableau 6 : recommandations
 Recommandations énergétiques par zone
 
 | Champ | Type | Description | Nullable |
@@ -915,7 +633,7 @@ Recommandations énergétiques par zone
 | priorite | VARCHAR(20) | Priorité (haute, moyenne, basse) | Oui |
 | created_at | TIMESTAMP | Date de création | Non |
 
-#### Table 7 : pipeline_runs
+#### Tableau 7 : pipeline_runs
 Journal des exécutions du pipeline de données
 
 | Champ | Type | Description | Nullable |
@@ -1129,6 +847,216 @@ Longue           0        6       29
 35. **Coupures par province** - Top 15 des provinces les plus touchées
 
 **Note** : Les captures d'écran sont disponibles dans le dossier `docs/captures/` et illustrent toutes les fonctionnalités du projet avec des données réelles (330 coupures).
+
+### Annexe F : Commandes de validation
+
+```powershell
+python -m pytest -q
+python processing/filter_real_data.py --out data/final/dataset_coupures_reelles.csv
+python processing/merge_real_datasets.py --base data/final/dataset_coupures_2020_2026.csv --collected data/final/dataset_coupures_reelles_collectees.csv --out data/final/dataset_coupures_reelles_combine.csv
+python processing/clean_coupures.py --input data/final/dataset_coupures_2020_2026.csv --out data/processed/coupures_clean.csv
+python ml/train_model.py --input data/final/dataset_coupures_reelles_combine.csv --real-only --out ml/model_real.pkl --metrics-out data/processed/model_metrics_real.json
+python ml/predict.py
+```
+
+### Annexe G : Réponses JSON détaillées des endpoints API
+
+Les réponses JSON détaillées de chaque endpoint sont présentées ci-dessous pour référence technique.
+
+#### GET /api/coupures
+
+```json
+[
+  {
+    "id": 1,
+    "date_debut": "2024-01-15",
+    "heure_debut": "08:00",
+    "region": "Centre",
+    "ville": "Ouagadougou",
+    "zone": "Tanghin",
+    "statut": "terminée",
+    "duree_minutes": 180,
+    "type_coupure": "planifiée",
+    "source": "SONABEL"
+  }
+]
+```
+
+#### GET /api/stats
+
+```json
+{
+  "kpis": {
+    "total_coupures": 330,
+    "duree_moyenne": 226.5,
+    "duree_mediane": 240,
+    "duree_max": 480,
+    "duree_totale": 74745,
+    "zones_suivies": 19,
+    "coupures_actives": 5
+  },
+  "par_region": [{"label": "Centre", "value": 150}],
+  "par_zone": [{"label": "Tanghin", "value": 45}],
+  "par_source": [{"label": "officielle", "value": 130}],
+  "par_statut": [{"label": "terminée", "value": 280}],
+  "par_type": [{"label": "planifiée", "value": 200}],
+  "duree_moyenne_region": [{"label": "Centre", "value": 245}],
+  "carte_points": []
+}
+```
+
+#### GET /api/map-points
+
+```json
+[
+  {
+    "region": "Centre",
+    "ville": "Ouagadougou",
+    "zone": "Tanghin",
+    "latitude": 12.358,
+    "longitude": -1.534,
+    "nb_coupures": 45,
+    "duree_moyenne": 245.5,
+    "derniere_coupure": "2024-06-15T08:00:00"
+  }
+]
+```
+
+#### GET /api/data-quality
+
+```json
+{
+  "score_global": 0.85,
+  "completude_par_colonne": {
+    "region": 0.98,
+    "ville": 0.95,
+    "duree_minutes": 0.92
+  },
+  "repartition_sources": {
+    "officielle": 130,
+    "media": 180,
+    "terrain": 20
+  },
+  "anomalies_detectees": 5
+}
+```
+
+#### GET /api/source-traceability
+
+```json
+{
+  "sources": [
+    {
+      "source_name": "SONABEL Facebook",
+      "source_type": "officielle",
+      "url": "https://facebook.com/sonabel",
+      "date_collecte": "2024-06-01",
+      "fichiers_produits": 5,
+      "niveau_confiance": 0.95
+    }
+  ]
+}
+```
+
+#### GET /api/model-metrics
+
+```json
+{
+  "mae": 117.72,
+  "rmse": 139.4,
+  "r2": -0.135,
+  "accuracy": 0.515,
+  "baseline": 0.53,
+  "distribution_classes": {
+    "courte": 39,
+    "moyenne": 174,
+    "longue": 117
+  },
+  "feature_importance": [
+    {"feature": "temperature_max", "importance": 0.2153},
+    {"feature": "irradiation_solaire", "importance": 0.208}
+  ]
+}
+```
+
+#### GET /api/model-card
+
+```json
+{
+  "nom_modele": "Random Forest Regressor",
+  "version": "1.0",
+  "date_entrainement": "2024-06-15",
+  "donnees_entrainement": 264,
+  "donnees_test": 66,
+  "features": ["region", "ville", "type_coupure", "cause"],
+  "target": "duree_minutes",
+  "performance": {}
+}
+```
+
+#### GET /api/model-predictions
+
+```json
+{
+  "predictions": [
+    {
+      "id": 1,
+      "valeur_reelle": 180,
+      "valeur_predite": 195,
+      "ecart": 15,
+      "classe_reelle": "moyenne",
+      "classe_predite": "moyenne"
+    }
+  ],
+  "pire_ecarts": [],
+  "erreurs_classification": []
+}
+```
+
+#### POST /api/predict-duration
+
+**Corps de la requête** :
+
+```json
+{
+  "region": "Centre",
+  "ville": "Ouagadougou",
+  "type_coupure": "planifiée",
+  "cause": "maintenance",
+  "temperature_max": 35,
+  "precipitation": 0,
+  "irradiation_solaire": 250
+}
+```
+
+**Réponse** :
+
+```json
+{
+  "duree_predite": 195,
+  "classe_predite": "moyenne",
+  "confiance": 0.65,
+  "intervalle_confiance": [150, 240]
+}
+```
+
+#### GET /api/pipeline-runs
+
+```json
+[
+  {
+    "id_run": 1,
+    "pipeline_name": "ingestion_daily",
+    "date_start": "2024-06-15T08:00:00",
+    "date_end": "2024-06-15T08:05:00",
+    "status": "completed",
+    "records_read": 50,
+    "records_inserted": 45,
+    "records_rejected": 5,
+    "error_message": null
+  }
+]
+```
 
 ---
 
