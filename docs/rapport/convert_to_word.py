@@ -28,6 +28,19 @@ def add_paragraph(doc, text):
 def add_image(doc, image_path, caption=None):
     """Add an image to the document with optional caption"""
     full_path = ROOT_DIR / image_path.replace("../", "")
+    
+    # Try to find the image if it doesn't exist with exact path
+    if not full_path.exists():
+        # Try to find similar files in captures directory
+        captures_dir = ROOT_DIR / "docs" / "captures"
+        if captures_dir.exists():
+            filename = Path(image_path).name
+            # Try to find file with similar name
+            for file in captures_dir.glob("*.png"):
+                if filename in file.name or file.name in filename:
+                    full_path = file
+                    break
+    
     if full_path.exists():
         try:
             para = doc.add_paragraph()
@@ -41,9 +54,15 @@ def add_image(doc, image_path, caption=None):
                 caption_para.runs[0].italic = True
                 caption_para.runs[0].font.size = Pt(10)
         except Exception as e:
-            doc.add_paragraph(f"[Image non trouvée: {image_path}]")
+            doc.add_paragraph(f"[Erreur lors de l'insertion de l'image: {image_path}]")
     else:
-        doc.add_paragraph(f"[Image non trouvée: {image_path}]")
+        # Add placeholder text instead of missing image
+        doc.add_paragraph(f"[Image non disponible: {Path(image_path).name}]")
+        if caption:
+            caption_para = doc.add_paragraph(caption)
+            caption_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            caption_para.runs[0].italic = True
+            caption_para.runs[0].font.size = Pt(10)
 
 def add_table(doc, headers, rows):
     """Add a table to the document"""
